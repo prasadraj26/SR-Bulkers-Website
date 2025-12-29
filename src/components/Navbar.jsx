@@ -47,7 +47,7 @@ const Navbar = () => {
       <div className="container nav-container">
         <div className="logo" onClick={() => scrollToSection('home')}>
           <FaTruck className="logo-icon" />
-          <span className="logo-text">Truck Builders</span>
+          <span className="logo-text">SR BULKERS</span>
         </div>
 
         <div className="nav-links">

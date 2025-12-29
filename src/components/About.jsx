@@ -22,9 +22,7 @@ const About = () => {
           >
             <h2 className="section-title">About Us</h2>
             <p className="about-description">
-              For over 20 years, Truck Builders Company has been at the forefront of custom truck body manufacturing. 
-              We combine traditional craftsmanship with cutting-edge technology to deliver durable, reliable, 
-              and high-performance truck bodies that withstand the toughest conditions.
+              Established in 2012 ,India SR Bulkers has gained immense expertise in supplying & trading of Cement bulker, box trailer, battery trolley etc. The supplier company is located in Mettur, Tamil Nadu and is one of the leading sellers of listed products. Buy Cement bulker, box trailer, battery trolley in bulk from us for the best quality products and service.
             </p>
             
             <div className="features-list">
