@@ -1,0 +1,376 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap');
+
+@import './components/Navbar.css';
+@import './components/Hero.css';
+@import './components/About.css';
+@import './components/Services.css';
+@import './components/Products.css';
+@import './components/Gallery.css';
+@import './components/Contact.css';
+@import './components/Footer.css';
+@import './components/GoToTop.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --primary-color: #000000;
+  --secondary-color: #ffffff;
+  --accent-color: #d10000;
+  --accent-dark: #b30000;
+  --gray-dark: #333333;
+  --gray-medium: #666666;
+  --gray-light: #f5f5f5;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  color: var(--primary-color);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 100px 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 40px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-dark);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.section-title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100px;
+  height: 4px;
+  background-color: var(--accent-color);
+}
+
+.white-section .section-title::after {
+  background-color: var(--accent-color);
+}
+
+.dark-section .section-title::after {
+  background-color: var(--secondary-color);
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: var(--gray-medium);
+  margin-bottom: 50px;
+  max-width: 700px;
+}
+
+.white-section {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.dark-section {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+  .section-title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+  .section-title {
+    font-size: 2.2rem;
+  }
+  section {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  section {
+    padding: 60px 0;
+  }
+  .btn {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    max-width: 540px;
+    padding: 0 15px;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+  section {
+    padding: 50px 0;
+  }
+}
+/* Add these at the end of your index.css file */
+
+/* Extra responsiveness for very small devices */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 10px;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* Tablet landscape */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .hero-buttons,
+  .contact-form,
+  .footer {
+    display: none;
+  }
+  
+  section {
+    padding: 50px 0;
+    page-break-inside: avoid;
+  }
+}
+/* Go to Top Button - Truck Wheel Style */
+.go-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: var(--transition);
+  border: 3px solid var(--secondary-color);
+  box-shadow: 0 5px 20px rgba(209, 0, 0, 0.3);
+  animation: wheelSpin 2s infinite linear;
+}
+
+.go-to-top:hover {
+  background: var(--accent-dark);
+  transform: scale(1.1) rotate(180deg);
+  box-shadow: 0 8px 30px rgba(209, 0, 0, 0.4);
+}
+
+.wheel-design {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  background: var(--secondary-color);
+  border-radius: 50%;
+}
+
+.wheel-spoke {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: var(--secondary-color);
+  transform-origin: center top;
+}
+
+.wheel-spoke:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg); }
+.wheel-spoke:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg); }
+.wheel-spoke:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg); }
+
+.wheel-rim {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--secondary-color);
+  border-radius: 50%;
+}
+
+.go-to-top.hidden {
+  opacity: 0;
+  transform: translateY(100px);
+  pointer-events: none;
+}
+
+.go-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes wheelSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.go-to-top:hover .wheel-design {
+  animation: wheelSpin 0.5s linear infinite;
+}
+
+/* Responsive styles for go-to-top button */
+@media (max-width: 768px) {
+  .go-to-top {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .wheel-design {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .wheel-rim {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .wheel-center {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .go-to-top {
+    width: 45px;
+    height: 45px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .wheel-design {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .wheel-rim {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .wheel-center {
+    width: 10px;
+    height: 10px;
+  }
+}
