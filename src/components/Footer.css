@@ -464,3 +464,29 @@
     padding-top: 20px;
   }
 }
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 50px 0 20px;
+  }
+  
+  .footer-grid {
+    gap: 25px;
+  }
+  
+  .location-header {
+    padding: 15px;
+  }
+  
+  .address-container {
+    padding: 15px;
+  }
+  
+  .location-actions {
+    padding: 0 15px 15px;
+  }
+  
+  .footer-bottom {
+    padding-top: 20px;
+  }
+}

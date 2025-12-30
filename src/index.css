@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;600;700&display=swap');
 
 @import './components/Navbar.css';
 @import './components/Hero.css';
@@ -20,8 +20,8 @@
 :root {
   --primary-color: #000000;
   --secondary-color: #ffffff;
-  --accent-color: #d10000;
-  --accent-dark: #b30000;
+  --accent-color: #d17a00;
+  --accent-dark: #b35f00;
   --gray-dark: #333333;
   --gray-medium: #666666;
   --gray-light: #f5f5f5;
@@ -31,15 +31,15 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
   color: var(--primary-color);
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
   line-height: 1.2;
 }
 
