@@ -1,20 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { galleryApi } from '../utils/mockApi'
 import './Gallery.css'
 
 const Gallery = () => {
-  const images = [
-    { id: 1, title: 'Custom Truck Body Fabrication', category: 'Fabrication' },
-    { id: 2, title: 'Welding Workshop', category: 'Workshop' },
-    { id: 3, title: 'Finished Truck Delivery', category: 'Delivery' },
-    { id: 4, title: 'Quality Inspection', category: 'Quality' },
-    { id: 5, title: 'Paint Booth Operations', category: 'Painting' },
-    { id: 6, title: 'Assembly Line', category: 'Assembly' },
-    { id: 7, title: 'Hydraulic System Installation', category: 'Hydraulics' },
-    { id: 8, title: 'Custom Trailer Manufacturing', category: 'Trailers' }
-  ]
+  const [images, setImages] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetchGallery()
+  }, [])
+
+  const fetchGallery = async () => {
+    try {
+      const data = await galleryApi.getAll()
+      setImages(data)
+    } catch (err) {
+      console.error('Error fetching gallery:', err)
+      setError('Error loading gallery')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const [selectedImage, setSelectedImage] = useState(null)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -51,24 +61,27 @@ const Gallery = () => {
           </p>
         </div>
 
-        <div className="gallery-grid">
-          {images.map((image, index) => (
-            <motion.div
-              key={image.id}
-              className="gallery-item"
-              data-aos="zoom-in"
-              data-aos-delay={index * 100}
-              whileHover={{ scale: 1.05 }}
-              onClick={() => openLightbox(index)}
-            >
-              <div className="gallery-image"></div>
-              <div className="image-overlay">
-                <h3 className="image-title">{image.title}</h3>
-                <span className="image-category">{image.category}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {loading && <p>Loading gallery...</p>}
+        {error && <p className="error">{error}</p>}
+        {!loading && !error && (
+          <div className="gallery-grid">
+            {images.map((image, index) => (
+              <motion.div
+                key={image.id}
+                className="gallery-item"
+                data-aos="zoom-in"
+                data-aos-delay={index * 100}
+                whileHover={{ scale: 1.05 }}
+                onClick={() => openLightbox(index)}
+              >
+                <img src={image.imageUrl} alt={image.title} className="gallery-image" />
+                <div className="image-overlay">
+                  <h3 className="image-title">{image.title}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
       <AnimatePresence>
@@ -87,7 +100,7 @@ const Gallery = () => {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="lightbox-image"></div>
+              <img src={selectedImage.imageUrl} alt={selectedImage.title} className="lightbox-image" />
               
               <div className="lightbox-nav">
                 <button className="nav-button" onClick={prevImage}>
@@ -104,7 +117,6 @@ const Gallery = () => {
               
               <div className="lightbox-info">
                 <h3>{selectedImage.title}</h3>
-                <p>{selectedImage.category}</p>
               </div>
             </motion.div>
           </motion.div>

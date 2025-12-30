@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { galleryApi } from '../utils/mockApi';
 import './AdminDashboard.css'; // Reuse the CSS for consistent styling
 
 function ManageGallery() {
   const navigate = useNavigate();
   const [gallery, setGallery] = useState([]);
-  const [form, setForm] = useState({ title: '', imageUrl: '', imageFile: null });
+  const [form, setForm] = useState({ title: '', imageUrl: '', category: '' });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,56 +21,36 @@ function ManageGallery() {
 
   const fetchGallery = async () => {
     try {
-      const response = await fetch('/api/gallery');
-      if (response.ok) {
-        const data = await response.json();
-        setGallery(data);
-      } else {
-        setError('Failed to fetch gallery');
-      }
+      setLoading(true);
+      const data = await galleryApi.getAll();
+      setGallery(data);
     } catch (err) {
       console.error('Error fetching gallery:', err);
       setError('Error fetching gallery');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.title.trim()) {
-      setError('Title is required');
-      return;
-    }
-    if (!form.imageUrl.trim() && !form.imageFile) {
-      setError('Image URL or file is required');
+    if (!form.title.trim() || !form.imageUrl.trim() || !form.category.trim()) {
+      setError('All fields are required');
       return;
     }
 
     setLoading(true);
     setError('');
 
-    const formData = new FormData();
-    formData.append('title', form.title);
-    if (form.imageFile) {
-      formData.append('image', form.imageFile);
-    } else {
-      formData.append('imageUrl', form.imageUrl);
-    }
-
     try {
-      const url = editingId ? `/api/gallery/${editingId}` : '/api/gallery';
-      const method = editingId ? 'PUT' : 'POST';
-      const response = await fetch(url, {
-        method,
-        body: formData,
-      });
-
-      if (response.ok) {
-        setForm({ title: '', imageUrl: '', imageFile: null });
-        setEditingId(null);
-        fetchGallery();
+      if (editingId) {
+        await galleryApi.update(editingId, form);
       } else {
-        setError('Failed to save gallery item');
+        await galleryApi.create(form);
       }
+      setForm({ title: '', imageUrl: '', category: '' });
+      setEditingId(null);
+      fetchGallery();
     } catch (err) {
       console.error('Error saving gallery item:', err);
       setError('Error saving gallery item');
@@ -79,7 +60,7 @@ function ManageGallery() {
   };
 
   const handleEdit = (item) => {
-    setForm({ title: item.title, imageUrl: item.imageUrl || '', imageFile: null });
+    setForm({ title: item.title, imageUrl: item.imageUrl, category: item.category });
     setEditingId(item.id);
   };
 
@@ -87,20 +68,12 @@ function ManageGallery() {
     if (!confirm('Are you sure you want to delete this item?')) return;
 
     try {
-      const response = await fetch(`/api/gallery/${id}`, { method: 'DELETE' });
-      if (response.ok) {
-        fetchGallery();
-      } else {
-        setError('Failed to delete gallery item');
-      }
+      await galleryApi.delete(id);
+      fetchGallery();
     } catch (err) {
       console.error('Error deleting gallery item:', err);
       setError('Error deleting gallery item');
     }
-  };
-
-  const handleFileChange = (e) => {
-    setForm({ ...form, imageFile: e.target.files[0], imageUrl: '' });
   };
 
   return (
@@ -134,17 +107,20 @@ function ManageGallery() {
             <input
               type="url"
               value={form.imageUrl}
-              onChange={(e) => setForm({ ...form, imageUrl: e.target.value, imageFile: null })}
+              onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
               placeholder="Enter image URL"
+              required
             />
           </div>
 
           <div className="form-group">
-            <label>Or Upload Image File:</label>
+            <label>Category:</label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
+              type="text"
+              value={form.category}
+              onChange={(e) => setForm({ ...form, category: e.target.value })}
+              placeholder="e.g., Fabrication, Workshop"
+              required
             />
           </div>
 
@@ -152,7 +128,7 @@ function ManageGallery() {
             {loading ? 'Saving...' : editingId ? 'Update' : 'Add'} Item
           </button>
           {editingId && (
-            <button type="button" onClick={() => { setEditingId(null); setForm({ title: '', imageUrl: '', imageFile: null }); }}>
+            <button type="button" onClick={() => { setEditingId(null); setForm({ title: '', imageUrl: '', category: '' }); }}>
               Cancel
             </button>
           )}
@@ -163,6 +139,7 @@ function ManageGallery() {
             <div key={item.id} className="gallery-item">
               <img src={item.imageUrl} alt={item.title} />
               <h3>{item.title}</h3>
+              <p className="category">{item.category}</p>
               <div className="item-actions">
                 <button onClick={() => handleEdit(item)}>Edit</button>
                 <button onClick={() => handleDelete(item.id)}>Delete</button>

@@ -15,7 +15,7 @@ function AdminLogin() {
 
     // Simple mock authentication - replace with real API call
     const adminUsername = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'password';
+    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
     if (credentials.username === adminUsername && credentials.password === adminPassword) {
       localStorage.setItem('adminToken', 'mock-token');
       localStorage.setItem('adminUser', credentials.username);

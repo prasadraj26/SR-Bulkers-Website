@@ -3,6 +3,12 @@
   overflow: hidden;
 }
 
+.error {
+  color: red;
+  text-align: center;
+  margin: 20px 0;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

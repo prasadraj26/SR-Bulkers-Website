@@ -32,8 +32,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/admin/gallery" element={<ProtectedRoute><ManageGallery /></ProtectedRoute>} />
-        <Route path="/admin/services" element={<ProtectedRoute><ManageServices /></ProtectedRoute>} />
+        <Route path="/admin/manage-gallery" element={<ProtectedRoute><ManageGallery /></ProtectedRoute>} />
+        <Route path="/admin/manage-services" element={<ProtectedRoute><ManageServices /></ProtectedRoute>} />
       </Routes>
     </Router>
   )
