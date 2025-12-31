@@ -64,7 +64,7 @@ const Services = () => {
 
       <div className="container">
         <div className="section-header" data-aos="fade-up">
-          <h2 className="section-title">Our Services</h2>
+          <h2 className="section-title">Our Services </h2>
           <p className="section-subtitle">
             Comprehensive truck manufacturing and maintenance services designed to keep your fleet running at peak performance.
           </p>
