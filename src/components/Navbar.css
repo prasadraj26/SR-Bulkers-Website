@@ -145,12 +145,15 @@
   }
 }
 
-@media (max-width: 576px) {
-  .logo-text {
-    font-size: 1.5rem;
-  }
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
 
-  .mobile-menu {
-    width: 100%;
-  }
+.logo-image {
+  height: 40px;          /* ✅ ideal navbar height */
+  width: auto;
+  max-width: 160px;      /* prevents overflow */
+  object-fit: contain;
 }

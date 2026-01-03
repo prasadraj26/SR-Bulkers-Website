@@ -2,38 +2,45 @@
 import { motion } from 'framer-motion'
 import { FaEye } from 'react-icons/fa'
 import './Products.css'
-
+import back from '../assets/images/back.png'
+import side from '../assets/images/side.png'
 const Products = () => {
   const products = [
     {
       name: 'Tipper Truck Body',
       description: 'Heavy-duty tipper bodies with hydraulic systems for efficient material transport.',
-      category: 'Construction'
+      category: 'Construction',
+      image: back
     },
     {
       name: 'Cargo Truck Body',
       description: 'Secure cargo bodies with customizable compartments and advanced security features.',
-      category: 'Logistics'
+      category: 'Logistics',
+      image: side
     },
     {
       name: 'Container Truck Body',
       description: 'Container carriers with twist lock systems for safe container transportation.',
-      category: 'Shipping'
+      category: 'Shipping',
+      image: back
     },
     {
       name: 'Flatbed Truck',
       description: 'Versatile flatbed trucks for oversized and heavy equipment transport.',
-      category: 'Transport'
+      category: 'Transport',
+      image: side
     },
     {
       name: 'Water Tanker',
       description: 'Stainless steel water tankers with varying capacities for liquid transport.',
-      category: 'Utilities'
+      category: 'Utilities',
+      image: back
     },
     {
       name: 'Trailer Body',
       description: 'Custom trailers designed for specific hauling needs and load requirements.',
-      category: 'Commercial'
+      category: 'Commercial',
+      image: side
     }
   ]
 
@@ -59,6 +66,7 @@ const Products = () => {
               whileTap={{ scale: 0.98 }}
             >
               <div className="product-image">
+                <img src={product.image} alt={product.name} className="product-img" />
                 <div className="product-category">{product.category}</div>
               </div>
               

@@ -1,45 +1,73 @@
-import { motion } from 'framer-motion'
+import { motion,AnimatePresence, useMotionValue, useTransform} from 'framer-motion'
+import { useEffect } from 'react'
+
 import { 
-  FaCogs, 
+  FaDrumSteelpan, 
   FaIndustry, 
-  FaRobot, 
+  FaRobot,
+  FaTools,
+  FaWeight,
   FaMicrochip, 
   FaChartLine, 
   FaArrowRight,
   FaCubes,
   FaDatabase,
   FaBrain,
-  FaBolt
+  FaBolt,
+  FaCloudMeatball,
+  FaCogs
 } from 'react-icons/fa'
+
 import './About.css'
 
 const About = () => {
   const techFeatures = [
     {
-      icon: <FaRobot />,
-      title: "Robotic Precision",
-      description: "AI-powered robotic systems ensure millimeter-perfect manufacturing with 99.9% accuracy."
+      icon: <FaDrumSteelpan/>,
+      title: "High Strength Steel",
+      description: "Manufactured using high-tensile steel for superior load-bearing capacity and longer service under extreme working conditions."
     },
     {
       icon: <FaMicrochip />,
-      title: "Smart Manufacturing",
-      description: "IoT-enabled production lines with real-time monitoring and predictive maintenance."
+      title: "Reinforced Chassis",
+      description: "Heavy-duty chassis reinforcement minimizes vibration, improves load distribution, and prevents structural fatigue."
     },
     {
-      icon: <FaCubes />,
-      title: "Digital Twins",
-      description: "Virtual simulations before physical production for optimal design and performance."
+      icon: <FaTools />,
+      title: "Precision Welding",
+      description: "Precision welding techniques ensure uniform weld strength, better stress handling, and improved durability across all joints."
     },
     {
-      icon: <FaChartLine />,
-      title: "Data Analytics",
-      description: "Big data analytics driving continuous improvement and quality optimization."
+      icon: <FaWeight />,
+      title: "Weight Distribution Engineering",
+      description: "Well designed body geometry enhances vehicle stability and improves overall fuel efficiency."
     },
 
   ]
+const CountUp = ({ value, suffix = '' }) => {
+  const motionValue = useMotionValue(0)
+  const rounded = useTransform(motionValue, latest =>
+    Number.isInteger(value) ? Math.round(latest) : latest.toFixed(1)
+  )
+
+  useEffect(() => {
+    motionValue.set(0)
+  }, [])
+
+  return (
+    <motion.span
+      whileInView={() => motionValue.set(value)}
+      transition={{ duration: 2, ease: 'easeOut' }}
+      viewport={{ once: true }}
+    >
+      {rounded}
+      {suffix}
+    </motion.span>
+  )
+}
 
   const stats = [
-    { number: "20+", label: "Years Excellence", icon: <FaIndustry /> },
+    { number: "12+", label: "Years Excellence", icon: <FaIndustry /> },
     { number: "99.9%", label: "Quality Rate", icon: <FaBolt /> },
     { number: "5000+", label: "Projects Completed", icon: <FaCogs /> },
     { number: "24/7", label: "Smart Monitoring", icon: <FaChartLine /> }

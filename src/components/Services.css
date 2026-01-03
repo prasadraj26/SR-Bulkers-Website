@@ -1,28 +1,40 @@
-.services-section {
-  position: relative;
-  overflow: hidden;
-  background: #ffffff!important;
-  padding: 80px 0;
+/* ===== Services Header – EXACT Products Style ===== */
+.services-section{
+  background-color: #ffffff!important;
 }
-
-.section-header {
+.services-section .section-header {
+  max-width: 700px;
   margin-bottom: 60px;
-}
-
-.services-section .section-subtitle {
-  display: block;
-  text-align: center;
-  color: #666666;
+  text-align: left;
 }
 
 .services-section .section-title {
-  color: #000000;
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #000;
+  position: relative;
+  margin-bottom: 20px;
 }
 
-.dark-section .section-title::after {
-  left: 50%;
-  transform: translateX(-50%);
+/* underline */
+.services-section .section-title::after {
+  content: '';
+  width: 70px;
+  height: 4px;
+  background: var(--accent-color);
+  display: block;
+  margin-top: 10px;
 }
+
+.services-section .section-subtitle {
+  font-size: 1.05rem;
+  color: #666;
+  line-height: 1.6;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
 
 .services-grid {
   display: grid;

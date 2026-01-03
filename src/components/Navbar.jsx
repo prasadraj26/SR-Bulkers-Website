@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { FaTruck } from 'react-icons/fa'
 import './Navbar.css'
+import logo from '../assets/images/logo.jpg'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -47,9 +48,9 @@ const Navbar = () => {
     >
       <div className="container nav-container">
         <div className="logo" onClick={() => scrollToSection('home')}>
-          <FaTruck className="logo-icon" />
-          <span className="logo-text">SR BULKERS</span>
-        </div>
+      <img src={logo} alt="SR Bulkers Logo" className="logo-image" />
+</div>
+
 
         <div className="nav-links">
           {navItems.map((item) => (
