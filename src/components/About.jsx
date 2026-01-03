@@ -35,16 +35,7 @@ const About = () => {
       title: "Data Analytics",
       description: "Big data analytics driving continuous improvement and quality optimization."
     },
-    {
-      icon: <FaDatabase />,
-      title: "Cloud Integration",
-      description: "Seamless cloud-based systems for remote monitoring and management."
-    },
-    {
-      icon: <FaBrain />,
-      title: "AI Optimization",
-      description: "Machine learning algorithms optimizing production efficiency and quality control."
-    }
+
   ]
 
   const stats = [

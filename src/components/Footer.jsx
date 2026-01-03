@@ -37,8 +37,8 @@ const Footer = () => {
     ]
   }
 
-  const quickLinks = ['Home', 'About Us', 'Services', 'Products', 'Gallery', 'Contact']
-  const servicesList = ['Custom Truck Bodies', 'Trailer Manufacturing', 'Truck Repair', 'Painting Services', 'Hydraulic Systems', 'Container Bodies']
+  const quickLinks = ['Home', 'About Us', 'Services', 'Products', 'Contact']
+  const servicesList = ['Custom Truck Bodies', 'Trailer Manufacturing', 'Truck Repair', 'Painting Services']
   const copyAddress = () => {
     const fullAddress = `${companyInfo.address.plusCode}, ${companyInfo.address.area}, ${companyInfo.address.district}, ${companyInfo.address.state} ${companyInfo.address.pincode}, ${companyInfo.address.country}`
     navigator.clipboard.writeText(fullAddress)
@@ -101,7 +101,7 @@ const Footer = () => {
           >
             <h3>Quick Links</h3>
             <ul className="footer-links">
-              {quickLinks.map((link, index) => (
+              {quickLinks.slice(0, 4).map((link, index) => (
                 <motion.li
                   key={index}
                   className="footer-link-item"
@@ -130,7 +130,7 @@ const Footer = () => {
           >
             <h3>Our Services</h3>
             <ul className="footer-links">
-              {servicesList.map((service, index) => (
+              {servicesList.slice(0, 3).map((service, index) => (
                 <motion.li
                   key={index}
                   className="footer-link-item"
@@ -167,15 +167,10 @@ const Footer = () => {
                     <FaMapMarkerAlt />
                   </div>
                   <div className="address-text">
-                    <strong>Plus Code:</strong> {companyInfo.address.plusCode}<br />
-                    <strong>Area:</strong> {companyInfo.address.area}<br />
-                    <strong>District:</strong> {companyInfo.address.district}<br />
-                    <strong>State:</strong> {companyInfo.address.state}<br />
-                    <strong>Pincode:</strong> {companyInfo.address.pincode}<br />
-                    <strong>Country:</strong> {companyInfo.address.country}
+                    <strong>Area:</strong> {companyInfo.address.area}, {companyInfo.address.district}<br />
+                    <strong>Pincode:</strong> {companyInfo.address.pincode}
                   </div>
                 </div>
-
                 <div className="address-line">
                   <div className="address-icon">
                     <FaPhone />
@@ -184,22 +179,12 @@ const Footer = () => {
                     <strong>Phone:</strong> {companyInfo.contact.phone}
                   </div>
                 </div>
-
                 <div className="address-line">
                   <div className="address-icon">
                     <FaEnvelope />
                   </div>
                   <div className="address-text">
                     <strong>Email:</strong> {companyInfo.contact.email}
-                  </div>
-                </div>
-
-                <div className="address-line">
-                  <div className="address-icon">
-                    <FaClock />
-                  </div>
-                  <div className="address-text">
-                    <strong>Hours:</strong> {companyInfo.contact.hours.weekdays}
                   </div>
                 </div>
               </div>
