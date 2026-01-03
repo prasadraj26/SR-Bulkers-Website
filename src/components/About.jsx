@@ -195,32 +195,18 @@ const CountUp = ({ value, suffix = '' }) => {
           transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
         >
-          <div className="gear-watermark"></div>
-<div className="visual-container">
-  <div className="gear-watermark"></div>
-
-  {/* Stats Overlay */}
-  <motion.div className="stats-overlay">
-    ...
-  </motion.div>
-</div>
-
           <div className="visual-container">
             {/* 3D Floating Cube */}
-            <motion.div
-  className="gear-wrapper"
-  animate={{ rotate: 360 }}
-  transition={{
-    duration: 20,
-    repeat: Infinity,
-    ease: 'linear'
-  }}
->
-  <div className="gear">
-    <div className="gear-center"></div>
-  </div>
-</motion.div>
-
+            <motion.div 
+              className="floating-cube"
+              variants={cubeVariants}
+              animate="visible"
+              initial="hidden"
+            >
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="cube-face"></div>
+              ))}
+            </motion.div>
 
             {/* Stats Overlay */}
             <motion.div 
