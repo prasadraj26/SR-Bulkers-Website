@@ -37,11 +37,11 @@ const Hero = () => {
         animate="visible"
       >
         <motion.h1 className="hero-title" variants={itemVariants}>
-          Building Strong Trucks for Strong Businesses
+          Heavy-Duty Builds for Heavy-Duty Work
         </motion.h1>
         
         <motion.p className="hero-subtitle" variants={itemVariants}>
-          Custom truck bodies engineered for durability and performance. Over 20 years of excellence in truck manufacturing.
+          Custom truck bodies engineered for durability and performance. Over 12+ years of excellence in truck manufacturing.
         </motion.p>
         
         <motion.div className="hero-buttons" variants={itemVariants}>
