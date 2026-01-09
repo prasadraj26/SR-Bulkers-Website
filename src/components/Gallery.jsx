@@ -92,7 +92,7 @@ const Gallery = () => {
         {/* Carousel Section */}
         {!loading && !error && images.length > 0 && (
           <div className="carousel-container">
-            <h3 className="featured-title">Featured Collections</h3>
+            <h3 className="featured-title">Featured Projects</h3>
             
             <div className="infinite-carousel">
               <div className="carousel-row-wrapper">

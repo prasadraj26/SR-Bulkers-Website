@@ -4,6 +4,7 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import { FaTruck } from 'react-icons/fa'
 import './Navbar.css'
 import logo from '../assets/images/logo.jpg'
+import logoo from '../assets/images/logoo.png'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,7 +49,7 @@ const Navbar = () => {
       <div className="container nav-container">
         <div className="logo" onClick={() => scrollToSection('home')}>
           <img src={logo} alt="SR Builders Logo" className="logo-image" />
-          <span className="logo-text">ENGINEERING WORKS AND FABRICATORS</span>
+          <img src={logoo} alt="SR Engineering Works and Fabricators" className="logoo-image" />
         </div>
 
 
