@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
 import { 
-  FaTruck, FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, 
+  FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock, 
   FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram,
   FaDirections, FaExternalLinkAlt, FaCopy
 } from 'react-icons/fa'
@@ -10,19 +9,19 @@ import './Footer.css'
 const Footer = () => {
   // Your company address
   const companyInfo = {
-    name: "Truck Builders Company",
-    description: "Leading truck body manufacturers with over 20 years of expertise in custom truck solutions, quality fabrication, and reliable service.",
+    name: "SR Bulkers",
+    description: "Leading truck bulkers with over 12 years of expertise in custom truck solutions, quality fabrication, and reliable service.",
     address: {
       plusCode: "PQPH+GG",
       area: "Navappatti",
-      district: "Dindigul District",
+      district: "Salem",
       state: "Tamil Nadu",
       pincode: "636452",
       country: "India"
     },
     contact: {
-      phone: "+91 12345 67890",
-      email: "info@truckbuilders.com",
+      phone: "8098389303",
+      email: "srbulkers@gmail.com",
       hours: {
         weekdays: "Mon-Fri: 8:00 AM - 6:00 PM",
         saturday: "Saturday: 9:00 AM - 2:00 PM",
@@ -71,8 +70,7 @@ const Footer = () => {
             data-aos-delay="100"
           >
             <div className="footer-logo">
-              <FaTruck className="logo-icon" />
-              <span className="logo-text">Truck Builders</span>
+              <span className="logo-text">SR BULKERS</span>
             </div>
             <p className="company-description">
               {companyInfo.description}

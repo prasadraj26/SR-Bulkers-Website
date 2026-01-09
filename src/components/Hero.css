@@ -47,7 +47,7 @@
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  color:  rgb(44, 101, 186);
+  color: var(--secondary-color);
   font-size: 1.5rem;
   animation: bounce 2s infinite;
   cursor: pointer;

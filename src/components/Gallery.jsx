@@ -10,8 +10,6 @@ const Gallery = () => {
   const [error, setError] = useState('')
   const [selectedImage, setSelectedImage] = useState(null)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isHovering, setIsHovering] = useState(false)
-  
   const topRowRef = useRef(null)
   const bottomRowRef = useRef(null)
 
@@ -19,17 +17,13 @@ const Gallery = () => {
     fetchGallery()
   }, [])
 
+  // Keep carousel animation running continuously; hover no longer pauses it
   useEffect(() => {
     const topRow = topRowRef.current
     const bottomRow = bottomRowRef.current
-    
-    if (topRow) {
-      topRow.style.animationPlayState = isHovering ? 'paused' : 'running'
-    }
-    if (bottomRow) {
-      bottomRow.style.animationPlayState = isHovering ? 'paused' : 'running'
-    }
-  }, [isHovering])
+    if (topRow) topRow.style.animationPlayState = 'running'
+    if (bottomRow) bottomRow.style.animationPlayState = 'running'
+  }, [])
 
   const fetchGallery = async () => {
     try {
@@ -72,6 +66,19 @@ const Gallery = () => {
   const carouselImages = getCarouselImages()
   const duplicatedImages = [...carouselImages, ...carouselImages, ...carouselImages]
 
+  // Create a map for faster lookups instead of using findIndex every click
+  const carouselImageMap = new Map(carouselImages.map((img, idx) => [img.id, idx]))
+
+  const handleCarouselImageClick = (idx) => {
+    const originalIdx = idx % carouselImages.length
+    const selectedImage = carouselImages[originalIdx]
+    // Find the image in the full gallery directly
+    const mainIdx = images.findIndex(img => img.id === selectedImage.id)
+    if (mainIdx !== -1) {
+      openLightbox(mainIdx)
+    }
+  }
+
   return (
     <section id="gallery" className="gallery-section">
       <div className="container">
@@ -84,11 +91,7 @@ const Gallery = () => {
 
         {/* Carousel Section */}
         {!loading && !error && images.length > 0 && (
-          <div 
-            className="carousel-container"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
+          <div className="carousel-container">
             <h3 className="featured-title">Featured Collections</h3>
             
             <div className="infinite-carousel">
@@ -102,11 +105,7 @@ const Gallery = () => {
                       key={`top-${idx}`}
                       className="carousel-image-wrapper"
                       whileHover={{ scale: 1.05 }}
-                      onClick={() => {
-                        const originalIdx = idx % carouselImages.length
-                        const mainIdx = images.findIndex(img => img.id === carouselImages[originalIdx].id)
-                        openLightbox(mainIdx)
-                      }}
+                      onClick={() => handleCarouselImageClick(idx)}
                     >
                       <img
                         src={image.imageUrl}
@@ -129,11 +128,7 @@ const Gallery = () => {
                       key={`bottom-${idx}`}
                       className="carousel-image-wrapper"
                       whileHover={{ scale: 1.05 }}
-                      onClick={() => {
-                        const originalIdx = idx % carouselImages.length
-                        const mainIdx = images.findIndex(img => img.id === carouselImages[originalIdx].id)
-                        openLightbox(mainIdx)
-                      }}
+                      onClick={() => handleCarouselImageClick(idx)}
                     >
                       <img
                         src={image.imageUrl}

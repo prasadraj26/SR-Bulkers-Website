@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { FaTruck } from 'react-icons/fa'
@@ -48,25 +47,38 @@ const Navbar = () => {
     >
       <div className="container nav-container">
         <div className="logo" onClick={() => scrollToSection('home')}>
-      <img src={logo} alt="SR Bulkers Logo" className="logo-image" />
-      <span className="logo-text">ENGINEERING WORKS AND FABRICATORS</span>
-</div>
+          <img src={logo} alt="SR Builders Logo" className="logo-image" />
+          <span className="logo-text">ENGINEERING WORKS AND FABRICATORS</span>
+        </div>
 
 
-        <div className="nav-links">
+        <div className="nav-links" role="navigation" aria-label="Main navigation">
           {navItems.map((item) => (
             <a
               key={item}
               className="nav-link"
               onClick={() => scrollToSection(item)}
               style={{ cursor: 'pointer' }}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  scrollToSection(item)
+                }
+              }}
             >
               {item}
             </a>
           ))}
         </div>
 
-        <button className="menu-toggle" onClick={() => setIsOpen(true)}>
+        <button 
+          className="menu-toggle" 
+          onClick={() => setIsOpen(true)}
+          aria-label="Open mobile menu"
+          aria-expanded={isOpen}
+        >
           <FiMenu />
         </button>
       </div>
@@ -88,8 +100,14 @@ const Navbar = () => {
               exit="closed"
               variants={menuVariants}
               transition={{ duration: 0.3 }}
+              role="navigation"
+              aria-label="Mobile navigation"
             >
-              <button className="close-menu" onClick={() => setIsOpen(false)}>
+              <button 
+                className="close-menu" 
+                onClick={() => setIsOpen(false)}
+                aria-label="Close mobile menu"
+              >
                 <FiX />
               </button>
               {navItems.map((item) => (
@@ -98,6 +116,14 @@ const Navbar = () => {
                   className="mobile-nav-link"
                   onClick={() => scrollToSection(item)}
                   style={{ cursor: 'pointer' }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      scrollToSection(item)
+                    }
+                  }}
                 >
                   {item}
                 </a>

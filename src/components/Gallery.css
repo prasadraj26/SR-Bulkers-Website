@@ -12,15 +12,29 @@
 }
 
 .section-title {
-  color: #000000;
+  color: var(--primary-color);
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
   text-transform: uppercase;
+  display: block;
+  text-align: center;
+}
+
+.section-title::after {
+  content: '';
+  display: block !important;
+  width: 120px !important;
+  height: 6px !important;
+  background: var(--accent-color) !important;
+  margin: 12px auto 0 !important;
+  border-radius: 3px;
+  position: static !important;
+  z-index: 2;
 }
 
 .section-subtitle {
-  color: #666;
+  color: var(--gray-medium);
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
@@ -35,7 +49,7 @@
 }
 
 .error {
-  color: #ff0000;
+  color: var(--accent-color);
   text-align: center;
   margin: 20px 0;
   font-size: 1.1rem;
@@ -45,7 +59,7 @@
 .featured-title {
   text-align: center;
   margin-bottom: 2rem;
-  color: #000000;
+  color: var(--primary-color);
   font-size: 1.8rem;
   font-weight: 600;
 }
@@ -106,10 +120,10 @@
   }
 }
 
-/* Pause animation on hover */
-.carousel-container:hover .top-row,
-.carousel-container:hover .bottom-row {
-  animation-play-state: paused;
+/* Keep animation running on hover - do not pause */
+.carousel-container .top-row,
+.carousel-container .bottom-row {
+  animation-play-state: running;
 }
 
 /* Carousel Image Styles */
@@ -158,13 +172,13 @@
   cursor: pointer;
   height: 250px;
   transition: all 0.3s ease;
-  background: #fff;
+  background: var(--secondary-color);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .gallery-item:hover {
   transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(255, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(211, 0, 0, 0.3);
 }
 
 .gallery-image {
@@ -194,7 +208,7 @@
 }
 
 .image-title {
-  color: #fff;
+  color: var(--secondary-color);
   font-size: 1.1rem;
   margin: 0;
   font-weight: 600;
@@ -243,7 +257,7 @@
 .nav-button {
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: white;
+  color: var(--secondary-color);
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -256,7 +270,7 @@
 }
 
 .nav-button:hover {
-  background: #ff0000;
+  background: var(--accent-color);
   transform: scale(1.1);
 }
 
@@ -266,7 +280,7 @@
   right: 20px;
   background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: white;
+  color: var(--secondary-color);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -279,7 +293,7 @@
 }
 
 .close-button:hover {
-  background: #ff0000;
+  background: var(--accent-color);
   transform: rotate(90deg);
 }
 
@@ -289,7 +303,7 @@
   left: 0;
   right: 0;
   text-align: center;
-  color: white;
+  color: var(--secondary-color);
   padding: 20px;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);

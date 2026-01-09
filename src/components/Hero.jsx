@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
 import { FaArrowDown } from 'react-icons/fa'
 import './Hero.css'
@@ -37,7 +36,7 @@ const Hero = () => {
         animate="visible"
       >
         <motion.h1 className="hero-title" variants={itemVariants}>
-          Heavy-Duty Builds for Heavy-Duty Work
+          Manufacturing & Servicing of fly ash bulkers
         </motion.h1>
         
         <motion.p className="hero-subtitle" variants={itemVariants}>

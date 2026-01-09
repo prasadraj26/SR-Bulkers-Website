@@ -1,38 +1,47 @@
 /* ===== Services Header – EXACT Products Style ===== */
 .services-section{
-  background-color: #ffffff!important;
+  background-color: var(--secondary-color)!important;
 }
 .services-section .section-header {
-  max-width: 700px;
-  margin-bottom: 60px;
-  text-align: left;
+  max-width: 900px;
+  margin: 0 auto 60px;
+  text-align: center;
 }
 
 .services-section .section-title {
   font-size: 2.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #000;
+  color: var(--primary-color);
   position: relative;
   margin-bottom: 20px;
 }
 
 /* underline */
+.services-section .section-title {
+  display: block;
+  text-align: center;
+}
 .services-section .section-title::after {
   content: '';
-  width: 70px;
-  height: 4px;
-  background: var(--accent-color);
-  display: block;
-  margin-top: 10px;
+  display: block !important;
+  width: 120px !important;
+  height: 6px !important;
+  background: var(--accent-color) !important;
+  margin: 12px auto 0 !important;
+  border-radius: 3px;
+  position: static !important;
+  z-index: 2;
 }
 
 .services-section .section-subtitle {
   font-size: 1.05rem;
-  color: #666;
+  color: var(--gray-medium);
   line-height: 1.6;
   text-transform: none;
   letter-spacing: normal;
+  max-width: 820px;
+  margin: 0 auto;
 }
 
 
@@ -92,11 +101,11 @@
 .service-title {
   font-size: 1.5rem;
   margin-bottom: 15px;
-  color: #000000;
+  color: var(--primary-color);
 }
 
 .service-description {
-  color: #000000;
+  color: var(--primary-color);
   text-align: center;
   font-size: 0.95rem;
   line-height: 1.6;

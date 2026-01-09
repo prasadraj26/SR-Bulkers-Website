@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 import wheelImage from '../assets/images/wheel.png' // Uncomment when wheel.png is added
 import './GoToTop.css'

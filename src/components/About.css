@@ -8,28 +8,9 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.tech-grid-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  background-image: 
-    linear-gradient(90deg,  rgb(44, 101, 186) 1px, transparent 1px),
-    linear-gradient( rgb(44, 101, 186) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridMove 20s linear infinite;
-}
-
-@keyframes gridMove {
-  0% { transform: translateY(0) translateX(0); }
-  100% { transform: translateY(50px) translateX(50px); }
-}
-
 /* Main Container - Mobile First Approach */
 .about-container {
-  color:  rgb(44, 101, 186);
+  color: var(--primary-color);
   display: flex;
   flex-direction: column;
   gap: 60px;
@@ -50,7 +31,7 @@
   position: absolute;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle,  rgb(115, 164, 238) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(67, 133, 214, 0.6) 0%, transparent 70%);
   filter: blur(40px);
   top: 50%;
   left: 50%;
@@ -67,9 +48,9 @@
 .section-tag {
   display: inline-block;
   padding: 8px 20px;
-  background: linear-gradient(90deg, rgba(209, 0, 0, 0.15), transparent);
+  background: linear-gradient(90deg, rgba(211, 0, 0, 0.15), transparent);
   border-left: 3px solid var(--accent-color);
-  color: rgb(44, 101, 186);
+  color: var(--primary-color);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 3px;

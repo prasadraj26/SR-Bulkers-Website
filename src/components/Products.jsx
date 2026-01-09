@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
 import { FaEye } from 'react-icons/fa'
 import './Products.css'

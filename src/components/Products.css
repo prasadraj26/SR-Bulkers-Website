@@ -3,6 +3,23 @@
   overflow: hidden;
 }
 
+.products-section .section-title {
+  display: block;
+  text-align: center;
+}
+
+.products-section .section-title::after {
+  content: '';
+  display: block !important;
+  width: 120px !important;
+  height: 6px !important;
+  background: var(--accent-color) !important;
+  margin: 12px auto 0 !important;
+  border-radius: 3px;
+  position: static !important;
+  z-index: 2;
+}
+
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -26,7 +43,7 @@
 
 .product-image {
   height: 250px;
-  background: linear-gradient(45deg, var(--gray-light), #ffffff);
+  background: linear-gradient(45deg, var(--gray-light), var(--secondary-color));
   position: relative;
   overflow: hidden;
 }

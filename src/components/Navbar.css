@@ -16,7 +16,6 @@
   background: #ffffff;
 }
 
-
 .nav-container {
   display: flex;
   justify-content: space-between;
@@ -35,12 +34,21 @@
   font-size: 2rem;
 }
 
+.logo-image {
+  height: 40px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+}
+
 .logo-text {
-  font-family: 'Oswald', Rajdhani, sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--primary-color);
+  letter-spacing: 1px;
+  line-height: 1.1;
 }
 
 .nav-links {
@@ -54,7 +62,7 @@
   text-transform: uppercase;
   font-size: 14px;
   letter-spacing: 1px;
-  color: rgb(44, 101, 186);
+  color: var(--primary-color);
   text-decoration: none;
   transition: var(--transition);
   position: relative;
@@ -68,7 +76,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: red;
+  background-color: var(--accent-color);
   transition: var(--transition);
 }
 
@@ -144,25 +152,4 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 998;
   }
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.logo-image {
-  height: 40px;          /* ✅ ideal navbar height */
-  width: auto;
-  max-width: 160px;      /* prevents overflow */
-  object-fit: contain;
-}
-.logo-text {
-  font-size: 1.2rem;
-  font-family:'Anton', Impact, Haettenschweiler, 'Arial Narrow Bold';
-  font-weight: ExtraBold;
-  letter-spacing: 0.5px;
-  color: #00a92d; /* change based on theme */
-  text-transform: uppercase;
 }

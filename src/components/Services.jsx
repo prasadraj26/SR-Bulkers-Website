@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
 import { FaTruck, FaBox, FaTrailer, FaWrench, FaPaintRoller, FaTools } from 'react-icons/fa'
 import './Services.css'

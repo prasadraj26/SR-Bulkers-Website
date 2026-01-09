@@ -43,7 +43,7 @@ const initialServices = [
   }
 ];
 
-// Initialize localStorage with sample data if empty
+// Initialize localStorage with sample data if empty (runs once on module load)
 const initializeData = () => {
   if (!localStorage.getItem('gallery')) {
     localStorage.setItem('gallery', JSON.stringify(initialGallery));
@@ -53,18 +53,19 @@ const initializeData = () => {
   }
 };
 
+// Call once on module load instead of on every API call
+initializeData();
+
 // Gallery CRUD operations
 export const galleryApi = {
   getAll: async () => {
     await delay(500); // Simulate network delay
-    initializeData();
     const data = JSON.parse(localStorage.getItem('gallery') || '[]');
     return data;
   },
 
   create: async (item) => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('gallery') || '[]');
     const newItem = {
       ...item,
@@ -77,7 +78,6 @@ export const galleryApi = {
 
   update: async (id, item) => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('gallery') || '[]');
     const index = data.findIndex(g => g.id === id);
     if (index !== -1) {
@@ -90,7 +90,6 @@ export const galleryApi = {
 
   delete: async (id) => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('gallery') || '[]');
     const filtered = data.filter(g => g.id !== id);
     localStorage.setItem('gallery', JSON.stringify(filtered));
@@ -102,14 +101,12 @@ export const galleryApi = {
 export const servicesApi = {
   getAll: async () => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('services') || '[]');
     return data;
   },
 
   create: async (item) => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('services') || '[]');
     const newItem = {
       ...item,
@@ -122,7 +119,6 @@ export const servicesApi = {
 
   update: async (id, item) => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('services') || '[]');
     const index = data.findIndex(s => s.id === id);
     if (index !== -1) {
@@ -135,7 +131,6 @@ export const servicesApi = {
 
   delete: async (id) => {
     await delay(500);
-    initializeData();
     const data = JSON.parse(localStorage.getItem('services') || '[]');
     const filtered = data.filter(s => s.id !== id);
     localStorage.setItem('services', JSON.stringify(filtered));
