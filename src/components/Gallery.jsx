@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-// eslint-disable-next-line no-unused-vars
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import { galleryApi } from '../utils/mockApi'
@@ -9,10 +8,28 @@ const Gallery = () => {
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isHovering, setIsHovering] = useState(false)
+  
+  const topRowRef = useRef(null)
+  const bottomRowRef = useRef(null)
 
   useEffect(() => {
     fetchGallery()
   }, [])
+
+  useEffect(() => {
+    const topRow = topRowRef.current
+    const bottomRow = bottomRowRef.current
+    
+    if (topRow) {
+      topRow.style.animationPlayState = isHovering ? 'paused' : 'running'
+    }
+    if (bottomRow) {
+      bottomRow.style.animationPlayState = isHovering ? 'paused' : 'running'
+    }
+  }, [isHovering])
 
   const fetchGallery = async () => {
     try {
@@ -25,9 +42,6 @@ const Gallery = () => {
       setLoading(false)
     }
   }
-
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
 
   const openLightbox = (index) => {
     setSelectedImage(images[index])
@@ -50,9 +64,16 @@ const Gallery = () => {
     setCurrentIndex(prevIndex)
   }
 
-  return (
-    <section id="gallery" className="dark-section gallery-section">
+  const getCarouselImages = () => {
+    if (images.length <= 5) return images
+    return images.slice(0, Math.min(7, images.length))
+  }
 
+  const carouselImages = getCarouselImages()
+  const duplicatedImages = [...carouselImages, ...carouselImages, ...carouselImages]
+
+  return (
+    <section id="gallery" className="gallery-section">
       <div className="container">
         <div className="section-header" data-aos="fade-up">
           <h2 className="section-title">Our Gallery</h2>
@@ -61,29 +82,81 @@ const Gallery = () => {
           </p>
         </div>
 
-        {loading && <p>Loading gallery...</p>}
-        {error && <p className="error">{error}</p>}
-        {!loading && !error && (
-          <div className="gallery-grid">
-            {images.map((image, index) => (
-              <motion.div
-                key={image.id}
-                className="gallery-item"
-                data-aos="zoom-in"
-                data-aos-delay={index * 100}
-                whileHover={{ scale: 1.05 }}
-                onClick={() => openLightbox(index)}
-              >
-                <img src={image.imageUrl} alt={image.title} className="gallery-image" />
-                <div className="image-overlay">
-                  <h3 className="image-title">{image.title}</h3>
+        {/* Carousel Section */}
+        {!loading && !error && images.length > 0 && (
+          <div 
+            className="carousel-container"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            <h3 className="featured-title">Featured Collections</h3>
+            
+            <div className="infinite-carousel">
+              <div className="carousel-row-wrapper">
+                <div 
+                  ref={topRowRef}
+                  className="carousel-row top-row"
+                >
+                  {duplicatedImages.map((image, idx) => (
+                    <motion.div
+                      key={`top-${idx}`}
+                      className="carousel-image-wrapper"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => {
+                        const originalIdx = idx % carouselImages.length
+                        const mainIdx = images.findIndex(img => img.id === carouselImages[originalIdx].id)
+                        openLightbox(mainIdx)
+                      }}
+                    >
+                      <img
+                        src={image.imageUrl}
+                        alt={image.title}
+                        className="carousel-image"
+                        title={image.title}
+                      />
+                    </motion.div>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
+              </div>
+
+              <div className="carousel-row-wrapper">
+                <div 
+                  ref={bottomRowRef}
+                  className="carousel-row bottom-row"
+                >
+                  {duplicatedImages.map((image, idx) => (
+                    <motion.div
+                      key={`bottom-${idx}`}
+                      className="carousel-image-wrapper"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => {
+                        const originalIdx = idx % carouselImages.length
+                        const mainIdx = images.findIndex(img => img.id === carouselImages[originalIdx].id)
+                        openLightbox(mainIdx)
+                      }}
+                    >
+                      <img
+                        src={image.imageUrl}
+                        alt={image.title}
+                        className="carousel-image"
+                        title={image.title}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
+
+        {loading && <p className="loading-text">Loading gallery...</p>}
+        {error && <p className="error">{error}</p>}
+        
+ 
+
       </div>
 
+      {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div

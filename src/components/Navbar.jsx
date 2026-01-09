@@ -49,6 +49,7 @@ const Navbar = () => {
       <div className="container nav-container">
         <div className="logo" onClick={() => scrollToSection('home')}>
       <img src={logo} alt="SR Bulkers Logo" className="logo-image" />
+      <span className="logo-text">ENGINEERING WORKS AND FABRICATORS</span>
 </div>
 
 
