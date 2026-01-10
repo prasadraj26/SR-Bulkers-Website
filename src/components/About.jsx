@@ -1,238 +1,70 @@
-import { motion,AnimatePresence, useMotionValue, useTransform} from 'framer-motion'
-import { useEffect } from 'react'
-
-import { 
-  FaDrumSteelpan, 
-  FaIndustry, 
-  FaRobot,
-  FaTools,
-  FaWeight,
-  FaMicrochip, 
-  FaChartLine, 
-  FaArrowRight,
-  FaCubes,
-  FaDatabase,
-  FaBrain,
-  FaBolt,
-  FaCloudMeatball,
-  FaCogs
-} from 'react-icons/fa'
-
+import { FaArrowRight, FaIndustry, FaTools, FaTruck, FaHandshake } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 import './About.css'
 
 const About = () => {
-  const techFeatures = [
-    {
-      icon: <FaDrumSteelpan/>,
-      title: "High Strength Steel",
-      description: "Manufactured using high-tensile steel for superior load-bearing capacity and longer service under extreme working conditions."
-    },
-    {
-      icon: <FaMicrochip />,
-      title: "Reinforced Chassis",
-      description: "Heavy-duty chassis reinforcement minimizes vibration, improves load distribution, and prevents structural fatigue."
-    },
-    {
-      icon: <FaTools />,
-      title: "Precision Welding",
-      description: "Precision welding techniques ensure uniform weld strength, better stress handling, and improved durability across all joints."
-    },
-    {
-      icon: <FaWeight />,
-      title: "Weight Distribution Engineering",
-      description: "Well designed body geometry enhances vehicle stability and improves overall fuel efficiency."
-    },
-
-  ]
-const CountUp = ({ value, suffix = '' }) => {
-  const motionValue = useMotionValue(0)
-  const rounded = useTransform(motionValue, latest =>
-    Number.isInteger(value) ? Math.round(latest) : latest.toFixed(1)
-  )
-
-  useEffect(() => {
-    motionValue.set(0)
-  }, [])
-
-  return (
-    <motion.span
-      whileInView={() => motionValue.set(value)}
-      transition={{ duration: 2, ease: 'easeOut' }}
-      viewport={{ once: true }}
-    >
-      {rounded}
-      {suffix}
-    </motion.span>
-  )
-}
-
-  const stats = [
-    { number: "12+", label: "Years Excellence", icon: <FaIndustry /> },
-    { number: "99.9%", label: "Quality Rate", icon: <FaBolt /> },
-    { number: "5000+", label: "Projects Completed", icon: <FaCogs /> },
-    { number: "24/7", label: "Smart Monitoring", icon: <FaChartLine /> }
-  ]
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  }
-
-  const cubeVariants = {
-    hidden: { rotateY: 0, scale: 0.8 },
-    visible: {
-      rotateY: 360,
-      scale: 1,
-      transition: {
-        duration: 20,
-        repeat: Infinity,
-        ease: "linear"
-      }
-    }
-  }
-
-  // Generate random data streams
-  const dataStreams = Array.from({ length: 8 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    delay: `${Math.random() * 3}s`
-  }))
+  const navigate = useNavigate()
 
   return (
     <section id="about" className="about-section">
-      {/* Animated Tech Grid Background */}
-      <div className="tech-grid-bg"></div>
-      
-      {/* Data Stream Animations */}
-      {dataStreams.map(stream => (
-        <div 
-          key={stream.id}
-          className="data-stream"
-          style={{
-            left: stream.left,
-            animationDelay: stream.delay
-          }}
-        />
-      ))}
+      <div className="about-container">
 
-      <div className="container about-container">
-        {/* Left Content */}
-        <motion.div 
-          className="about-left"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="glow-circle"></div>
-          
-          <div className="content-wrapper">
-            <motion.span className="section-tag" variants={itemVariants}>
-              Advanced Manufacturing
-            </motion.span>
-            
-            <motion.h2 className="about-title" variants={itemVariants}>
-              Engineering the <span className="title-highlight">Future</span> of
-              <br />Truck Technology
-            </motion.h2>
-            
-            <motion.div className="tech-features">
-              {techFeatures.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className="tech-feature"
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="feature-icon">
-                    {feature.icon}
-                  </div>
-                  <div className="feature-content">
-                    <h4>{feature.title}</h4>
-                    <p>{feature.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-            
-            <motion.button 
-              className="tech-button"
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
-            >
-              <span>Explore Technology</span>
-              <FaArrowRight className="button-icon" />
-            </motion.button>
+        {/* HEADER */}
+        <div className="section-header">
+          <h2 className="section-title">WELCOME</h2>
+          <p className="section-subtitle">
+            SR Bulkers is a trusted manufacturer of cement bulkers and trailers,
+            established in 2012 at Mettur, Tamil Nadu. With over 12 years of experience,
+            we focus on strong build quality, safety, and long service life.
+          </p>
+        </div>
+
+        {/* TRUST POINTS */}
+        <div className="about-points">
+          <div className="about-point">🏭 12+ Years Manufacturing Experience</div>
+          <div className="about-point">🔧 Strong & Reliable Bulker Designs</div>
+          <div className="about-point">🤝 Trusted by Construction & Logistics Companies</div>
+        </div>
+
+        {/* READ MORE */}
+        <div className="about-read-more">
+          <button className="tech-button" onClick={() => navigate('/about')}>
+            Read More About Us
+            <FaArrowRight className="button-icon" />
+          </button>
+        </div>
+
+        {/* WHY CHOOSE US */}
+        <div className="why-choose-section">
+          <h3 className="why-title">Why Choose SR Bulkers</h3>
+
+          <div className="why-grid">
+            <div className="why-card">
+              <FaIndustry className="why-icon" />
+              <h4>12+ Years Experience</h4>
+              <p>Proven manufacturing expertise</p>
+            </div>
+
+            <div className="why-card">
+              <FaTools className="why-icon" />
+              <h4>Strong Build Quality</h4>
+              <p>Designed for Indian roads</p>
+            </div>
+
+            <div className="why-card">
+              <FaTruck className="why-icon" />
+              <h4>On-Time Delivery</h4>
+              <p>Committed timelines</p>
+            </div>
+
+            <div className="why-card">
+              <FaHandshake className="why-icon" />
+              <h4>After-Sales Support</h4>
+              <p>Support after delivery</p>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Right Tech Visual */}
-        <motion.div 
-          className="tech-visual"
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <div className="visual-container">
-            {/* 3D Floating Cube */}
-            <motion.div 
-              className="floating-cube"
-              variants={cubeVariants}
-              animate="visible"
-              initial="hidden"
-            >
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="cube-face"></div>
-              ))}
-            </motion.div>
-
-            {/* Stats Overlay */}
-            <motion.div 
-              className="stats-overlay"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="stat-card"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="stat-icon">
-                    {stat.icon}
-                  </div>
-                  <div className="stat-number">{stat.number}</div>
-                  <div className="stat-label">{stat.label}</div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
