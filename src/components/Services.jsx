@@ -18,21 +18,6 @@ const Services = () => {
       icon: <FaTrailer />, 
       title: 'Trailer Manufacturing',
       description: 'Heavy-duty trailers engineered for maximum payload and road safety compliance.'
-    },
-    { 
-      icon: <FaTools />, 
-      title: 'Tipper & Hydraulic Bodies',
-      description: 'Robust tipper bodies with reliable hydraulic systems for efficient material handling.'
-    },
-    { 
-      icon: <FaWrench />, 
-      title: 'Truck Repair & Modification',
-      description: 'Comprehensive repair services and custom modifications to enhance truck performance.'
-    },
-    { 
-      icon: <FaPaintRoller />, 
-      title: 'Painting & Finishing',
-      description: 'Professional painting services with corrosion-resistant coatings and custom graphics.'
     }
   ]
 

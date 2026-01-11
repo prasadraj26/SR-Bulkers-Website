@@ -19,24 +19,17 @@ const About = () => {
           </p>
         </div>
 
-        {/* TRUST POINTS */}
-        <div className="about-points">
-          <div className="about-point">🏭 12+ Years Manufacturing Experience</div>
-          <div className="about-point">🔧 Strong & Reliable Bulker Designs</div>
-          <div className="about-point">🤝 Trusted by Construction & Logistics Companies</div>
-        </div>
-
         {/* READ MORE */}
         <div className="about-read-more">
           <button className="tech-button" onClick={() => navigate('/about')}>
-            Read More About Us
+            Read More
             <FaArrowRight className="button-icon" />
           </button>
         </div>
 
         {/* WHY CHOOSE US */}
         <div className="why-choose-section">
-          <h3 className="why-title">Why Choose SR Bulkers</h3>
+          <h3 className="why-title">Why Choose Us</h3>
 
           <div className="why-grid">
             <div className="why-card">
