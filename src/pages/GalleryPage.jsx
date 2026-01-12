@@ -48,16 +48,20 @@ function GalleryPage() {
                 boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
               }}
             >
-              <img
-                src={img.imageUrl}
-                alt={img.fileName}
-                style={{
-                  width: "100%",
-                  height: "220px",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
+ <img
+  src={img.imageUrl}
+  alt={img.fileName}
+  referrerPolicy="no-referrer-when-downgrade"
+  crossOrigin="anonymous"
+  loading="lazy"
+  style={{
+    width: "100%",
+    height: "220px",
+    objectFit: "cover",
+    display: "block",
+  }}
+/>
+
             </div>
           ))}
         </div>
