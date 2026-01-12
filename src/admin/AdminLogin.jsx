@@ -1,28 +1,28 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './AdminLogin.css';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import "./AdminLogin.css";
 
 function AdminLogin() {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
-    // Simple mock authentication - replace with real API call
-    const adminUsername = import.meta.env.VITE_ADMIN_USERNAME || 'admin';
-    const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
-    if (credentials.username === adminUsername && credentials.password === adminPassword) {
-      localStorage.setItem('adminToken', 'mock-token');
-      localStorage.setItem('adminUser', credentials.username);
-      navigate('/admin/dashboard');
-    } else {
-      setError('Invalid credentials');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/admin/dashboard");
+    } catch (err) {
+      setError("Invalid admin credentials");
     }
+
     setLoading(false);
   };
 
@@ -30,28 +30,32 @@ function AdminLogin() {
     <div className="admin-login-page">
       <div className="admin-login-container">
         <h1>Admin Login</h1>
+
+        {error && <div className="error-message">{error}</div>}
+
         <form onSubmit={handleSubmit} className="admin-login-form">
-          {error && <div className="error-message">{error}</div>}
           <div className="form-group">
-            <label>Username:</label>
+            <label>Email</label>
             <input
-              type="text"
-              value={credentials.username}
-              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
+
           <div className="form-group">
-            <label>Password:</label>
+            <label>Password</label>
             <input
               type="password"
-              value={credentials.password}
-              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
+
           <button type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

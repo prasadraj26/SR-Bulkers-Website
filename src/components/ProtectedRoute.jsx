@@ -1,9 +1,17 @@
 import { Navigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 
 const ProtectedRoute = ({ children }) => {
-  const isAdminLoggedIn = localStorage.getItem("adminToken");
+  const [user, loading] = useAuthState(auth);
 
-  return isAdminLoggedIn ? children : <Navigate to="/admin" />;
+  if (loading) return <p>Checking access...</p>;
+
+  if (!user) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  return children;
 };
 
 export default ProtectedRoute;

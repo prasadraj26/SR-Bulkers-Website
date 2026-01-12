@@ -34,6 +34,7 @@ function App() {
 
         {/* ADMIN */}
         <Route path="/admin" element={<AdminLogin />} />
+
         <Route
           path="/admin/dashboard"
           element={
@@ -42,6 +43,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/manage-gallery"
           element={
@@ -50,6 +52,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/admin/manage-services"
           element={
