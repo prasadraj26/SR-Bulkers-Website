@@ -7,42 +7,75 @@
 
 /* ===== SECTION ===== */
 .gallery-section {
-  background: linear-gradient(135deg, #0a0c10 0%, #14161c 100%);
-  padding: 80px 0;
-  color: #fff;
+  background: #ffffff;
+  padding: 100px 0;
   overflow: hidden;
   position: relative;
   min-height: 100vh;
+  width: 100%;
 }
 
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
   position: relative;
 }
 
+/* ===== SECTION HEADER - FIXED ALIGNMENT ===== */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80px;
+  width: 100%;
+}
+
 .section-title {
-  text-align: center;
-  font-size: 3rem;
-  margin-bottom: 16px;
-  background: linear-gradient(45deg, #ffffff, #a0aec0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 3.5rem;
+  margin: 0 0 15px 0; /* Reset all margins, only bottom margin */
+  color: #2c5ea4;
   font-weight: 800;
   letter-spacing: -0.5px;
+  line-height: 1;
+  text-align: center;
+}
+
+.title-underline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto 25px auto; /* Center with auto margins */
+  width: 140px; /* Fixed width for consistent centering */
+  height: 10px;
+}
+
+.underline-red {
+  width: 60px;
+  height: 4px;
+  background: #ff0000;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.underline-blue {
+  width: 60px;
+  height: 4px;
+  background: #2c5ea4;
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .section-subtitle {
-  text-align: center;
-  color: #94a3b8;
-  margin-bottom: 80px;
-  font-size: 1.2rem;
+  color: #2c5ea4;
+  margin: 0 auto;
+  font-size: 1.3rem;
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
   line-height: 1.6;
+  font-weight: 500;
+  display: block;
+  text-align: center;
 }
 
 /* ===== LOADING & EMPTY STATES ===== */
@@ -59,8 +92,8 @@
 .loading-spinner {
   width: 60px;
   height: 60px;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #3b82f6;
+  border: 4px solid rgba(44, 94, 164, 0.1);
+  border-top-color: #2c5ea4;
   border-radius: 50%;
   margin: 0 auto 24px;
   animation: spin 1s linear infinite;
@@ -73,7 +106,7 @@
 .empty-state {
   text-align: center;
   padding: 100px 20px;
-  color: #94a3b8;
+  color: #2c5ea4;
   font-size: 1.2rem;
   min-height: 400px;
   display: flex;
@@ -84,18 +117,19 @@
 /* ===== CAROUSEL WRAPPER ===== */
 .carousel-wrapper {
   position: relative;
-  margin: 0 -50px; /* Extend beyond container for seamless edges */
+  margin: 0 -50px;
   padding: 20px 0;
 }
 
 .carousel-container {
   overflow: hidden;
   position: relative;
-  width: calc(100% + 100px); /* Extend width */
-  left: -50px; /* Shift left to cover gaps */
+  width: calc(100% + 100px);
+  left: -50px;
+  cursor: default;
 }
 
-/* Add gradient fade at edges */
+/* Remove gradient fade at edges */
 .carousel-container::before,
 .carousel-container::after {
   content: '';
@@ -109,46 +143,46 @@
 
 .carousel-container::before {
   left: 0;
-  background: linear-gradient(90deg, rgba(10, 12, 16, 1), rgba(10, 12, 16, 0));
+  background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0));
 }
 
 .carousel-container::after {
   right: 0;
-  background: linear-gradient(90deg, rgba(10, 12, 16, 0), rgba(10, 12, 16, 1));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff);
 }
 
 /* ===== SEAMLESS INFINITE CAROUSEL ===== */
 .carousel-row {
   display: flex;
-  gap: 24px;
+  gap: 30px;
   width: max-content;
   will-change: transform;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
-  padding: 10px 0;
+  padding: 20px 0;
 }
 
 /* SPEED ADJUSTMENT: Change these values to control animation speed */
 /* Higher number = slower animation, Lower number = faster animation */
 
-/* Top row - moves left continuously - CURRENT SPEED: 60s */
+/* Top row - moves left continuously - CURRENT SPEED: 100s */
 .top-row {
-  animation: scroll-left 60s linear infinite; /* ADJUST THIS VALUE FOR TOP ROW SPEED */
+  animation: scroll-left 100s linear infinite; /* ADJUST THIS VALUE FOR TOP ROW SPEED */
 }
 
-/* Bottom row - moves right continuously - CURRENT SPEED: 65s */
+/* Bottom row - moves right continuously - CURRENT SPEED: 105s */
 .bottom-row {
-  animation: scroll-right 65s linear infinite; /* ADJUST THIS VALUE FOR BOTTOM ROW SPEED */
+  animation: scroll-right 105s linear infinite; /* ADJUST THIS VALUE FOR BOTTOM ROW SPEED */
 }
 
-/* PAUSE CLASS - Applied when hovering */
+/* PAUSE CLASS - Applied when hovering container (not images) */
 .carousel-row.paused {
   animation-play-state: paused;
 }
 
 /* SPEED ADJUSTMENT NOTE: 
-   - For slower animation: Increase the number (e.g., 80s, 100s)
-   - For faster animation: Decrease the number (e.g., 40s, 30s)
+   - For slower animation: Increase the number (e.g., 120s, 150s)
+   - For faster animation: Decrease the number (e.g., 80s, 60s)
    - Keep bottom row slightly different for visual interest */
 
 /* ===== TRUE SEAMLESS LOOP ANIMATIONS ===== */
@@ -175,174 +209,28 @@
   flex: 0 0 auto;
   width: 320px;
   height: 220px;
-  border-radius: 20px;
+  border-radius: 12px;
   overflow: hidden;
-  cursor: pointer;
   position: relative;
-  background: #1e2128;
+  background: #f8f9fa;
   box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.5),
-    0 2px 8px rgba(255, 255, 255, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    0 8px 30px rgba(44, 94, 164, 0.1),
+    0 2px 4px rgba(44, 94, 164, 0.05);
   transform-origin: center;
+  border: 1px solid rgba(44, 94, 164, 0.1);
+  /* REMOVED: cursor pointer and all hover transitions */
 }
 
-/* REMOVED: Hover scale effect on images */
+/* NO hover effects on cards - images are not clickable */
 .carousel-card:hover {
-  transform: none; /* No scale transform on hover */
-  box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.5),
-    0 2px 8px rgba(255, 255, 255, 0.05);
-  z-index: 100;
+  /* No changes on hover */
 }
 
 .carousel-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* REMOVED: Image transition on hover */
-}
-
-/* REMOVED: Image scale on hover */
-
-/* ===== LIGHTBOX ===== */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.97);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(20px);
-  padding: 40px;
-}
-
-.lightbox-content {
-  position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
-  background: rgba(20, 22, 28, 0.98);
-  border-radius: 24px;
-  padding: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    0 40px 80px -20px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.03);
-  overflow: hidden;
-}
-
-.lightbox-image-container {
-  position: relative;
-  max-width: 100%;
-  max-height: calc(90vh - 140px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(10, 12, 16, 0.5);
-}
-
-.lightbox-image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
   display: block;
-}
-
-/* ===== LIGHTBOX CONTROLS ===== */
-.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(30, 33, 40, 0.95);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 10;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-.nav:hover:not(:disabled) {
-  background: rgba(59, 130, 246, 0.95);
-  border-color: #3b82f6;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3);
-}
-
-.nav:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.prev-btn {
-  left: 20px;
-}
-
-.next-btn {
-  right: 20px;
-}
-
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(30, 33, 40, 0.95);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 10;
-}
-
-.close-btn:hover {
-  background: #ef4444;
-  border-color: #ef4444;
-  transform: scale(1.1);
-}
-
-/* ===== LIGHTBOX FOOTER ===== */
-.lightbox-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.lightbox-title {
-  color: #ffffff;
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 0;
-  flex: 1;
-  padding-right: 20px;
-}
-
-.lightbox-counter {
-  color: #94a3b8;
-  font-size: 1.1rem;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 8px 16px;
-  border-radius: 12px;
-  min-width: 80px;
-  text-align: center;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -352,6 +240,10 @@
   .carousel-card {
     width: 300px;
     height: 200px;
+  }
+  
+  .section-title {
+    font-size: 3.2rem;
   }
 }
 
@@ -363,7 +255,11 @@
   }
   
   .section-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
+  }
+  
+  .container {
+    padding: 0 30px;
   }
 }
 
@@ -375,54 +271,11 @@
   }
   
   .carousel-row {
-    gap: 20px;
+    gap: 24px;
   }
   
   .section-title {
-    font-size: 2.2rem;
-  }
-  
-  .lightbox-content {
-    padding: 24px;
-  }
-  
-  .nav {
-    width: 56px;
-    height: 56px;
-  }
-  
-  /* SPEED ADJUSTMENT FOR TABLET: Slightly slower for smaller screens */
-  .top-row {
-    animation-duration: 70s; /* ADJUST THIS FOR TABLET */
-  }
-  
-  .bottom-row {
-    animation-duration: 75s; /* ADJUST THIS FOR TABLET */
-  }
-}
-
-/* Small Tablet */
-@media (max-width: 768px) {
-  .gallery-section {
-    padding: 60px 0;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-  
-  .section-subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 60px;
-  }
-  
-  .carousel-card {
-    width: 200px;
-    height: 140px;
-  }
-  
-  .carousel-row {
-    gap: 16px;
+    font-size: 2.5rem;
   }
   
   .carousel-wrapper {
@@ -439,30 +292,84 @@
     width: 60px;
   }
   
-  .lightbox {
-    padding: 20px;
+  .title-underline {
+    width: 130px;
   }
   
-  .nav {
-    width: 48px;
-    height: 48px;
+  .underline-red,
+  .underline-blue {
+    width: 55px;
   }
   
-  .prev-btn {
-    left: 10px;
-  }
-  
-  .next-btn {
-    right: 10px;
-  }
-  
-  /* SPEED ADJUSTMENT FOR MOBILE: Adjust if needed */
+  /* SPEED ADJUSTMENT FOR TABLET */
   .top-row {
-    animation-duration: 80s; /* ADJUST THIS FOR MOBILE */
+    animation-duration: 110s; /* ADJUST THIS FOR TABLET */
   }
   
   .bottom-row {
-    animation-duration: 85s; /* ADJUST THIS FOR MOBILE */
+    animation-duration: 115s; /* ADJUST THIS FOR TABLET */
+  }
+}
+
+/* Small Tablet */
+@media (max-width: 768px) {
+  .gallery-section {
+    padding: 80px 0;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+  }
+  
+  .section-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .carousel-card {
+    width: 200px;
+    height: 140px;
+  }
+  
+  .carousel-row {
+    gap: 20px;
+  }
+  
+  .container {
+    padding: 0 20px;
+  }
+  
+  .carousel-wrapper {
+    margin: 0 -20px;
+  }
+  
+  .carousel-container {
+    width: calc(100% + 40px);
+    left: -20px;
+  }
+  
+  .carousel-container::before,
+  .carousel-container::after {
+    width: 40px;
+  }
+  
+  .title-underline {
+    width: 120px;
+    margin-bottom: 20px;
+  }
+  
+  .underline-red,
+  .underline-blue {
+    width: 50px;
+  }
+  
+  /* SPEED ADJUSTMENT FOR MOBILE */
+  .top-row {
+    animation-duration: 120s; /* ADJUST THIS FOR MOBILE */
+  }
+  
+  .bottom-row {
+    animation-duration: 125s; /* ADJUST THIS FOR MOBILE */
   }
 }
 
@@ -474,26 +381,22 @@
   }
   
   .section-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    margin-bottom: 10px;
   }
   
   .section-subtitle {
     font-size: 1rem;
-    margin-bottom: 50px;
   }
   
-  .lightbox-footer {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
+  .title-underline {
+    width: 110px;
+    margin-bottom: 18px;
   }
   
-  .lightbox-title {
-    font-size: 1.2rem;
-  }
-  
-  .lightbox-counter {
-    align-self: flex-start;
+  .underline-red,
+  .underline-blue {
+    width: 45px;
   }
 }
 
@@ -505,31 +408,38 @@
   }
   
   .carousel-row {
-    gap: 12px;
-  }
-  
-  .container {
-    padding: 0 15px;
+    gap: 16px;
   }
   
   .section-title {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
   
-  .lightbox-content {
-    padding: 20px;
+  .gallery-section {
+    padding: 60px 0;
   }
   
-  .nav {
-    width: 44px;
-    height: 44px;
+  .carousel-wrapper {
+    margin: 0 -15px;
   }
   
-  .close-btn {
+  .carousel-container {
+    width: calc(100% + 30px);
+    left: -15px;
+  }
+  
+  .carousel-container::before,
+  .carousel-container::after {
+    width: 30px;
+  }
+  
+  .title-underline {
+    width: 100px;
+  }
+  
+  .underline-red,
+  .underline-blue {
     width: 40px;
-    height: 40px;
-    top: 15px;
-    right: 15px;
   }
 }
 
@@ -541,33 +451,27 @@
   }
   
   .section-title {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+  }
+  
+  .carousel-row {
+    gap: 12px;
+  }
+  
+  .title-underline {
+    width: 90px;
+  }
+  
+  .underline-red,
+  .underline-blue {
+    width: 35px;
   }
 }
 
 /* ===== PERFORMANCE OPTIMIZATIONS ===== */
 @media (prefers-reduced-motion: reduce) {
-  .carousel-row,
-  .carousel-card,
-  .nav,
-  .close-btn,
-  .lightbox-content,
-  .lightbox {
-    animation-duration: 0.001ms !important;
-    transition: none !important;
-  }
-  
   .carousel-row {
+    animation-duration: 0.001ms !important;
     animation-play-state: paused;
-  }
-}
-
-/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
-@media (hover: none) and (pointer: coarse) {
-  .carousel-card:hover {
-    transform: none;
-    box-shadow: 
-      0 12px 40px rgba(0, 0, 0, 0.5),
-      0 2px 8px rgba(255, 255, 255, 0.05);
   }
 }

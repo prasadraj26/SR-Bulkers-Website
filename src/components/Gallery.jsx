@@ -1,6 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "./Gallery.css";
 
 const APPS_SCRIPT_URL =
@@ -9,13 +7,14 @@ const APPS_SCRIPT_URL =
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
   
   // Refs for carousel rows
   const topRowRef = useRef(null);
   const bottomRowRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
+  
+  // Separate hover states for top and bottom rows
+  const [isTopHovered, setIsTopHovered] = useState(false);
+  const [isBottomHovered, setIsBottomHovered] = useState(false);
 
   /* ===== FETCH GALLERY ===== */
   useEffect(() => {
@@ -63,63 +62,15 @@ const Gallery = () => {
 
   const loopImages = getLoopImages(carouselImages);
 
-  /* ===== LIGHTBOX ===== */
-  const openLightbox = (index) => {
-    if (images[index]) {
-      setSelectedImage(images[index]);
-      setCurrentIndex(index);
-    }
-  };
-
-  const closeLightbox = () => setSelectedImage(null);
-
-  const nextImage = (e) => {
-    e?.stopPropagation();
-    if (images.length === 0) return;
-    const next = (currentIndex + 1) % images.length;
-    setSelectedImage(images[next]);
-    setCurrentIndex(next);
-  };
-
-  const prevImage = (e) => {
-    e?.stopPropagation();
-    if (images.length === 0) return;
-    const prev = (currentIndex - 1 + images.length) % images.length;
-    setSelectedImage(images[prev]);
-    setCurrentIndex(prev);
-  };
-
-  const handleCarouselClick = (index) => {
-    if (carouselImages.length === 0) return;
-    const originalIndex = index % carouselImages.length;
-    const clickedImage = carouselImages[originalIndex];
-    
-    // Find in full images array
-    const fullIndex = images.findIndex(img => img.id === clickedImage.id);
-    if (fullIndex !== -1) openLightbox(fullIndex);
-  };
-
-  // Handle keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!selectedImage) return;
-      
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, currentIndex]);
-
   return (
-    <section className="gallery-section">
+    <section className="gallery-section" id="projects">
       <div className="container">
-        <h2 className="section-title">Latest Projects</h2>
-        <p className="section-subtitle">
-          Recently completed works and builds
-        </p>
+        <div className="section-header">
+          <h2 className="section-title">LATEST PROJECTS</h2>
+          <p className="section-subtitle">
+            Recently completed works and builds
+          </p>
+        </div>
 
         {loading ? (
           <div className="loading-state">
@@ -135,18 +86,22 @@ const Gallery = () => {
             {/* TOP ROW - moves left */}
             <div 
               className="carousel-container"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onMouseEnter={(e) => {
+                // Only pause if not hovering an image directly
+                if (e.target === e.currentTarget) {
+                  setIsTopHovered(true);
+                }
+              }}
+              onMouseLeave={() => setIsTopHovered(false)}
             >
               <div 
-                className={`carousel-row top-row ${isHovered ? 'paused' : ''}`}
+                className={`carousel-row top-row ${isTopHovered ? 'paused' : ''}`}
                 ref={topRowRef}
               >
                 {loopImages.map((img, idx) => (
                   <div
                     key={`top-${img.id}-${idx}`}
                     className="carousel-card"
-                    onClick={() => handleCarouselClick(idx)}
                   >
                     <img 
                       src={img.imageUrl} 
@@ -161,18 +116,22 @@ const Gallery = () => {
             {/* BOTTOM ROW - moves right */}
             <div 
               className="carousel-container"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onMouseEnter={(e) => {
+                // Only pause if not hovering an image directly
+                if (e.target === e.currentTarget) {
+                  setIsBottomHovered(true);
+                }
+              }}
+              onMouseLeave={() => setIsBottomHovered(false)}
             >
               <div 
-                className={`carousel-row bottom-row ${isHovered ? 'paused' : ''}`}
+                className={`carousel-row bottom-row ${isBottomHovered ? 'paused' : ''}`}
                 ref={bottomRowRef}
               >
                 {loopImages.map((img, idx) => (
                   <div
                     key={`bottom-${img.id}-${idx}`}
                     className="carousel-card"
-                    onClick={() => handleCarouselClick(idx)}
                   >
                     <img 
                       src={img.imageUrl} 
@@ -186,74 +145,6 @@ const Gallery = () => {
           </div>
         )}
       </div>
-
-      {/* ===== LIGHTBOX ===== */}
-      <AnimatePresence mode="wait">
-        {selectedImage && (
-          <motion.div
-            className="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeLightbox}
-          >
-            <motion.div
-              className="lightbox-content"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 30 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="lightbox-image-container">
-                <motion.img 
-                  key={selectedImage.id}
-                  src={selectedImage.imageUrl} 
-                  alt={selectedImage.title}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-                
-                {images.length > 1 && (
-                  <>
-                    <button 
-                      className="nav prev-btn" 
-                      onClick={prevImage}
-                      aria-label="Previous image"
-                    >
-                      <FiChevronLeft size={32} />
-                    </button>
-                    <button 
-                      className="nav next-btn" 
-                      onClick={nextImage}
-                      aria-label="Next image"
-                    >
-                      <FiChevronRight size={32} />
-                    </button>
-                  </>
-                )}
-              </div>
-              
-              <div className="lightbox-footer">
-                <h3 className="lightbox-title">{selectedImage.title}</h3>
-                <div className="lightbox-counter">
-                  {currentIndex + 1} / {images.length}
-                </div>
-              </div>
-
-              <button 
-                className="close-btn" 
-                onClick={closeLightbox}
-                aria-label="Close lightbox"
-              >
-                <FiX size={24} />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };
