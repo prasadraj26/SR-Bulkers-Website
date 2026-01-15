@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;600;700;900&family=Oswald:wght@400;600;700&family=Montserrat:wght@700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;600;700&family=Oswald:wght@400;600;700&family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
 
 @import './components/Navbar.css';
 @import './components/Hero.css';
@@ -32,16 +32,18 @@
 }
 
 body {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
   color: var(--primary-color);
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-weight: 400;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  font-weight: 700;
   line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .container {
@@ -99,6 +101,9 @@ section {
   text-transform: uppercase;
   position: relative;
   display: inline-block;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .section-title::after {

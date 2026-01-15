@@ -6,6 +6,10 @@
 .products-section .section-title {
   display: block;
   text-align: center;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
 }
 
 .products-section .section-title::after {
@@ -87,6 +91,7 @@
   color: var(--gray-medium);
   margin-bottom: 20px;
   line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .view-button {

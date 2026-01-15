@@ -36,9 +36,11 @@
   margin: 0 0 15px 0; /* Reset all margins, only bottom margin */
   color: #2c5ea4;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: 1px;
   line-height: 1;
   text-align: center;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
 }
 
 .title-underline {
@@ -76,6 +78,7 @@
   font-weight: 500;
   display: block;
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* ===== LOADING & EMPTY STATES ===== */

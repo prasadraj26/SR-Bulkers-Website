@@ -3,7 +3,7 @@
 .admin-dashboard-page {
   min-height: 100vh;
   background-color: #f5f5f5;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .admin-dashboard-header {
@@ -18,12 +18,17 @@
 .admin-dashboard-header h1 {
   margin: 0;
   font-size: 2rem;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 .admin-dashboard-subtitle {
   margin: 5px 0 0 0;
   font-size: 1rem;
   opacity: 0.8;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .admin-dashboard-logout {
@@ -70,6 +75,7 @@
   margin: 0;
   color: #666;
   font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .admin-dashboard-grid {
@@ -193,6 +199,7 @@
   font-size: 0.9rem;
   color: #666;
   font-style: italic;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .item-actions {

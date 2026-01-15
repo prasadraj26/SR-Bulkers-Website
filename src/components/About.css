@@ -26,6 +26,8 @@
   font-weight: 800;
   text-transform: uppercase;
   color: rgb(44, 101, 186);
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  letter-spacing: 1px;
 }
 
 .section-title::after {
@@ -43,6 +45,7 @@
   font-size: 1.15rem;
   line-height: 1.6;
   color: #555;
+  font-family: 'Montserrat', sans-serif;
 }
 
 
@@ -133,6 +136,7 @@
 .why-card p {
   font-size: 0.95rem;
   color: #666;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* =========================

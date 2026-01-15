@@ -22,6 +22,9 @@
   font-size: 3rem;
   font-weight: 800;
   color: #2c5ea4; /* Navy blue */
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .gallery-title span {

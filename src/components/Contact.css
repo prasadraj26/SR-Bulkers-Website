@@ -7,6 +7,10 @@
 .contact-section .section-title {
   display: block;
   text-align: center;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
 }
 
 .contact-section .section-title::after {
@@ -62,6 +66,7 @@
 .info-content p {
   color: var(--gray-medium);
   line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .social-links {
@@ -151,6 +156,7 @@
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .form-input,

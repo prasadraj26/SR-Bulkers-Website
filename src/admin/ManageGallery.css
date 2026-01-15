@@ -7,6 +7,10 @@
   margin-bottom: 16px;
   font-size: 1.6rem;
   color: #222;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 /* ===== Upload Section ===== */
@@ -45,6 +49,7 @@
   margin-bottom: 18px;
   font-size: 0.95rem;
   color: #333;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* ===== Gallery Grid ===== */
