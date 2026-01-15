@@ -38,19 +38,23 @@ function ManageGallery() {
     reader.onloadend = async () => {
       try {
         const base64 = reader.result.split(",")[1];
-        const formData = new FormData();
-
-        formData.append("image", base64);
-        formData.append("fileName", file.name);
-        formData.append("mimeType", file.type);
+        
+        const data = {
+          image: base64,
+          fileName: file.name,
+          mimeType: file.type
+        };
 
         const res = await fetch(APPS_SCRIPT_URL, {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data),
         });
 
-        const data = await res.json();
-        if (!data.success) throw new Error();
+        const responseData = await res.json();
+        if (!responseData.success) throw new Error();
 
         setMessage("Image uploaded successfully");
         setFile(null);
@@ -73,17 +77,21 @@ function ManageGallery() {
     setMessage("");
 
     try {
-      const formData = new FormData();
-      formData.append("action", "delete");
-      formData.append("fileId", fileId);
+      const data = {
+        action: "delete",
+        fileId: fileId
+      };
 
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
       });
 
-      const data = await res.json();
-      if (!data.success) throw new Error();
+      const responseData = await res.json();
+      if (!responseData.success) throw new Error();
 
       setImages((prev) => prev.filter((img) => img.fileId !== fileId));
       setMessage("Image deleted successfully");

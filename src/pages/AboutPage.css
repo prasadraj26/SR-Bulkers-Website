@@ -1,0 +1,162 @@
+:root {
+  --navy: #2c5ea4;
+  --navy-dark: #244b86;
+  --text-dark: #1f2937;
+  --bg-light: #f9fafb;
+}
+
+/* PAGE */
+.about-page {
+  background: #ffffff;
+}
+
+/* SECTION */
+.about-section {
+  padding: 80px 20px;
+}
+
+.light-bg {
+  background: var(--bg-light);
+}
+
+.mission-bg {
+  background: #eef3fb;
+}
+
+/* CONTAINER */
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.two-col.reverse {
+  direction: rtl;
+}
+
+.two-col.reverse > * {
+  direction: ltr;
+}
+
+.center {
+  text-align: center;
+}
+
+/* TITLES */
+.about-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.about-underline {
+  width: 70px;
+  height: 4px;
+  background: var(--navy);
+  margin: 12px 0 24px;
+  border-radius: 4px;
+}
+
+.about-underline.center {
+  margin: 12px auto 24px;
+}
+
+/* TEXT */
+.about-text {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  line-height: 1.7;
+}
+
+.max-width {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.about-logo {
+  width: 260px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+/* WHO WE ARE LOGO */
+.team-logo {
+  width: 260px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+/* SERVICES */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.service-card h3 {
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  color: var(--text-dark);
+}
+
+/* BACK BUTTON */
+.about-back-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 60px;
+}
+
+.about-back-btn {
+  padding: 12px 32px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--navy);
+  color: #ffffff;
+  transition: background 0.25s ease;
+}
+
+.about-back-btn:hover {
+  background: var(--navy-dark);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .about-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: 60px 16px;
+  }
+
+  .about-title {
+    font-size: 2rem;
+  }
+}
