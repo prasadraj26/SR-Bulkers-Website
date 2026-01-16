@@ -14,13 +14,40 @@ function AdminDashboard() {
 
   return (
     <div className="admin-dashboard-page">
+      {/* HEADER */}
       <header className="admin-dashboard-header">
         <div>
           <h1>Admin Dashboard</h1>
-          <p>Welcome back, <strong>{adminEmail}</strong></p>
+          <p>Welcome, <strong>{adminEmail}</strong></p>
         </div>
-        <button onClick={handleLogout}>Logout</button>
+
+        <button className="admin-logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </header>
+
+      {/* DASHBOARD CONTENT */}
+      <main className="admin-dashboard-main">
+        <div className="admin-actions-grid">
+
+          <div
+            className="admin-action-card"
+            onClick={() => navigate("/admin/manage-gallery")}
+          >
+            <h2>Manage Gallery</h2>
+            <p>Upload & delete website gallery images</p>
+          </div>
+
+          <div
+            className="admin-action-card"
+            onClick={() => navigate("/")}
+          >
+            <h2>Go to Website</h2>
+            <p>Navigate to homepage</p>
+          </div>
+
+        </div>
+      </main>
     </div>
   );
 }
