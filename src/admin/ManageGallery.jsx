@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ref, onValue, remove } from "firebase/database";
+import { db } from "../firebase";
+import { uploadGalleryImage } from "../utils/uploadGalleryImage";
 import "./ManageGallery.css";
-
-const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL;
 
 function ManageGallery() {
   const navigate = useNavigate();
@@ -12,86 +13,62 @@ function ManageGallery() {
   const [loading, setLoading] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState("");
+  const [initialLoading, setInitialLoading] = useState(true);
 
   /* FETCH IMAGES */
-const fetchImages = async () => {
-  console.log("ENV URL:", VITE_APPS_SCRIPT_URL); // 👈 ADD THIS LINE
-
-  try {
-    const res = await fetch(VITE_APPS_SCRIPT_URLAPPS_SCRIPT_URL);
-    const data = await res.json();
-    setImages(data.reverse());
-  } catch {
-    setMessage("Failed to load images");
-  }
-};
-
-
   useEffect(() => {
-    fetchImages();
+    const galleryRef = ref(db, "gallery");
+    onValue(galleryRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const list = Object.entries(data)
+          .map(([id, value]) => ({ id, ...value }))
+          .sort((a, b) => b.uploadedAtTimestamp - a.uploadedAtTimestamp);
+        setImages(list);
+      } else {
+        setImages([]);
+      }
+      setInitialLoading(false);
+    });
   }, []);
 
   /* UPLOAD IMAGE */
-  const uploadImage = () => {
-    if (!file) return;
+  const handleUpload = async () => {
+    if (!file) {
+      setMessage("Please select an image");
+      return;
+    }
 
     setLoading(true);
     setMessage("");
 
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      try {
-        const base64 = reader.result.split(",")[1];
+    const result = await uploadGalleryImage(file);
 
-        const res = await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            image: base64,
-            fileName: file.name,
-            mimeType: file.type
-          })
-        });
+    if (result.success) {
+      setMessage("Image uploaded successfully");
+      setFile(null);
+      document.querySelector('input[type="file"]').value = "";
+    } else {
+      setMessage(result.error);
+    }
 
-        const data = await res.json();
-        if (!data.success) throw new Error();
-
-        setMessage("Image uploaded successfully");
-        setFile(null);
-        fetchImages();
-      } catch {
-        setMessage("Upload failed");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    reader.readAsDataURL(file);
+    setLoading(false);
   };
 
   /* DELETE IMAGE */
-  const deleteImage = async (fileId) => {
+  const handleDelete = async (id) => {
     if (!window.confirm("Delete this image?")) return;
 
-    setDeletingId(fileId);
+    setDeletingId(id);
 
     try {
-      const res = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "delete", fileId })
-      });
-
-      const data = await res.json();
-      if (!data.success) throw new Error();
-
-      setImages(prev => prev.filter(img => img.fileId !== fileId));
+      await remove(ref(db, `gallery/${id}`));
       setMessage("Image deleted");
     } catch {
       setMessage("Delete failed");
-    } finally {
-      setDeletingId(null);
     }
+
+    setDeletingId(null);
   };
 
   return (
@@ -100,37 +77,53 @@ const fetchImages = async () => {
 
       {/* Upload */}
       <div className="gallery-upload">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <button onClick={uploadImage} disabled={loading || !file}>
-          {loading ? "Uploading..." : "Upload"}
+        <label className={`file-picker ${file ? "selected" : ""}`}>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setFile(e.target.files[0])}
+            disabled={loading}
+          />
+          {file ? "Image Selected" : "Choose Image"}
+        </label>
+
+        <button onClick={handleUpload} disabled={loading || !file}>
+          {loading ? <span className="spinner"></span> : "Upload"}
         </button>
       </div>
+
+      {/* Selected file info */}
+      {file && (
+        <div className="file-info">
+          <span>{file.name}</span>
+          <small>{Math.round(file.size / 1024)} KB</small>
+        </div>
+      )}
 
       {message && <p className="gallery-message">{message}</p>}
 
       {/* Gallery */}
       <div className="gallery-grid">
-        {images.length === 0 ? (
+        {initialLoading ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="gallery-skeleton"></div>
+          ))
+        ) : images.length === 0 ? (
           <p className="empty-text">No images uploaded yet.</p>
         ) : (
           images.map((img) => (
-            <div
-              key={img.fileId}
-              className={`gallery-card ${
-                deletingId === img.fileId ? "deleting" : ""
-              }`}
-            >
-              <img src={img.imageUrl} alt={img.fileName} />
+            <div key={img.id} className="gallery-card fade-in">
+              <img
+                src={img.imageUrl}
+                alt={img.fileName}
+                loading="lazy"
+              />
               <button
                 className="gallery-delete-btn"
-                onClick={() => deleteImage(img.fileId)}
-                disabled={deletingId === img.fileId}
+                onClick={() => handleDelete(img.id)}
+                disabled={deletingId === img.id}
               >
-                {deletingId === img.fileId ? "Deleting..." : "Delete"}
+                {deletingId === img.id ? "Deleting..." : "Delete"}
               </button>
             </div>
           ))

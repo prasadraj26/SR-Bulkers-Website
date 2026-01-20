@@ -225,16 +225,16 @@
 }
 
 /* NO hover effects on cards - images are not clickable */
-.carousel-card:hover {
-  /* No changes on hover */
-}
+
 
 .carousel-card img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  height: auto;          /* allow natural height */
+  max-height: 200px;     /* keeps grid clean */
+  object-fit: contain;  /* show full image */
+  background: #f5f6fa;  /* neutral background */
 }
+
 
 /* ===== RESPONSIVE DESIGN ===== */
 

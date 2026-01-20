@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import { ref, onValue } from "firebase/database";
+import { db } from "../firebase";
 import "./Gallery.css";
-
-const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycby_ZkW1SctI4LPhoe3MuCBaWuuJw_iM23tNPhGejIrK8sr9rP04pEeKimAKD1rPJsU7/exec";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   // Refs for carousel rows
   const topRowRef = useRef(null);
@@ -16,40 +16,68 @@ const Gallery = () => {
   const [isTopHovered, setIsTopHovered] = useState(false);
   const [isBottomHovered, setIsBottomHovered] = useState(false);
 
-  /* ===== FETCH GALLERY ===== */
+  /* ===== FETCH GALLERY FROM FIREBASE ===== */
   useEffect(() => {
-    fetch(APPS_SCRIPT_URL)
-      .then(res => res.json())
-      .then(data => {
-        const normalized = data
-          .filter(img => img.uploadedAt && img.imageUrl)
-          .map((img, i) => ({
-            id: img.fileId || `img-${i}-${Date.now()}`,
-            imageUrl: img.imageUrl,
-            title: img.fileName || `Project ${i + 1}`,
-            uploadedAt: img.uploadedAt,
-            originalIndex: i
-          }));
-        setImages(normalized);
-      })
-      .catch(error => {
-        console.error("Error fetching gallery:", error);
-        setImages([]);
-      })
-      .finally(() => setLoading(false));
+    setLoading(true);
+    setError(null);
+
+    try {
+      const dbRef = ref(db, "gallery");
+      const unsubscribe = onValue(
+        dbRef,
+        (snapshot) => {
+          try {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              const normalized = Object.entries(data)
+                .map(([key, img]) => ({
+                  id: img.fileId || key,
+                  imageUrl: img.imageUrl,
+                  title: img.fileName || `Project`,
+                  uploadedAt: img.uploadedAt,
+                  uploadedAtTimestamp: img.uploadedAtTimestamp || 0,
+                }))
+                .filter(img => img.imageUrl && img.uploadedAt)
+                .sort((a, b) => b.uploadedAtTimestamp - a.uploadedAtTimestamp);
+              
+              console.log("Gallery loaded:", normalized.length, "images");
+              setImages(normalized);
+            } else {
+              console.log("No gallery images found");
+              setImages([]);
+            }
+            setLoading(false);
+          } catch (err) {
+            console.error("Data processing error:", err);
+            setError("Failed to process images");
+            setLoading(false);
+          }
+        },
+        (error) => {
+          console.error("Firebase error:", error);
+          setError(error.message);
+          setImages([]);
+          setLoading(false);
+        }
+      );
+
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Gallery setup error:", error);
+      setError(error.message);
+      setImages([]);
+      setLoading(false);
+    }
   }, []);
 
   /* ===== LATEST 20 IMAGES ===== */
-  const carouselImages = [...images]
-    .sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt))
-    .slice(0, Math.min(20, images.length));
+  const carouselImages = [...images].slice(0, Math.min(20, images.length));
 
   /* ===== ENSURE ENOUGH IMAGES FOR SEAMLESS LOOP ===== */
   const getLoopImages = (images) => {
     if (images.length === 0) return [];
     
     let loopImages = [];
-    // We need enough duplicates to ensure seamless scrolling
     const minItemsNeeded = 40;
     const repeatCount = Math.ceil(minItemsNeeded / images.length);
     
@@ -77,6 +105,10 @@ const Gallery = () => {
             <div className="loading-spinner"></div>
             <p>Loading gallery...</p>
           </div>
+        ) : error ? (
+          <div className="error-state">
+            <p style={{ color: 'red' }}>Error: {error}</p>
+          </div>
         ) : carouselImages.length === 0 ? (
           <div className="empty-state">
             <p>No images found in the gallery.</p>
@@ -87,7 +119,6 @@ const Gallery = () => {
             <div 
               className="carousel-container"
               onMouseEnter={(e) => {
-                // Only pause if not hovering an image directly
                 if (e.target === e.currentTarget) {
                   setIsTopHovered(true);
                 }
@@ -107,6 +138,10 @@ const Gallery = () => {
                       src={img.imageUrl} 
                       alt={img.title}
                       loading="lazy"
+                      onError={(e) => {
+                        console.error("Image failed to load:", img.imageUrl);
+                        e.target.style.display = 'none';
+                      }}
                     />
                   </div>
                 ))}
@@ -117,7 +152,6 @@ const Gallery = () => {
             <div 
               className="carousel-container"
               onMouseEnter={(e) => {
-                // Only pause if not hovering an image directly
                 if (e.target === e.currentTarget) {
                   setIsBottomHovered(true);
                 }
@@ -137,6 +171,10 @@ const Gallery = () => {
                       src={img.imageUrl} 
                       alt={img.title}
                       loading="lazy"
+                      onError={(e) => {
+                        console.error("Image failed to load:", img.imageUrl);
+                        e.target.style.display = 'none';
+                      }}
                     />
                   </div>
                 ))}
