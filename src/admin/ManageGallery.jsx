@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ManageGallery.css";
 
-const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycby_ZkW1SctI4LPhoe3MuCBaWuuJw_iM23tNPhGejIrK8sr9rP04pEeKimAKD1rPJsU7/exec";
+const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL;
 
 function ManageGallery() {
   const navigate = useNavigate();
@@ -14,19 +13,28 @@ function ManageGallery() {
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState("");
 
-  const fetchImages = () => {
-    fetch(APPS_SCRIPT_URL)
-      .then((res) => res.json())
-      .then((data) => setImages(data.reverse()))
-      .catch(() => setMessage("Failed to load images"));
-  };
+  /* FETCH IMAGES */
+const fetchImages = async () => {
+  console.log("ENV URL:", VITE_APPS_SCRIPT_URL); // 👈 ADD THIS LINE
+
+  try {
+    const res = await fetch(VITE_APPS_SCRIPT_URLAPPS_SCRIPT_URL);
+    const data = await res.json();
+    setImages(data.reverse());
+  } catch {
+    setMessage("Failed to load images");
+  }
+};
+
 
   useEffect(() => {
     fetchImages();
   }, []);
 
+  /* UPLOAD IMAGE */
   const uploadImage = () => {
     if (!file) return;
+
     setLoading(true);
     setMessage("");
 
@@ -41,8 +49,8 @@ function ManageGallery() {
           body: JSON.stringify({
             image: base64,
             fileName: file.name,
-            mimeType: file.type,
-          }),
+            mimeType: file.type
+          })
         });
 
         const data = await res.json();
@@ -61,8 +69,9 @@ function ManageGallery() {
     reader.readAsDataURL(file);
   };
 
+  /* DELETE IMAGE */
   const deleteImage = async (fileId) => {
-    if (!window.confirm("Are you sure you want to delete this image?")) return;
+    if (!window.confirm("Delete this image?")) return;
 
     setDeletingId(fileId);
 
@@ -70,14 +79,14 @@ function ManageGallery() {
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "delete", fileId }),
+        body: JSON.stringify({ action: "delete", fileId })
       });
 
       const data = await res.json();
       if (!data.success) throw new Error();
 
-      setImages((prev) => prev.filter((img) => img.fileId !== fileId));
-      setMessage("Image deleted successfully");
+      setImages(prev => prev.filter(img => img.fileId !== fileId));
+      setMessage("Image deleted");
     } catch {
       setMessage("Delete failed");
     } finally {
@@ -89,7 +98,7 @@ function ManageGallery() {
     <div className="manage-gallery">
       <h2>Manage Gallery</h2>
 
-      {/* Upload Section */}
+      {/* Upload */}
       <div className="gallery-upload">
         <input
           type="file"
@@ -103,7 +112,7 @@ function ManageGallery() {
 
       {message && <p className="gallery-message">{message}</p>}
 
-      {/* Gallery Grid */}
+      {/* Gallery */}
       <div className="gallery-grid">
         {images.length === 0 ? (
           <p className="empty-text">No images uploaded yet.</p>
@@ -128,13 +137,13 @@ function ManageGallery() {
         )}
       </div>
 
-      {/* BACK BUTTON (CENTERED – SAME AS ABOUT PAGE) */}
+      {/* Back */}
       <div className="about-back-wrapper">
         <button
           className="about-back-btn"
           onClick={() => navigate("/admin/dashboard")}
         >
-          ←Back to Dashboard
+          ← Back to Dashboard
         </button>
       </div>
     </div>
