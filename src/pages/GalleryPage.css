@@ -1,57 +1,76 @@
-/* PAGE */
+/* =========================
+   PAGE WRAPPER
+========================= */
 .gallery-page {
   min-height: 100vh;
   background: #ffffff;
-  padding: 80px 0;
+  padding: 60px 0;
 }
 
-/* CENTERED CONTAINER */
+/* =========================
+   CONTAINER
+========================= */
 .gallery-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 30px;
 }
 
-/* TITLE */
+/* =========================
+   TITLE (FIXED ALIGNMENT)
+========================= */
 .gallery-title-wrapper {
-  text-align: center;
-  margin-bottom: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 🔥 TRUE CENTER */
+  justify-content: center;
+  margin-bottom: 50px;
 }
 
 .gallery-title {
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 800;
-  color: #2c5ea4; /* Navy blue */
+  color: #2c5ea4;
   font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;   /* SAFETY */
 }
 
 .gallery-title span {
-  color:#2c5ea4;
+  color: #2c5ea4;
 }
 
+/* UNDERLINE — PERFECTLY CENTERED */
 .gallery-underline {
   width: 90px;
   height: 4px;
   background: #2c5ea4;
-  margin: 12px auto 0;
+  margin-top: 12px;
   border-radius: 2px;
 }
 
-/* GRID */
+/* =========================
+   GRID - FIXED ALIGNMENT
+========================= */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 30px;
+  gap: 28px;
+  justify-items: center; /* 🔥 Center grid items */
 }
 
-/* CARD */
+/* =========================
+   CARD - FIXED WIDTH
+========================= */
 .gallery-card {
   background: #ffffff;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  width: 100%; /* 🔥 Ensures consistent width */
+  max-width: 300px; /* 🔥 Optional: Set a max-width for better control */
 }
 
 .gallery-card img {
@@ -61,14 +80,32 @@
   display: block;
 }
 
-/* BACK BUTTON */
+/* =========================
+   STATE MESSAGES - CENTERED
+========================= */
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error-state p {
+  color: #ff4444;
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
 .gallery-back-wrapper {
-  margin-top: 80px;
+  margin-top: 60px;
   text-align: center;
 }
 
 .gallery-back-btn {
-  padding: 12px 28px;
+  padding: 12px 30px;
   border-radius: 30px;
   border: none;
   background: #2c5ea4;
@@ -79,16 +116,39 @@
 }
 
 .gallery-back-btn:hover {
-  background: #2c5ea4;
+  background: #1a4780;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 768px) {
   .gallery-title {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
+  }
+
+  .gallery-card {
+    max-width: 100%; /* 🔥 Full width on mobile */
   }
 
   .gallery-card img {
     height: 200px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr; /* 🔥 Single column on very small screens */
+  }
+  
+  .gallery-container {
+    padding: 0 15px;
   }
 }

@@ -12,65 +12,55 @@ const GalleryPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  /* 🔥 FORCE SCROLL TO TOP ON PAGE LOAD */
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    try {
-      const dbRef = ref(db, "gallery");
-      const unsubscribe = onValue(
-        dbRef,
-        (snapshot) => {
-          try {
-            if (snapshot.exists()) {
-              const data = snapshot.val();
-              const imageArray = Object.entries(data)
-                .map(([key, img]) => ({
-                  fileId: key,
-                  ...img,
-                }))
-                .filter(img => img.imageUrl)
-                .sort((a, b) => (b.uploadedAtTimestamp || 0) - (a.uploadedAtTimestamp || 0));
-              
-              console.log("GalleryPage loaded:", imageArray.length, "images");
-              setImages(imageArray);
-            } else {
-              console.log("No images found");
-              setImages([]);
-            }
-            setLoading(false);
-          } catch (err) {
-            console.error("Data processing error:", err);
-            setError("Failed to process images");
-            setLoading(false);
-          }
-        },
-        (error) => {
-          console.error("Firebase error:", error);
-          setError(error.message);
-          setImages([]);
-          setLoading(false);
-        }
-      );
+    const dbRef = ref(db, "gallery");
+    const unsubscribe = onValue(
+      dbRef,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const imageArray = Object.entries(data)
+            .map(([key, img]) => ({
+              fileId: key,
+              ...img,
+            }))
+            .filter((img) => img.imageUrl)
+            .sort(
+              (a, b) =>
+                (b.uploadedAtTimestamp || 0) -
+                (a.uploadedAtTimestamp || 0)
+            );
 
-      return () => unsubscribe();
-    } catch (error) {
-      console.error("Gallery page setup error:", error);
-      setError(error.message);
-      setImages([]);
-      setLoading(false);
-    }
+          setImages(imageArray);
+        } else {
+          setImages([]);
+        }
+        setLoading(false);
+      },
+      (error) => {
+        setError(error.message);
+        setImages([]);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
 
   return (
     <>
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* PAGE CONTENT */}
       <main className="gallery-page">
         <div className="gallery-container">
-
           {/* TITLE */}
           <div className="gallery-title-wrapper">
             <h2 className="gallery-title">
@@ -79,29 +69,25 @@ const GalleryPage = () => {
             <div className="gallery-underline"></div>
           </div>
 
-          {/* LOADING STATE */}
+          {/* STATES */}
           {loading && (
             <div className="loading-state">
-              <div className="loading-spinner"></div>
               <p>Loading images...</p>
             </div>
           )}
 
-          {/* ERROR STATE */}
           {!loading && error && (
             <div className="error-state">
-              <p style={{ color: 'red' }}>Error: {error}</p>
+              <p style={{ color: "red" }}>Error: {error}</p>
             </div>
           )}
 
-          {/* EMPTY STATE */}
           {!loading && !error && images.length === 0 && (
             <div className="empty-state">
               <p>No images in the gallery yet.</p>
             </div>
           )}
 
-          {/* IMAGE GRID */}
           {!loading && !error && images.length > 0 && (
             <div className="gallery-grid">
               {images.map((img) => (
@@ -110,17 +96,13 @@ const GalleryPage = () => {
                     src={img.imageUrl}
                     alt={img.fileName || "Gallery Image"}
                     loading="lazy"
-                    onError={(e) => {
-                      console.error("Image failed to load:", img.imageUrl);
-                      e.target.style.display = 'none';
-                    }}
                   />
                 </div>
               ))}
             </div>
           )}
 
-          {/* BACK BUTTON */}
+          {/* BACK */}
           <div className="gallery-back-wrapper">
             <button
               className="gallery-back-btn"
@@ -129,11 +111,9 @@ const GalleryPage = () => {
               ← Go Back
             </button>
           </div>
-
         </div>
       </main>
 
-      {/* FOOTER */}
       <Footer />
     </>
   );

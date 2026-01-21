@@ -3,45 +3,28 @@ import { FaEye } from 'react-icons/fa'
 import './Products.css'
 import back from '../assets/images/back.png'
 import side from '../assets/images/side.png'
+import silo from '../assets/images/silo.png'
 
 const Products = () => {
   const products = [
     {
-      name: 'Tipper Truck Body',
-      description: 'Heavy-duty tipper bodies with hydraulic systems for efficient material transport.',
-      category: 'Construction',
+      name: 'Bulkers',
+      description: 'Heavy-duty bulkers with hydraulic systems for efficient material transport.',
+      category: 'transport',
       image: back
     },
     {
-      name: 'Cargo Truck Body',
+      name: 'Fly Ash bed',
       description: 'Secure cargo bodies with customizable compartments and advanced security features.',
-      category: 'Logistics',
+      category: 'transport',
       image: side
     },
     {
-      name: 'Container Truck Body',
-      description: 'Container carriers with twist lock systems for safe container transportation.',
-      category: 'Shipping',
-      image: back
+      name: 'silos',
+      description: 'We specialize in designing, manufacturing, and installing high-quality industrial silos tailored to meet the storage needs of various industries',
+      category: 'Storage',
+      image: silo
     },
-    {
-      name: 'Flatbed Truck',
-      description: 'Versatile flatbed trucks for oversized and heavy equipment transport.',
-      category: 'Transport',
-      image: side
-    },
-    {
-      name: 'Water Tanker',
-      description: 'Stainless steel water tankers with varying capacities for liquid transport.',
-      category: 'Utilities',
-      image: back
-    },
-    {
-      name: 'Trailer Body',
-      description: 'Custom trailers designed for specific hauling needs and load requirements.',
-      category: 'Commercial',
-      image: side
-    }
   ]
 
   // Animation variants for scroll effect
