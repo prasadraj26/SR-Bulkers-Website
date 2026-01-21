@@ -8,7 +8,7 @@
 /* ===== SECTION ===== */
 .gallery-section {
   background: #ffffff;
-  padding: 100px 0;
+  padding: 100px 0 60px 0; /* CHANGED: Reduced bottom padding to 60px */
   overflow: hidden;
   position: relative;
   min-height: 100vh;
@@ -273,7 +273,7 @@
 /* Small Tablet */
 @media (max-width: 768px) {
   .gallery-section {
-    padding: 80px 0;
+    padding: 80px 0 40px 0; /* CHANGED: Reduced bottom padding to 40px */
   }
   
   .gallery-title {
@@ -355,7 +355,7 @@
   }
   
   .gallery-section {
-    padding: 60px 0;
+    padding: 60px 0 30px 0; /* CHANGED: Reduced bottom padding to 30px */
   }
   
   .carousel-wrapper {

@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
 import { FaEye } from 'react-icons/fa'
 import './Products.css'
-import back from '../assets/images/back.png'
-import side from '../assets/images/side.png'
-import silo from '../assets/images/silo.png'
+
+// Correct way to import images in React/Vite
+import backImg from '../assets/images/back.png'
+import sideImg from '../assets/images/side.png'
+import siloImg from '../assets/images/silo.png'
 
 const Products = () => {
   const products = [
@@ -11,19 +13,19 @@ const Products = () => {
       name: 'Bulkers',
       description: 'Heavy-duty bulkers with hydraulic systems for efficient material transport.',
       category: 'transport',
-      image: back
+      image: backImg  // Use the imported variable
     },
     {
       name: 'Fly Ash bed',
       description: 'Secure cargo bodies with customizable compartments and advanced security features.',
       category: 'transport',
-      image: side
+      image: sideImg  // Use the imported variable
     },
     {
-      name: 'silos',
+      name: 'Silos',
       description: 'We specialize in designing, manufacturing, and installing high-quality industrial silos tailored to meet the storage needs of various industries',
       category: 'Storage',
-      image: silo
+      image: siloImg  // Use the imported variable
     },
   ]
 

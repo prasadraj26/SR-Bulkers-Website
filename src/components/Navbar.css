@@ -5,11 +5,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   z-index: 1000;
   background: #ffffff;
   border-bottom: 1px solid #eee;
   transition: all 0.3s ease;
+  overflow-x: hidden; /* 🔥 PREVENT OVERFLOW */
 }
 
 .navbar.scrolled {
@@ -17,9 +18,11 @@
 }
 
 /* =========================
-   CONTAINER
+   CONTAINER (OVERRIDE GLOBAL)
 ========================= */
 .nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,10 +37,12 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .logo-image {
-  height: 50px;
+  height: 46px;
+  max-width: 100%;
   object-fit: contain;
 }
 
@@ -54,11 +59,11 @@
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
-  color: rgb(44, 101, 186); /* NAVY BLUE */
+  color: rgb(44, 101, 186);
   cursor: pointer;
   position: relative;
+  white-space: nowrap;
 }
-
 
 .nav-link::after {
   content: '';
@@ -81,19 +86,20 @@
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .icon-btn {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .icon-btn.whatsapp {
@@ -111,7 +117,7 @@
 }
 
 /* =========================
-   MENU TOGGLE (MOBILE)
+   MENU TOGGLE
 ========================= */
 .menu-toggle {
   display: none;
@@ -176,14 +182,30 @@
 }
 
 /* =========================
-   RESPONSIVE
+   RESPONSIVE FIXES
 ========================= */
 @media (max-width: 992px) {
   .nav-links {
     display: none;
   }
 
+  /* 🔥 HIDE ICONS ON MOBILE */
+  .icon-btn.whatsapp,
+  .icon-btn.call {
+    display: none;
+  }
+
   .menu-toggle {
     display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 14px;
+  }
+
+  .logo-image {
+    height: 42px;
   }
 }

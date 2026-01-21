@@ -18,6 +18,18 @@
   scroll-behavior: smooth;
 }
 
+/* FIX FOR HORIZONTAL SCROLLING ON MOBILE */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+  color: var(--primary-color);
+}
+
 :root {
   --primary-color: rgb(44, 101, 186);
   --secondary-color: #ffffff;
@@ -29,13 +41,6 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.6;
-  overflow-x: hidden;
-  color: var(--primary-color);
 }
 
 h1, h2, h3, h4 {
@@ -105,9 +110,6 @@ section {
   font-weight: 700;
   letter-spacing: 1px;
 }
-
-/* REMOVED THE PROBLEMATIC .section-title::after RULES HERE */
-/* No global underline styles - each component handles its own underline */
 
 .section-subtitle {
   font-size: 1.2rem;
@@ -179,6 +181,7 @@ section {
     padding: 50px 0;
   }
 }
+
 /* Add these at the end of your index.css file */
 
 /* Extra responsiveness for very small devices */
@@ -225,6 +228,7 @@ section {
     page-break-inside: avoid;
   }
 }
+
 /* Go to Top Button - Truck Wheel Style */
 .go-to-top {
   position: fixed;
@@ -363,5 +367,25 @@ section {
   .wheel-center {
     width: 10px;
     height: 10px;
+  }
+}
+/* Fix spacing specifically between Gallery and Contact sections on mobile */
+@media (max-width: 768px) {
+  #gallery {
+    padding-bottom: 40px !important;
+  }
+  
+  #contact {
+    padding-top: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #gallery {
+    padding-bottom: 30px !important;
+  }
+  
+  #contact {
+    padding-top: 10px !important;
   }
 }

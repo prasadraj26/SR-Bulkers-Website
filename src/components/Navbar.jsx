@@ -13,14 +13,18 @@ const Navbar = () => {
   const location = useLocation()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToTop = () => {
+  const goTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setIsOpen(false)
+  }
+
+  const goPage = (path) => {
+    navigate(path)
     window.scrollTo({ top: 0, behavior: 'smooth' })
     setIsOpen(false)
   }
@@ -39,24 +43,24 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="container nav-container">
-        
+      <div className="nav-container">
+
         {/* LOGO */}
-        <div className="logo" onClick={scrollToTop}>
+        <div className="logo" onClick={goTop}>
           <img src={logo} alt="SR Bulkers" className="logo-image" />
         </div>
 
         {/* DESKTOP LINKS */}
         <div className="nav-links">
-          <span className="nav-link" onClick={scrollToTop}>Home</span>
-          <span className="nav-link" onClick={() => navigate('/about')}>About</span>
-          <span className="nav-link" onClick={() => navigate('/services')}>Services</span>
+          <span className="nav-link" onClick={goTop}>Home</span>
+          <span className="nav-link" onClick={() => goPage('/about')}>About</span>
+          <span className="nav-link" onClick={() => goPage('/services')}>Services</span>
           <span className="nav-link" onClick={() => scrollToSection('products')}>Products</span>
-          <span className="nav-link" onClick={() => navigate('/gallery')}>Gallery</span>
+          <span className="nav-link" onClick={() => goPage('/gallery')}>Gallery</span>
           <span className="nav-link" onClick={() => scrollToSection('contact')}>Contact</span>
         </div>
 
-        {/* ACTION ICONS */}
+        {/* ACTIONS */}
         <div className="nav-actions">
           <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noreferrer" className="icon-btn whatsapp">
             <FaWhatsapp />
@@ -79,11 +83,11 @@ const Navbar = () => {
               <FiX />
             </button>
 
-            <span onClick={scrollToTop}>Home</span>
-            <span onClick={() => navigate('/about')}>About</span>
-            <span onClick={() => navigate('/services')}>Services</span>
+            <span onClick={goTop}>Home</span>
+            <span onClick={() => goPage('/about')}>About</span>
+            <span onClick={() => goPage('/services')}>Services</span>
             <span onClick={() => scrollToSection('products')}>Products</span>
-            <span onClick={() => navigate('/gallery')}>Gallery</span>
+            <span onClick={() => goPage('/gallery')}>Gallery</span>
             <span onClick={() => scrollToSection('contact')}>Contact</span>
           </div>
         </>
