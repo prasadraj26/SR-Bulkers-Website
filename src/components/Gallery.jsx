@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { ref, onValue } from "firebase/database";
 import { db } from "../firebase";
 import "./Gallery.css";
+import { motion } from "framer-motion";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
@@ -90,15 +91,54 @@ const Gallery = () => {
 
   const loopImages = getLoopImages(carouselImages);
 
+  // Animation variants for scroll effect
+  const titleVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const subtitleVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 0.2
+      }
+    }
+  };
+
   return (
     <section className="gallery-section" id="projects">
       <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">LATEST PROJECTS</h2>
-          <p className="section-subtitle">
+        <motion.div 
+          className="gallery-header"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2 
+            className="gallery-title"
+            variants={titleVariants}
+          >
+            LATEST PROJECTS
+          </motion.h2>
+          <motion.p 
+            className="gallery-subtitle"
+            variants={subtitleVariants}
+          >
             Recently completed works and builds
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {loading ? (
           <div className="loading-state">

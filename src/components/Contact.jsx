@@ -109,11 +109,10 @@ const Contact = () => {
 
   return (
     <section id="contact" className="white-section contact-section">
-
       <div className="container">
-        <div className="section-header" data-aos="fade-up">
-          <h2 className="section-title">Contact Us</h2>
-          <p className="section-subtitle">
+        <div className="contact-header" data-aos="fade-up">
+          <h2 className="contact-title">Contact Us</h2>
+          <p className="contact-subtitle">
             Get in touch with our team. We're here to help and answer any questions you might have.
           </p>
         </div>
@@ -123,7 +122,7 @@ const Contact = () => {
             className="contact-info"
             data-aos="fade-right"
           >
-            <h3>Get in Touch</h3>
+            <h3 className="contact-info-title">Get in Touch</h3>
             
             <div className="info-list">
               {contactInfo.map((info, index) => (

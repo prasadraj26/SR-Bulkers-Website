@@ -4,25 +4,30 @@
   padding: 80px 0;
 }
 
-.contact-section .section-title {
-  display: block;
+.contact-header {
   text-align: center;
-  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 800;
+  margin-bottom: 60px;
 }
 
-.contact-section .section-title::after {
-  content: '';
-  display: block !important;
-  width: 120px !important;
-  height: 6px !important;
-  background: var(--accent-color) !important;
-  margin: 12px auto 0 !important;
-  border-radius: 3px;
-  position: static !important;
-  z-index: 2;
+.contact-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--primary-color);
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  display: inline-block;
+  position: relative;
+}
+
+/* NO UNDERLINE - Removed ::after completely */
+.contact-subtitle {
+  font-size: 1.2rem;
+  color: var(--gray-medium);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .contact-container {
@@ -32,10 +37,13 @@
   align-items: start;
 }
 
-.contact-info h3 {
+.contact-info-title {
   font-size: 2rem;
   margin-bottom: 30px;
   color: var(--primary-color);
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .info-list {
@@ -61,6 +69,7 @@
   font-size: 1.2rem;
   margin-bottom: 5px;
   color: var(--primary-color);
+  font-weight: 600;
 }
 
 .info-content p {
@@ -104,6 +113,9 @@
   font-size: 2rem;
   margin-bottom: 30px;
   color: var(--primary-color);
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .form-status {
@@ -207,7 +219,7 @@
     padding: 40px 30px;
   }
 
-  .contact-info h3,
+  .contact-info-title,
   .form-title {
     font-size: 1.8rem;
   }
@@ -220,6 +232,14 @@
 @media (max-width: 768px) {
   .contact-section {
     padding: 60px 0;
+  }
+
+  .contact-title {
+    font-size: 2rem;
+  }
+
+  .contact-subtitle {
+    font-size: 1rem;
   }
 
   .contact-container {
@@ -236,13 +256,9 @@
   }
 
   .form-title,
-  .contact-info h3 {
+  .contact-info-title {
     font-size: 1.6rem;
     margin-bottom: 20px;
-  }
-
-  .contact-info h3 {
-    text-align: center;
   }
 
   .info-item {
@@ -293,6 +309,14 @@
     padding: 50px 0;
   }
 
+  .contact-title {
+    font-size: 1.8rem;
+  }
+
+  .contact-subtitle {
+    font-size: 0.95rem;
+  }
+
   .contact-container {
     gap: 30px;
   }
@@ -309,7 +333,7 @@
     margin-top: 0;
   }
 
-  .contact-info h3,
+  .contact-info-title,
   .form-title {
     font-size: 1.4rem;
     margin-bottom: 20px;
@@ -381,7 +405,11 @@
     padding: 0 15px;
   }
 
-  .contact-info h3,
+  .contact-title {
+    font-size: 1.6rem;
+  }
+
+  .contact-info-title,
   .form-title {
     font-size: 1.3rem;
     margin-bottom: 18px;

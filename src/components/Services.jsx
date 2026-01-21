@@ -45,11 +45,10 @@ const Services = () => {
 
   return (
     <section id="services" className="dark-section services-section">
-
       <div className="container">
-        <div className="section-header" data-aos="fade-up">
-          <h2 className="section-title">Our Services </h2>
-          <p className="section-subtitle">
+        <div className="services-header" data-aos="fade-up">
+          <h2 className="services-title">Our Services</h2>
+          <p className="services-subtitle">
             Comprehensive truck manufacturing and maintenance services designed to keep your fleet running at peak performance.
           </p>
         </div>

@@ -14,11 +14,13 @@ function ManageGallery() {
   const [deletingId, setDeletingId] = useState(null);
   const [message, setMessage] = useState("");
   const [initialLoading, setInitialLoading] = useState(true);
+  const [previewImage, setPreviewImage] = useState(null);
 
   /* FETCH IMAGES */
   useEffect(() => {
     const galleryRef = ref(db, "gallery");
-    onValue(galleryRef, (snapshot) => {
+
+    const unsubscribe = onValue(galleryRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         const list = Object.entries(data)
@@ -30,9 +32,18 @@ function ManageGallery() {
       }
       setInitialLoading(false);
     });
+
+    return () => unsubscribe();
   }, []);
 
-  /* UPLOAD IMAGE */
+  /* ESC CLOSE MODAL */
+  useEffect(() => {
+    const esc = (e) => e.key === "Escape" && setPreviewImage(null);
+    window.addEventListener("keydown", esc);
+    return () => window.removeEventListener("keydown", esc);
+  }, []);
+
+  /* UPLOAD */
   const handleUpload = async () => {
     if (!file) {
       setMessage("Please select an image");
@@ -55,7 +66,7 @@ function ManageGallery() {
     setLoading(false);
   };
 
-  /* DELETE IMAGE */
+  /* DELETE */
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this image?")) return;
 
@@ -92,7 +103,6 @@ function ManageGallery() {
         </button>
       </div>
 
-      {/* Selected file info */}
       {file && (
         <div className="file-info">
           <span>{file.name}</span>
@@ -109,7 +119,10 @@ function ManageGallery() {
             <div key={i} className="gallery-skeleton"></div>
           ))
         ) : images.length === 0 ? (
-          <p className="empty-text">No images uploaded yet.</p>
+          <div className="empty-state">
+            <h3>No images yet</h3>
+            <p>Upload your first image to get started</p>
+          </div>
         ) : (
           images.map((img) => (
             <div key={img.id} className="gallery-card fade-in">
@@ -117,7 +130,9 @@ function ManageGallery() {
                 src={img.imageUrl}
                 alt={img.fileName}
                 loading="lazy"
+                onClick={() => setPreviewImage(img.imageUrl)}
               />
+
               <button
                 className="gallery-delete-btn"
                 onClick={() => handleDelete(img.id)}
@@ -129,6 +144,14 @@ function ManageGallery() {
           ))
         )}
       </div>
+
+      {/* MODAL */}
+      {previewImage && (
+        <div className="image-modal" onClick={() => setPreviewImage(null)}>
+          <img src={previewImage} alt="Preview" />
+          <span className="modal-close">✕</span>
+        </div>
+      )}
 
       {/* Back */}
       <div className="about-back-wrapper">

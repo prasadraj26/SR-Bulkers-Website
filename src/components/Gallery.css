@@ -22,18 +22,16 @@
   position: relative;
 }
 
-/* ===== SECTION HEADER - FIXED ALIGNMENT ===== */
-.section-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* ===== SECTION HEADER - CENTER ALIGNED ===== */
+.gallery-header {
+  text-align: center;
   margin-bottom: 80px;
   width: 100%;
 }
 
-.section-title {
+.gallery-title {
   font-size: 3.5rem;
-  margin: 0 0 15px 0; /* Reset all margins, only bottom margin */
+  margin: 0 0 15px 0;
   color: #2c5ea4;
   font-weight: 800;
   letter-spacing: 1px;
@@ -43,33 +41,8 @@
   text-transform: uppercase;
 }
 
-.title-underline {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 0 auto 25px auto; /* Center with auto margins */
-  width: 140px; /* Fixed width for consistent centering */
-  height: 10px;
-}
-
-.underline-red {
-  width: 60px;
-  height: 4px;
-  background: #ff0000;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.underline-blue {
-  width: 60px;
-  height: 4px;
-  background: #2c5ea4;
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-.section-subtitle {
+/* NO UNDERLINE - removed completely */
+.gallery-subtitle {
   color: #2c5ea4;
   margin: 0 auto;
   font-size: 1.3rem;
@@ -165,28 +138,21 @@
   padding: 20px 0;
 }
 
-/* SPEED ADJUSTMENT: Change these values to control animation speed */
-/* Higher number = slower animation, Lower number = faster animation */
-
-/* Top row - moves left continuously - CURRENT SPEED: 100s */
+/* REDUCED SPEED: Made animations slower (higher number = slower) */
+/* Top row - moves left continuously - SLOWER SPEED: 180s */
 .top-row {
-  animation: scroll-left 100s linear infinite; /* ADJUST THIS VALUE FOR TOP ROW SPEED */
+  animation: scroll-left 180s linear infinite; /* CHANGED FROM 100s TO 180s */
 }
 
-/* Bottom row - moves right continuously - CURRENT SPEED: 105s */
+/* Bottom row - moves right continuously - SLOWER SPEED: 190s */
 .bottom-row {
-  animation: scroll-right 105s linear infinite; /* ADJUST THIS VALUE FOR BOTTOM ROW SPEED */
+  animation: scroll-right 190s linear infinite; /* CHANGED FROM 105s TO 190s */
 }
 
 /* PAUSE CLASS - Applied when hovering container (not images) */
 .carousel-row.paused {
   animation-play-state: paused;
 }
-
-/* SPEED ADJUSTMENT NOTE: 
-   - For slower animation: Increase the number (e.g., 120s, 150s)
-   - For faster animation: Decrease the number (e.g., 80s, 60s)
-   - Keep bottom row slightly different for visual interest */
 
 /* ===== TRUE SEAMLESS LOOP ANIMATIONS ===== */
 @keyframes scroll-left {
@@ -221,20 +187,15 @@
     0 2px 4px rgba(44, 94, 164, 0.05);
   transform-origin: center;
   border: 1px solid rgba(44, 94, 164, 0.1);
-  /* REMOVED: cursor pointer and all hover transitions */
 }
-
-/* NO hover effects on cards - images are not clickable */
-
 
 .carousel-card img {
   width: 100%;
-  height: auto;          /* allow natural height */
-  max-height: 200px;     /* keeps grid clean */
-  object-fit: contain;  /* show full image */
-  background: #f5f6fa;  /* neutral background */
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  background: #f5f6fa;
 }
-
 
 /* ===== RESPONSIVE DESIGN ===== */
 
@@ -245,7 +206,7 @@
     height: 200px;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 3.2rem;
   }
 }
@@ -257,7 +218,7 @@
     height: 180px;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 2.8rem;
   }
   
@@ -277,8 +238,12 @@
     gap: 24px;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 2.5rem;
+  }
+  
+  .gallery-subtitle {
+    font-size: 1.2rem;
   }
   
   .carousel-wrapper {
@@ -295,22 +260,13 @@
     width: 60px;
   }
   
-  .title-underline {
-    width: 130px;
-  }
-  
-  .underline-red,
-  .underline-blue {
-    width: 55px;
-  }
-  
-  /* SPEED ADJUSTMENT FOR TABLET */
+  /* SLOWER SPEED FOR TABLET */
   .top-row {
-    animation-duration: 110s; /* ADJUST THIS FOR TABLET */
+    animation-duration: 200s; /* ADJUSTED FROM 110s TO 200s */
   }
   
   .bottom-row {
-    animation-duration: 115s; /* ADJUST THIS FOR TABLET */
+    animation-duration: 210s; /* ADJUSTED FROM 115s TO 210s */
   }
 }
 
@@ -320,12 +276,12 @@
     padding: 80px 0;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 2.2rem;
     margin-bottom: 12px;
   }
   
-  .section-subtitle {
+  .gallery-subtitle {
     font-size: 1.1rem;
   }
   
@@ -356,23 +312,13 @@
     width: 40px;
   }
   
-  .title-underline {
-    width: 120px;
-    margin-bottom: 20px;
-  }
-  
-  .underline-red,
-  .underline-blue {
-    width: 50px;
-  }
-  
-  /* SPEED ADJUSTMENT FOR MOBILE */
+  /* SLOWER SPEED FOR MOBILE */
   .top-row {
-    animation-duration: 120s; /* ADJUST THIS FOR MOBILE */
+    animation-duration: 220s; /* ADJUSTED FROM 120s TO 220s */
   }
   
   .bottom-row {
-    animation-duration: 125s; /* ADJUST THIS FOR MOBILE */
+    animation-duration: 230s; /* ADJUSTED FROM 125s TO 230s */
   }
 }
 
@@ -383,23 +329,13 @@
     height: 130px;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 2rem;
     margin-bottom: 10px;
   }
   
-  .section-subtitle {
+  .gallery-subtitle {
     font-size: 1rem;
-  }
-  
-  .title-underline {
-    width: 110px;
-    margin-bottom: 18px;
-  }
-  
-  .underline-red,
-  .underline-blue {
-    width: 45px;
   }
 }
 
@@ -414,7 +350,7 @@
     gap: 16px;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 1.8rem;
   }
   
@@ -435,15 +371,6 @@
   .carousel-container::after {
     width: 30px;
   }
-  
-  .title-underline {
-    width: 100px;
-  }
-  
-  .underline-red,
-  .underline-blue {
-    width: 40px;
-  }
 }
 
 /* Very Small Mobile */
@@ -453,21 +380,12 @@
     height: 100px;
   }
   
-  .section-title {
+  .gallery-title {
     font-size: 1.6rem;
   }
   
   .carousel-row {
     gap: 12px;
-  }
-  
-  .title-underline {
-    width: 90px;
-  }
-  
-  .underline-red,
-  .underline-blue {
-    width: 35px;
   }
 }
 

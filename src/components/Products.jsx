@@ -3,6 +3,7 @@ import { FaEye } from 'react-icons/fa'
 import './Products.css'
 import back from '../assets/images/back.png'
 import side from '../assets/images/side.png'
+
 const Products = () => {
   const products = [
     {
@@ -43,25 +44,91 @@ const Products = () => {
     }
   ]
 
+  // Animation variants for scroll effect
+  const titleVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const subtitleVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        delay: 0.2
+      }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <section id="products" className="white-section products-section">
-
+    <section id="products" className="products-section">
       <div className="container">
-        <div className="section-header" data-aos="fade-up">
-          <h2 className="section-title">Our Products</h2>
-          <p className="section-subtitle">
+        <motion.div 
+          className="products-header"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2 
+            className="products-title"
+            variants={titleVariants}
+          >
+            Our Products
+          </motion.h2>
+          <motion.p 
+            className="products-subtitle"
+            variants={subtitleVariants}
+          >
             Explore our range of high-quality truck bodies and trailers built to meet diverse industrial needs.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="products-grid">
+        <motion.div 
+          className="products-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {products.map((product, index) => (
             <motion.div
               key={index}
               className="product-card"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              whileHover={{ scale: 1.03 }}
+              variants={cardVariants}
+              whileHover={{ scale: 1.03, y: -5 }}
               whileTap={{ scale: 0.98 }}
             >
               <div className="product-image">
@@ -83,7 +150,7 @@ const Products = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
