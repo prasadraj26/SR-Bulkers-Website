@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap'); 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
 
 @import './components/Navbar.css';
@@ -51,16 +51,18 @@ h1, h2, h3, h4 {
   letter-spacing: 1px;
 }
 
-.container {
+/* REMOVED: Global container styles - each component has its own */
+/* .container {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
-}
+} */
 
-section {
+/* REMOVED: Global section padding - each component controls its own padding */
+/* section {
   padding: 100px 0;
-}
+} */
 
 .btn {
   display: inline-block;
@@ -128,40 +130,25 @@ section {
   color: var(--secondary-color);
 }
 
-/* Responsive Design */
+/* Responsive Design - Keep only font/text responsive styles */
 @media (max-width: 1200px) {
-  .container {
-    max-width: 1140px;
-  }
   .section-title {
     font-size: 2.5rem;
   }
 }
 
 @media (max-width: 992px) {
-  .container {
-    max-width: 960px;
-  }
   .section-title {
     font-size: 2.2rem;
-  }
-  section {
-    padding: 80px 0;
   }
 }
 
 @media (max-width: 768px) {
-  .container {
-    max-width: 720px;
-  }
   .section-title {
     font-size: 2rem;
   }
   .section-subtitle {
     font-size: 1rem;
-  }
-  section {
-    padding: 60px 0;
   }
   .btn {
     padding: 12px 30px;
@@ -170,26 +157,13 @@ section {
 }
 
 @media (max-width: 576px) {
-  .container {
-    max-width: 540px;
-    padding: 0 15px;
-  }
   .section-title {
     font-size: 1.8rem;
   }
-  section {
-    padding: 50px 0;
-  }
 }
-
-/* Add these at the end of your index.css file */
 
 /* Extra responsiveness for very small devices */
 @media (max-width: 480px) {
-  .container {
-    padding: 0 10px;
-  }
-  
   .section-title {
     font-size: 1.6rem;
   }
@@ -200,20 +174,6 @@ section {
   }
 }
 
-/* Tablet landscape */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .container {
-    max-width: 960px;
-  }
-}
-
-/* Large desktop */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1320px;
-  }
-}
-
 /* Print styles */
 @media print {
   .navbar,
@@ -221,11 +181,6 @@ section {
   .contact-form,
   .footer {
     display: none;
-  }
-  
-  section {
-    padding: 50px 0;
-    page-break-inside: avoid;
   }
 }
 
@@ -369,8 +324,9 @@ section {
     height: 10px;
   }
 }
-/* Fix spacing specifically between Gallery and Contact sections on mobile */
-@media (max-width: 768px) {
+
+/* REMOVED: Fix spacing specifically between Gallery and Contact sections on mobile */
+/* @media (max-width: 768px) {
   #gallery {
     padding-bottom: 40px !important;
   }
@@ -387,5 +343,21 @@ section {
   
   #contact {
     padding-top: 10px !important;
+  }
+} */
+/* Consistent section spacing system */
+section {
+  padding: 80px 0;
+}
+
+@media (max-width: 992px) {
+  section {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 40px 0;
   }
 }

@@ -8,6 +8,7 @@
 /* PAGE */
 .about-page {
   background: #ffffff;
+  padding-top: 90px !important; /* Navbar offset */
 }
 
 /* SECTION */
@@ -27,6 +28,7 @@
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .two-col {
@@ -44,10 +46,6 @@
   direction: ltr;
 }
 
-.center {
-  text-align: center;
-}
-
 /* TITLES */
 .about-title {
   font-size: 2.6rem;
@@ -56,18 +54,9 @@
   font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;
-}
-
-.about-underline {
-  width: 70px;
-  height: 4px;
-  background: var(--navy);
-  margin: 12px 0 24px;
-  border-radius: 4px;
-}
-
-.about-underline.center {
-  margin: 12px auto 24px;
+  text-align: center;
+  padding-top: 20px;
+  margin-bottom: 24px;
 }
 
 /* TEXT */
@@ -76,6 +65,7 @@
   color: var(--text-dark);
   line-height: 1.7;
   font-family: 'Montserrat', sans-serif;
+  text-align: center;
 }
 
 .max-width {
@@ -83,18 +73,31 @@
   margin: 0 auto;
 }
 
-.about-logo {
-  width: 260px;
-  max-width: 100%;
-  margin: 0 auto;
-  display: block;
+/* Center all content in two-col sections */
+.two-col > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
-/* WHO WE ARE LOGO */
+
+.two-col .about-text {
+  text-align: center;
+}
+
+/* LOGO IMAGES */
+.about-logo,
 .team-logo {
   width: 260px;
   max-width: 100%;
-  margin: 0 auto;
   display: block;
+  margin: 0 auto;
+  transition: transform 0.5s ease; /* 🔥 Added for hover effect */
+}
+
+.about-logo:hover,
+.team-logo:hover {
+  transform: scale(1.05); /* 🔥 Added hover effect */
 }
 
 /* SERVICES */
@@ -110,16 +113,31 @@
   padding: 32px;
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 🔥 Smooth transition */
+}
+
+.service-card:hover {
+  transform: translateY(-10px) scale(1.02); /* 🔥 Lift effect on hover */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* 🔥 Enhanced shadow on hover */
 }
 
 .service-card h3 {
   color: var(--navy);
   margin-bottom: 10px;
+  text-align: center;
+  transition: color 0.3s ease; /* 🔥 Color transition */
+}
+
+.service-card:hover h3 {
+  color: var(--navy-dark); /* 🔥 Darker color on hover */
 }
 
 .service-card p {
   color: var(--text-dark);
   font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  transition: color 0.3s ease; /* 🔥 Color transition */
 }
 
 /* BACK BUTTON */
@@ -138,11 +156,132 @@
   cursor: pointer;
   background: var(--navy);
   color: #ffffff;
-  transition: background 0.25s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 🔥 Enhanced transition */
+  position: relative;
+  overflow: hidden;
+}
+
+.about-back-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.about-back-btn:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .about-back-btn:hover {
   background: var(--navy-dark);
+  transform: translateY(-3px) scale(1.05); /* 🔥 Lift and scale on hover */
+  box-shadow: 0 10px 25px rgba(44, 94, 164, 0.3); /* 🔥 Shadow on hover */
+}
+
+.about-back-btn:active {
+  transform: translateY(-1px) scale(1.02); /* 🔥 Press effect */
+}
+
+/* 🔥 AOS Animation Classes */
+/* Fade animations */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-down {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-down.aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-left.aos-animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-right.aos-animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Zoom animations */
+.zoom-in {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.zoom-in.aos-animate {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.zoom-out {
+  opacity: 0;
+  transform: scale(1.1);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.zoom-out.aos-animate {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger animations */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.stagger-item.aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add delay classes for staggered animations */
+.delay-100 {
+  transition-delay: 100ms;
+}
+.delay-200 {
+  transition-delay: 200ms;
+}
+.delay-300 {
+  transition-delay: 300ms;
+}
+.delay-400 {
+  transition-delay: 400ms;
 }
 
 /* RESPONSIVE */
@@ -154,14 +293,52 @@
   .about-title {
     font-size: 2.2rem;
   }
+  
+  /* Adjust animations for mobile */
+  .fade-left, .fade-right {
+    transform: translateY(20px);
+  }
+  
+  .fade-left.aos-animate, .fade-right.aos-animate {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    padding-top: 80px !important;
+  }
+  
+  .about-title {
+    padding-top: 15px;
+  }
+  
+  /* Reduce hover effects on mobile */
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .about-back-btn:hover {
+    transform: translateY(-2px);
+  }
 }
 
 @media (max-width: 480px) {
+  .about-page {
+    padding-top: 70px !important;
+  }
+  
   .about-section {
     padding: 60px 16px;
   }
 
   .about-title {
     font-size: 2rem;
+    padding-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .about-container {
+    padding: 0 15px;
   }
 }

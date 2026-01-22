@@ -8,14 +8,25 @@
 /* ===== SECTION ===== */
 .gallery-section {
   background: #ffffff;
-  padding: 100px 0 60px 0; /* CHANGED: Reduced bottom padding to 60px */
+  padding: 80px 0 40px 0; /* Add moderate padding */
   overflow: hidden;
   position: relative;
-  min-height: 100vh;
   width: 100%;
 }
 
-.container {
+@media (max-width: 768px) {
+  .gallery-section {
+    padding: 60px 0 30px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-section {
+    padding: 40px 0 20px 0;
+  }
+}
+
+.gallery-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
@@ -141,12 +152,12 @@
 /* REDUCED SPEED: Made animations slower (higher number = slower) */
 /* Top row - moves left continuously - SLOWER SPEED: 180s */
 .top-row {
-  animation: scroll-left 180s linear infinite; /* CHANGED FROM 100s TO 180s */
+  animation: scroll-left 180s linear infinite;
 }
 
 /* Bottom row - moves right continuously - SLOWER SPEED: 190s */
 .bottom-row {
-  animation: scroll-right 190s linear infinite; /* CHANGED FROM 105s TO 190s */
+  animation: scroll-right 190s linear infinite;
 }
 
 /* PAUSE CLASS - Applied when hovering container (not images) */
@@ -222,7 +233,7 @@
     font-size: 2.8rem;
   }
   
-  .container {
+  .gallery-container {
     padding: 0 30px;
   }
 }
@@ -262,20 +273,16 @@
   
   /* SLOWER SPEED FOR TABLET */
   .top-row {
-    animation-duration: 200s; /* ADJUSTED FROM 110s TO 200s */
+    animation-duration: 200s;
   }
   
   .bottom-row {
-    animation-duration: 210s; /* ADJUSTED FROM 115s TO 210s */
+    animation-duration: 210s;
   }
 }
 
 /* Small Tablet */
 @media (max-width: 768px) {
-  .gallery-section {
-    padding: 80px 0 40px 0; /* CHANGED: Reduced bottom padding to 40px */
-  }
-  
   .gallery-title {
     font-size: 2.2rem;
     margin-bottom: 12px;
@@ -294,7 +301,7 @@
     gap: 20px;
   }
   
-  .container {
+  .gallery-container {
     padding: 0 20px;
   }
   
@@ -314,11 +321,11 @@
   
   /* SLOWER SPEED FOR MOBILE */
   .top-row {
-    animation-duration: 220s; /* ADJUSTED FROM 120s TO 220s */
+    animation-duration: 220s;
   }
   
   .bottom-row {
-    animation-duration: 230s; /* ADJUSTED FROM 125s TO 230s */
+    animation-duration: 230s;
   }
 }
 
@@ -352,10 +359,6 @@
   
   .gallery-title {
     font-size: 1.8rem;
-  }
-  
-  .gallery-section {
-    padding: 60px 0 30px 0; /* CHANGED: Reduced bottom padding to 30px */
   }
   
   .carousel-wrapper {

@@ -3,7 +3,7 @@
 ========================= */
 .contact-section {
   background: var(--secondary-color);
-  padding: 30px 0 60px 0; /* CHANGED: Reduced top padding to 30px, kept bottom 60px */
+  padding: 40px 0 60px 0; /* Moderate top padding */
 }
 
 /* =========================
@@ -34,8 +34,11 @@
 .contact-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 50px; /* REDUCED */
+  gap: 50px;
   align-items: flex-start;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* =========================
@@ -97,7 +100,7 @@
 ========================= */
 .contact-form-container {
   background: var(--gray-light);
-  padding: 34px; /* REDUCED */
+  padding: 34px;
   border-radius: 14px;
   box-shadow: var(--shadow);
 }
@@ -144,15 +147,15 @@
 }
 
 @media (max-width: 576px) {
-  .contact-section {
-    padding: 20px 0 40px 0; /* CHANGED: Reduced top padding to 20px */
-  }
-
   .contact-title {
     font-size: 2rem;
   }
 
   .contact-form-container {
     padding: 24px;
+  }
+  
+  .contact-container {
+    padding: 0 15px;
   }
 }
