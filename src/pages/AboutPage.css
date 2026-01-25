@@ -1,3 +1,4 @@
+/* AboutPage.css */
 :root {
   --navy: #2c5ea4;
   --navy-dark: #244b86;
@@ -38,6 +39,7 @@
   align-items: center;
 }
 
+/* FIX: Ensure proper mobile layout for reverse section */
 .two-col.reverse {
   direction: rtl;
 }
@@ -92,12 +94,12 @@
   max-width: 100%;
   display: block;
   margin: 0 auto;
-  transition: transform 0.5s ease; /* 🔥 Added for hover effect */
+  transition: transform 0.5s ease;
 }
 
 .about-logo:hover,
 .team-logo:hover {
-  transform: scale(1.05); /* 🔥 Added hover effect */
+  transform: scale(1.05);
 }
 
 /* SERVICES */
@@ -114,30 +116,30 @@
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 🔥 Smooth transition */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .service-card:hover {
-  transform: translateY(-10px) scale(1.02); /* 🔥 Lift effect on hover */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* 🔥 Enhanced shadow on hover */
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .service-card h3 {
   color: var(--navy);
   margin-bottom: 10px;
   text-align: center;
-  transition: color 0.3s ease; /* 🔥 Color transition */
+  transition: color 0.3s ease;
 }
 
 .service-card:hover h3 {
-  color: var(--navy-dark); /* 🔥 Darker color on hover */
+  color: var(--navy-dark);
 }
 
 .service-card p {
   color: var(--text-dark);
   font-family: 'Montserrat', sans-serif;
   text-align: center;
-  transition: color 0.3s ease; /* 🔥 Color transition */
+  transition: color 0.3s ease;
 }
 
 /* BACK BUTTON */
@@ -156,7 +158,7 @@
   cursor: pointer;
   background: var(--navy);
   color: #ffffff;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 🔥 Enhanced transition */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
 }
@@ -181,19 +183,22 @@
 
 .about-back-btn:hover {
   background: var(--navy-dark);
-  transform: translateY(-3px) scale(1.05); /* 🔥 Lift and scale on hover */
-  box-shadow: 0 10px 25px rgba(44, 94, 164, 0.3); /* 🔥 Shadow on hover */
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(44, 94, 164, 0.3);
 }
 
 .about-back-btn:active {
-  transform: translateY(-1px) scale(1.02); /* 🔥 Press effect */
+  transform: translateY(-1px) scale(1.02);
 }
 
-/* 🔥 AOS Animation Classes */
-/* Fade animations */
+/* ========================= */
+/* SIMPLIFIED AOS ANIMATIONS */
+/* ========================= */
+
+/* All animations come from below */
 .fade-up {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(40px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
@@ -202,66 +207,22 @@
   transform: translateY(0);
 }
 
-.fade-down {
-  opacity: 0;
-  transform: translateY(-30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-down.aos-animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fade-left {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-left.aos-animate {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.fade-right {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-right.aos-animate {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Zoom animations */
+/* Zoom in animation */
 .zoom-in {
   opacity: 0;
-  transform: scale(0.9);
+  transform: scale(0.9) translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .zoom-in.aos-animate {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 
-.zoom-out {
-  opacity: 0;
-  transform: scale(1.1);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.zoom-out.aos-animate {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* Stagger animations */
+/* Stagger animations - all from below */
 .stagger-item {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
@@ -284,23 +245,34 @@
   transition-delay: 400ms;
 }
 
-/* RESPONSIVE */
+/* ========================= */
+/* RESPONSIVE FIXES */
+/* ========================= */
+
 @media (max-width: 900px) {
   .two-col {
     grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  /* FIX: Ensure proper stacking order for reverse section on mobile */
+  .two-col.reverse {
+    direction: ltr; /* Reset direction for mobile */
+    grid-template-areas: 
+      "text"
+      "image";
+  }
+  
+  .two-col.reverse > div {
+    grid-area: text;
+  }
+  
+  .two-col.reverse > img {
+    grid-area: image;
   }
 
   .about-title {
     font-size: 2.2rem;
-  }
-  
-  /* Adjust animations for mobile */
-  .fade-left, .fade-right {
-    transform: translateY(20px);
-  }
-  
-  .fade-left.aos-animate, .fade-right.aos-animate {
-    transform: translateY(0);
   }
 }
 
@@ -313,13 +285,21 @@
     padding-top: 15px;
   }
   
-  /* Reduce hover effects on mobile */
   .service-card:hover {
     transform: translateY(-5px);
   }
   
   .about-back-btn:hover {
     transform: translateY(-2px);
+  }
+  
+  /* Reduce animation distance on mobile */
+  .fade-up {
+    transform: translateY(20px);
+  }
+  
+  .stagger-item {
+    transform: translateY(15px);
   }
 }
 
@@ -340,5 +320,14 @@
   
   .about-container {
     padding: 0 15px;
+  }
+  
+  .two-col {
+    gap: 30px;
+  }
+  
+  .about-logo,
+  .team-logo {
+    width: 220px;
   }
 }

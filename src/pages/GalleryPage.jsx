@@ -13,6 +13,8 @@ const GalleryPage = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const imagesPerPage = 6; // Perfect 3x2 grid per page
 
   /* 🔥 Initialize AOS */
   useEffect(() => {
@@ -24,9 +26,11 @@ const GalleryPage = () => {
       offset: 100
     });
     
-    // Refresh AOS when images load
-    AOS.refresh();
-  }, [images]);
+    // Refresh AOS when images load or page changes
+    setTimeout(() => {
+      AOS.refresh();
+    }, 100);
+  }, [images, currentPage]);
 
   /* 🔥 FORCE SCROLL TO TOP ON PAGE LOAD */
   useEffect(() => {
@@ -71,6 +75,18 @@ const GalleryPage = () => {
     return () => unsubscribe();
   }, []);
 
+  // Calculate pagination
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
+  const totalPages = Math.ceil(images.length / imagesPerPage);
+
+  // Handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 300, behavior: "smooth" });
+  };
+
   return (
     <>
       <Navbar />
@@ -82,7 +98,13 @@ const GalleryPage = () => {
             <h2 className="gallery-title">
               Our <span>Gallery</span>
             </h2>
-            {/* 🔥 REMOVED UNDERLINE DIV */}
+            
+            {/* Show total images count */}
+            {!loading && !error && images.length > 0 && (
+              <p className="gallery-subtitle" data-aos="fade-up" data-aos-delay="200">
+                Showing {currentImages.length} of {images.length} images
+              </p>
+            )}
           </div>
 
           {/* STATES */}
@@ -105,28 +127,101 @@ const GalleryPage = () => {
             </div>
           )}
 
+          {/* GALLERY GRID WITH PERFECT AUTO-ADJUSTMENT */}
           {!loading && !error && images.length > 0 && (
-            <div className="gallery-grid">
-              {images.map((img, index) => (
-                <div 
-                  className="gallery-card stagger-item" 
-                  key={img.fileId}
-                  data-aos="fade-up"
-                  data-aos-delay={`${(index % 4) * 100}`} // Stagger animation
-                  data-aos-duration="600"
-                >
-                  <img
-                    src={img.imageUrl}
-                    alt={img.fileName || "Gallery Image"}
-                    loading="lazy"
-                  />
+            <>
+              <div 
+                className="gallery-grid"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                {currentImages.map((img, index) => {
+                  // Calculate delay for staggered animation
+                  const animationDelay = (index % 4) * 100;
+                  
+                  return (
+                    <div 
+                      className="gallery-card stagger-item" 
+                      key={img.fileId}
+                      data-aos="zoom-in"
+                      data-aos-delay={animationDelay}
+                      data-aos-duration="600"
+                    >
+                      <img
+                        src={img.imageUrl}
+                        alt={img.fileName || "Gallery Image"}
+                        loading="lazy"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* PAGINATION CONTROLS - Only show if more than 1 page */}
+              {totalPages > 1 && (
+                <div className="gallery-pagination" data-aos="fade-up" data-aos-delay="300">
+                  {/* Previous Button */}
+                  <button
+                    className="page-btn"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    aria-label="Previous page"
+                  >
+                    &laquo;
+                  </button>
+
+                  {/* Page Numbers */}
+                  {[...Array(totalPages)].map((_, index) => {
+                    const pageNumber = index + 1;
+                    // Show first 3 pages, last 3 pages, and pages around current
+                    if (
+                      pageNumber <= 3 ||
+                      pageNumber > totalPages - 3 ||
+                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                    ) {
+                      return (
+                        <button
+                          key={pageNumber}
+                          className={`page-btn ${currentPage === pageNumber ? 'active' : ''}`}
+                          onClick={() => handlePageChange(pageNumber)}
+                          aria-label={`Page ${pageNumber}`}
+                          aria-current={currentPage === pageNumber ? 'page' : undefined}
+                        >
+                          {pageNumber}
+                        </button>
+                      );
+                    } else if (
+                      pageNumber === 4 && currentPage > 4 ||
+                      pageNumber === totalPages - 4 && currentPage < totalPages - 3
+                    ) {
+                      return <span key={`dots-${pageNumber}`} className="page-dots">...</span>;
+                    }
+                    return null;
+                  })}
+
+                  {/* Next Button */}
+                  <button
+                    className="page-btn"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    aria-label="Next page"
+                  >
+                    &raquo;
+                  </button>
                 </div>
-              ))}
-            </div>
+              )}
+
+              {/* Page info */}
+              {totalPages > 1 && (
+                <div className="page-info" data-aos="fade-up" data-aos-delay="350" style={{textAlign: 'center', color: '#666', fontSize: '0.9rem', marginBottom: '20px'}}>
+                  Page {currentPage} of {totalPages}
+                </div>
+              )}
+            </>
           )}
 
           {/* BACK BUTTON WITH ANIMATION */}
-          <div className="gallery-back-wrapper" data-aos="fade-up" data-aos-delay="300">
+          <div className="gallery-back-wrapper" data-aos="fade-up" data-aos-delay="400">
             <button
               className="gallery-back-btn"
               onClick={() => navigate(-1)}

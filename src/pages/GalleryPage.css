@@ -4,7 +4,7 @@
 .gallery-page {
   min-height: 100vh;
   background: #ffffff;
-  padding-top: 100px !important; /* 🔥 FORCE TOP PADDING */
+  padding-top: 100px !important;
   padding-bottom: 60px;
   margin-top: 0 !important;
 }
@@ -27,7 +27,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   padding-top: 0;
 }
 
@@ -40,25 +40,76 @@
   letter-spacing: 1px;
   text-align: center;
   margin-top: 0;
-  margin-bottom: 40px; /* 🔥 Increased margin for spacing */
+  margin-bottom: 10px;
 }
 
 .gallery-title span {
   color: #2c5ea4;
 }
 
-/* =========================
-   GRID - FIXED ALIGNMENT
-========================= */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 28px;
-  justify-items: center;
+.gallery-subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 400;
 }
 
 /* =========================
-   CARD - FIXED WIDTH WITH ANIMATIONS
+   GRID - AUTO-ADJUSTING LAYOUT
+========================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+/* For exactly 4 items - perfect 2x2 grid */
+.gallery-grid:has(.gallery-card:nth-child(4):last-child) {
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  max-width: 660px; /* 2 cards * 320px + 20px gap */
+  margin: 0 auto;
+}
+
+/* For exactly 6 items - perfect 3x2 grid */
+.gallery-grid:has(.gallery-card:nth-child(6):last-child) {
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  max-width: 1020px; /* 3 cards * 320px + 30px gap */
+  margin: 0 auto;
+}
+
+/* For exactly 7 items - last item centered in new row */
+.gallery-grid:has(.gallery-card:nth-child(7):last-child) {
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+.gallery-grid:has(.gallery-card:nth-child(7):last-child) .gallery-card:last-child {
+  grid-column: 2; /* Center the 7th item in middle column */
+}
+
+/* For exactly 8 items - perfect 4x2 grid */
+.gallery-grid:has(.gallery-card:nth-child(8):last-child) {
+  grid-template-columns: repeat(4, minmax(280px, 1fr));
+  max-width: 1340px; /* 4 cards * 320px + 40px gap */
+  margin: 0 auto;
+}
+
+/* For exactly 9 items - perfect 3x3 grid */
+.gallery-grid:has(.gallery-card:nth-child(9):last-child) {
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+/* =========================
+   CARD - FIXED SIZING
 ========================= */
 .gallery-card {
   background: #ffffff;
@@ -66,32 +117,145 @@
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   width: 100%;
-  max-width: 300px;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 🔥 Enhanced transition */
-  opacity: 0; /* 🔥 Initial state for AOS */
-  transform: translateY(20px) scale(0.95); /* 🔥 Initial state for AOS */
+  max-width: 320px;
+  height: 280px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  display: flex;
+  flex-direction: column;
+  justify-self: center; /* Center each card in its grid cell */
 }
 
 .gallery-card.aos-animate {
-  opacity: 1; /* 🔥 AOS animated state */
-  transform: translateY(0) scale(1); /* 🔥 AOS animated state */
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .gallery-card img {
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.7s ease; /* 🔥 Image transition */
+  transition: transform 0.7s ease;
+  flex-grow: 1;
 }
 
 .gallery-card:hover {
-  transform: translateY(-10px) scale(1.02); /* 🔥 Hover effect */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* 🔥 Enhanced shadow on hover */
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .gallery-card:hover img {
-  transform: scale(1.1); /* 🔥 Zoom image on hover */
+  transform: scale(1.1);
+}
+
+/* Card overlay for hover effect */
+.gallery-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.gallery-card:hover::after {
+  opacity: 1;
+}
+
+/* =========================
+   PAGINATION STYLES
+========================= */
+.gallery-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 40px 0 30px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: white;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.page-btn.active {
+  background: #2c5ea4;
+  color: white;
+  border-color: #2c5ea4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(44, 94, 164, 0.2);
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.page-dots {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  color: #666;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+/* =========================
+   LOAD MORE BUTTON (ALTERNATIVE)
+========================= */
+.gallery-load-more {
+  text-align: center;
+  margin: 40px 0 30px;
+}
+
+.load-more-btn {
+  padding: 14px 40px;
+  border-radius: 30px;
+  border: 2px solid #2c5ea4;
+  background: transparent;
+  color: #2c5ea4;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.load-more-btn:hover {
+  background: #2c5ea4;
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(44, 94, 164, 0.2);
+}
+
+.load-more-btn:active {
+  transform: translateY(-1px);
 }
 
 /* =========================
@@ -104,17 +268,45 @@
   padding: 60px 20px;
   font-size: 1.2rem;
   color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
 }
 
 .error-state p {
   color: #ff4444;
+  margin-top: 15px;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+/* Loading animation */
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(44, 94, 164, 0.1);
+  border-top-color: #2c5ea4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* =========================
    BACK BUTTON
 ========================= */
 .gallery-back-wrapper {
-  margin-top: 60px;
+  margin-top: 40px;
   text-align: center;
 }
 
@@ -126,9 +318,13 @@
   color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 🔥 Enhanced transition */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
 }
 
 .gallery-back-btn::before {
@@ -151,16 +347,17 @@
 
 .gallery-back-btn:hover {
   background: #1a4780;
-  transform: translateY(-3px) scale(1.05); /* 🔥 Enhanced hover effect */
-  box-shadow: 0 10px 25px rgba(44, 94, 164, 0.3); /* 🔥 Shadow on hover */
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(44, 94, 164, 0.3);
 }
 
 .gallery-back-btn:active {
-  transform: translateY(-1px) scale(1.02); /* 🔥 Press effect */
+  transform: translateY(-1px) scale(1.02);
 }
 
-/* 🔥 AOS Animation Classes for Gallery */
-/* Fade animations */
+/* =========================
+   AOS ANIMATION CLASSES
+========================= */
 .gallery-fade-up {
   opacity: 0;
   transform: translateY(40px);
@@ -183,7 +380,6 @@
   transform: translateY(0);
 }
 
-/* Zoom animations */
 .gallery-zoom-in {
   opacity: 0;
   transform: scale(0.8);
@@ -195,7 +391,6 @@
   transform: scale(1);
 }
 
-/* Stagger animations for grid items */
 .stagger-item {
   opacity: 0;
   transform: translateY(30px);
@@ -208,46 +403,36 @@
 }
 
 /* Add delay classes for staggered animations */
-.delay-100 {
-  transition-delay: 100ms;
-}
-.delay-200 {
-  transition-delay: 200ms;
-}
-.delay-300 {
-  transition-delay: 300ms;
-}
-.delay-400 {
-  transition-delay: 400ms;
-}
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
 
-/* Loading animation */
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(44, 94, 164, 0.1);
-  border-top-color: #2c5ea4;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    max-width: 585px;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(6):last-child) {
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    max-width: 855px;
+  }
+  
+  .gallery-card {
+    max-width: 300px;
+    height: 260px;
   }
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 @media (max-width: 992px) {
   .gallery-page {
     padding-top: 90px !important;
@@ -256,6 +441,32 @@
   
   .gallery-title {
     font-size: 2.5rem;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    max-width: 540px;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(6):last-child) {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    max-width: 540px;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(8):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(9):last-child) {
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    max-width: 540px;
+  }
+  
+  .gallery-card {
+    max-width: 280px;
+    height: 240px;
   }
 }
 
@@ -267,32 +478,93 @@
   
   .gallery-title {
     font-size: 2.2rem;
-    margin-bottom: 35px; /* 🔥 Adjusted margin for mobile */
+    margin-bottom: 8px;
   }
-
-  .gallery-card {
-    max-width: 100%;
-  }
-
-  .gallery-card:hover {
-    transform: translateY(-5px); /* 🔥 Reduced hover effect on mobile */
-  }
-
-  .gallery-card img {
-    height: 200px;
+  
+  .gallery-subtitle {
+    font-size: 1rem;
+    margin-bottom: 25px;
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
   }
   
+  .gallery-grid:has(.gallery-card:nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    max-width: 440px;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(6):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(7):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(8):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(9):last-child) {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    max-width: 440px;
+  }
+  
+  /* Reset special positioning for 7th item on tablet */
+  .gallery-grid:has(.gallery-card:nth-child(7):last-child) .gallery-card:last-child {
+    grid-column: auto;
+  }
+  
+  .gallery-card {
+    max-width: 100%;
+    height: 220px;
+  }
+  
+  .gallery-card:hover {
+    transform: translateY(-5px);
+  }
+  
   .gallery-title-wrapper {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
   }
   
   .gallery-back-btn:hover {
-    transform: translateY(-2px); /* 🔥 Reduced hover effect on mobile */
+    transform: translateY(-2px);
+  }
+  
+  .page-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 400px;
+    margin: 0 auto 30px;
+  }
+  
+  /* For all cases on mobile, use single column */
+  .gallery-grid:has(.gallery-card:nth-child(4):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(6):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(7):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(8):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(9):last-child) {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+  
+  .gallery-card {
+    max-width: 100%;
+    height: 250px;
+  }
+  
+  .gallery-pagination {
+    gap: 8px;
+    margin: 30px 0 25px;
+  }
+  
+  .page-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.85rem;
   }
 }
 
@@ -302,20 +574,61 @@
     padding-bottom: 30px;
   }
   
-  .gallery-grid {
-    grid-template-columns: 1fr;
-  }
-  
   .gallery-container {
     padding: 0 15px;
   }
   
   .gallery-title {
     font-size: 2rem;
-    margin-bottom: 30px; /* 🔥 Adjusted margin for small mobile */
+    margin-bottom: 5px;
+  }
+  
+  .gallery-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  
+  .gallery-grid {
+    gap: 15px;
+    max-width: 100%;
+  }
+  
+  .gallery-grid:has(.gallery-card:nth-child(4):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(6):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(7):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(8):last-child),
+  .gallery-grid:has(.gallery-card:nth-child(9):last-child) {
+    max-width: 100%;
+  }
+  
+  .gallery-card {
+    height: 220px;
   }
   
   .gallery-title-wrapper {
     margin-bottom: 30px;
+  }
+  
+  .gallery-pagination {
+    gap: 6px;
+  }
+  
+  .page-btn {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+  }
+  
+  .load-more-btn,
+  .gallery-back-btn {
+    padding: 12px 25px;
+    font-size: 0.95rem;
+  }
+  
+  .loading-state,
+  .error-state,
+  .empty-state {
+    padding: 40px 15px;
+    min-height: 250px;
   }
 }

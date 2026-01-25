@@ -62,13 +62,13 @@ const Navbar = () => {
 
         {/* ACTIONS */}
         <div className="nav-actions">
-          <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noreferrer" className="icon-btn whatsapp">
+          <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noreferrer" className="icon-btn whatsapp" aria-label="WhatsApp">
             <FaWhatsapp />
           </a>
-          <a href="tel:+91XXXXXXXXXX" className="icon-btn call">
+          <a href="tel:+91XXXXXXXXXX" className="icon-btn call" aria-label="Call">
             <FaPhone />
           </a>
-          <button className="menu-toggle" onClick={() => setIsOpen(true)}>
+          <button className="menu-toggle" onClick={() => setIsOpen(true)} aria-label="Open menu">
             <FiMenu />
           </button>
         </div>
@@ -79,7 +79,7 @@ const Navbar = () => {
         <>
           <div className="overlay" onClick={() => setIsOpen(false)} />
           <div className="mobile-menu">
-            <button className="close-menu" onClick={() => setIsOpen(false)}>
+            <button className="close-menu" onClick={() => setIsOpen(false)} aria-label="Close menu">
               <FiX />
             </button>
 
@@ -89,6 +89,16 @@ const Navbar = () => {
             <span onClick={() => scrollToSection('products')}>Products</span>
             <span onClick={() => goPage('/gallery')}>Gallery</span>
             <span onClick={() => scrollToSection('contact')}>Contact</span>
+            
+            {/* Icons in Mobile Menu */}
+            <div className="mobile-actions">
+              <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noreferrer" className="icon-btn whatsapp" aria-label="WhatsApp">
+                <FaWhatsapp />
+              </a>
+              <a href="tel:+91XXXXXXXXXX" className="icon-btn call" aria-label="Call">
+                <FaPhone />
+              </a>
+            </div>
           </div>
         </>
       )}

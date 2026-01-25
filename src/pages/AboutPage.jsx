@@ -12,13 +12,13 @@ const AboutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Initialize AOS
+    // Initialize AOS with simplified settings
     AOS.init({
       duration: 800,
-      easing: 'ease-in-out',
+      easing: 'ease-out-cubic',
       once: true,
       mirror: false,
-      offset: 100
+      offset: 50
     });
   }, []);
 
@@ -32,7 +32,7 @@ const AboutPage = () => {
         {/* WHO WE ARE */}
         <section className="about-section">
           <div className="about-container two-col">
-            <div data-aos="fade-right" data-aos-delay="100">
+            <div data-aos="fade-up" data-aos-delay="100">
               <h2 className="about-title">Who We Are</h2>
               <p className="about-text" data-aos="fade-up" data-aos-delay="200">
                 SR Bulkers is a trusted manufacturer specializing in custom
@@ -46,7 +46,7 @@ const AboutPage = () => {
               src={logo}
               alt="SR Bulkers Logo"
               className="about-logo"
-              data-aos="fade-left"
+              data-aos="fade-up"
               data-aos-delay="300"
             />
           </div>
@@ -55,12 +55,12 @@ const AboutPage = () => {
         {/* WHAT WE DO */}
         <section className="about-section light-bg">
           <div className="about-container">
-            <h2 className="about-title center" data-aos="fade-down" data-aos-delay="100">
+            <h2 className="about-title center" data-aos="fade-up" data-aos-delay="100">
               What We Do
             </h2>
 
             <div className="services-grid">
-              <div className="service-card" data-aos="zoom-in" data-aos-delay="200">
+              <div className="service-card" data-aos="fade-up" data-aos-delay="200">
                 <h3>Custom Truck Bodies</h3>
                 <p>
                   High-quality bulker and tipper body fabrication built to
@@ -68,7 +68,7 @@ const AboutPage = () => {
                 </p>
               </div>
 
-              <div className="service-card" data-aos="zoom-in" data-aos-delay="300">
+              <div className="service-card" data-aos="fade-up" data-aos-delay="300">
                 <h3>Vehicle Modification</h3>
                 <p>
                   Tailored vehicle designs based on operational and client
@@ -76,7 +76,7 @@ const AboutPage = () => {
                 </p>
               </div>
 
-              <div className="service-card" data-aos="zoom-in" data-aos-delay="400">
+              <div className="service-card" data-aos="fade-up" data-aos-delay="400">
                 <h3>Repair & Maintenance</h3>
                 <p>
                   Reliable repair and maintenance services ensuring long-term
@@ -90,14 +90,7 @@ const AboutPage = () => {
         {/* OUR TEAM */}
         <section className="about-section">
           <div className="about-container two-col reverse">
-            <img
-              src={team}
-              alt="SR Bulkers Team"
-              className="team-logo"
-              data-aos="fade-right"
-              data-aos-delay="200"
-            />
-            <div data-aos="fade-left" data-aos-delay="100">
+            <div data-aos="fade-up" data-aos-delay="100">
               <h2 className="about-title">Our Team</h2>
               <p className="about-text">
                 Our experienced engineers, technicians, and fabricators work
@@ -105,6 +98,14 @@ const AboutPage = () => {
                 high-quality truck solutions for every project.
               </p>
             </div>
+            
+            <img
+              src={team}
+              alt="SR Bulkers Team"
+              className="team-logo"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            />
           </div>
         </section>
 
