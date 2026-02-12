@@ -123,16 +123,6 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* BACK BUTTON */}
-        <div className="about-back-wrapper" data-aos="fade-up" data-aos-delay="300">
-          <button
-            className="about-back-btn"
-            onClick={() => navigate(-1)}
-          >
-            ← Go Back
-          </button>
-        </div>
-
       </main>
 
       {/* FOOTER */}

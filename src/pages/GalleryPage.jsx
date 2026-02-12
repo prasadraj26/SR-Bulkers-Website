@@ -220,15 +220,6 @@ const GalleryPage = () => {
             </>
           )}
 
-          {/* BACK BUTTON WITH ANIMATION */}
-          <div className="gallery-back-wrapper" data-aos="fade-up" data-aos-delay="400">
-            <button
-              className="gallery-back-btn"
-              onClick={() => navigate(-1)}
-            >
-              ← Go Back
-            </button>
-          </div>
         </div>
       </main>
 
