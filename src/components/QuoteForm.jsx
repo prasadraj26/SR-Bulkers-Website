@@ -19,6 +19,8 @@ const QuoteForm = ({
   subtitle = "Tell us your requirements and we’ll get back to you." 
 }) => {
 
+  const WHATSAPP_NUMBER = "916384153370"; // ✅ UPDATED NUMBER
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -57,7 +59,7 @@ const QuoteForm = ({
   }
 
   /* ===============================
-     EMAIL SUBMIT (SAVES TO FIREBASE)
+     EMAIL SUBMIT (SAVE TO FIREBASE)
   =============================== */
   const handleEmailSubmit = async (e) => {
     e.preventDefault()
@@ -109,7 +111,7 @@ const QuoteForm = ({
   }
 
   /* ===============================
-     WHATSAPP SUBMIT (ONLY REDIRECT)
+     WHATSAPP SUBMIT
   =============================== */
   const handleWhatsAppSubmit = () => {
     const error = validateForm()
@@ -130,14 +132,14 @@ Requirement: ${formData.message}
     const encodedMessage = encodeURIComponent(message)
 
     window.open(
-      `https://wa.me/918098389303?text=${encodedMessage}`,
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
       "_blank"
     )
   }
 
   const contactInfo = [
     { icon: <FaMapMarkerAlt />, title: 'Address', info: '8/7-1, Navapatti, Bhavani Main Road, Mettur Dam, Salem, Tamil Nadu 636452' },
-    { icon: <FaPhone />, title: 'Phone', info: '8098389303' },
+    { icon: <FaPhone />, title: 'Phone', info: '6384153370' }, // ✅ UPDATED DISPLAY NUMBER
     { icon: <FaEnvelope />, title: 'Email', info: 'srbulkers@gmail.com' },
     { icon: <FaClock />, title: 'Working Hours', info: 'Mon-Fri: 8:00 AM - 6:00 PM' }
   ]
@@ -160,7 +162,6 @@ Requirement: ${formData.message}
 
         <div className="quote-container">
 
-          {/* LEFT SIDE – CONTACT INFO */}
           <motion.div className="quote-info">
             <h3 className="quote-info-title">Get in Touch</h3>
 
@@ -190,7 +191,6 @@ Requirement: ${formData.message}
             </div>
           </motion.div>
 
-          {/* RIGHT SIDE – FORM */}
           <motion.div className="quote-form-container">
 
             {formStatus.message && (
