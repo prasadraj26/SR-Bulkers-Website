@@ -1,7 +1,6 @@
 // src/firebase.js
 
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage";
@@ -14,14 +13,11 @@ const firebaseConfig = {
   storageBucket: "srbulkers-03.firebasestorage.app",
   messagingSenderId: "763084736118",
   appId: "1:763084736118:web:162a77c3ce6917aeea0157",
-  measurementId: "G-RNGX2ZJYLV",
   databaseURL: "https://srbulkers-03-default-rtdb.asia-southeast1.firebasedatabase.app"
-
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 // Export Firebase services
 export const auth = getAuth(app);

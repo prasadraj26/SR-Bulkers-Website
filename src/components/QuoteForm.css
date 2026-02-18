@@ -1,0 +1,288 @@
+/* ================================
+   QUOTE SECTION
+================================ */
+.quote-section {
+  background: var(--secondary-color);
+  padding: 80px 0;
+  position: relative;
+}
+
+/* Subtle background glow */
+.quote-section::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0,0,0,0.05) 0%, transparent 70%);
+  top: -150px;
+  right: -150px;
+  z-index: 0;
+}
+
+/* ================================
+   HEADER
+================================ */
+.quote-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.quote-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 14px;
+}
+
+.quote-subtitle {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  color: var(--gray-medium);
+  line-height: 1.6;
+}
+
+/* ================================
+   MAIN GRID
+================================ */
+.quote-container {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 60px;
+  align-items: flex-start;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ================================
+   LEFT SIDE – INFO CARD
+================================ */
+.quote-info {
+  background: white;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: 0.3s ease;
+}
+
+.quote-info:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+}
+
+.quote-info-title {
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.info-list {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+.info-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  margin-top: 4px;
+}
+
+.info-content h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.info-content p {
+  font-size: 0.95rem;
+  color: var(--gray-medium);
+  line-height: 1.5;
+}
+
+/* ================================
+   SOCIAL ICONS
+================================ */
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+
+.social-link {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+
+.social-link:hover {
+  background: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+/* ================================
+   RIGHT SIDE – FORM CARD
+================================ */
+.quote-form-container {
+  background: white;
+  padding: 45px;
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.07);
+  transition: 0.3s ease;
+}
+
+.quote-form-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+}
+
+.quote-form {
+  display: grid;
+  gap: 22px;
+}
+
+/* ================================
+   FORM ELEMENTS
+================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.3s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+.button-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.button-group .btn {
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.whatsapp-btn {
+  background: #25D366;
+  color: white;
+  border: none;
+}
+
+.whatsapp-btn:hover {
+  background: #1ebe5b;
+  transform: translateY(-2px);
+}
+
+/* ================================
+   STATUS MESSAGE
+================================ */
+.form-status {
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.form-status.success {
+  background: #e6f9ef;
+  color: #1a7f42;
+}
+
+.form-status.error {
+  background: #fdeaea;
+  color: #b42318;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 992px) {
+  .quote-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .quote-form-container,
+  .quote-info {
+    padding: 30px;
+  }
+
+  .quote-title {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -226,7 +226,7 @@ const ServicesPage = () => {
               <p className="cta-description">
                 Maximize your equipment's efficiency and longevity with our exceptional after-sales service.
               </p>
-              <button className="cta-button" onClick={() => navigate('/contact')}>
+              <button className="cta-button" onClick={() => navigate('/')}>
                 Contact Us for Service
               </button>
             </div>

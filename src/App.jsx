@@ -18,6 +18,7 @@ import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import ManageGallery from "./admin/ManageGallery";
 import ManageServices from "./admin/ManageServices";
+import ManageQuote from "./admin/ManageQuote";   // ✅ correct file
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -65,9 +66,18 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* 🔥 MANAGE QUOTES */}
+          <Route
+            path="/admin/manage-quotes"
+            element={
+              <ProtectedRoute>
+                <ManageQuote />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
 
-        {/* 🤖 AI Chatbot */}
         <ChatBot />
       </>
     </Router>

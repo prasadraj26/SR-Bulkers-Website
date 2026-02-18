@@ -38,6 +38,15 @@ function AdminDashboard() {
             <p>Upload & delete website gallery images</p>
           </div>
 
+          {/* ✅ NEW MANAGE QUOTES CARD */}
+          <div
+            className="admin-action-card"
+            onClick={() => navigate("/admin/manage-quotes")}
+          >
+            <h2>Manage Quotes</h2>
+            <p>View, update & delete customer quote requests</p>
+          </div>
+
           <div
             className="admin-action-card"
             onClick={() => navigate("/")}

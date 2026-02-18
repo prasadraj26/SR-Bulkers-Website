@@ -119,7 +119,7 @@ const Gallery = () => {
 
   return (
     <section className="gallery-section" id="projects">
-      <div className="container">
+      <div className="gallery-container">
         <motion.div 
           className="gallery-header"
           initial="hidden"
@@ -158,11 +158,7 @@ const Gallery = () => {
             {/* TOP ROW - moves left */}
             <div 
               className="carousel-container"
-              onMouseEnter={(e) => {
-                if (e.target === e.currentTarget) {
-                  setIsTopHovered(true);
-                }
-              }}
+              onMouseEnter={() => setIsTopHovered(true)}
               onMouseLeave={() => setIsTopHovered(false)}
             >
               <div 
@@ -191,11 +187,7 @@ const Gallery = () => {
             {/* BOTTOM ROW - moves right */}
             <div 
               className="carousel-container"
-              onMouseEnter={(e) => {
-                if (e.target === e.currentTarget) {
-                  setIsBottomHovered(true);
-                }
-              }}
+              onMouseEnter={() => setIsBottomHovered(true)}
               onMouseLeave={() => setIsBottomHovered(false)}
             >
               <div 
