@@ -2,7 +2,7 @@
    QUOTE SECTION
 ================================ */
 .quote-section {
-  background: var(--secondary-color);
+  background: var(--secondary-color, #ffffff);
   padding: 80px 0;
   position: relative;
 }
@@ -17,6 +17,19 @@
   top: -150px;
   right: -150px;
   z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ================================
+   CONTAINER
+================================ */
+.quote-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ================================
@@ -29,19 +42,22 @@
   z-index: 1;
 }
 
-.quote-title {
+.quote-header h2 {
   font-size: 2.6rem;
   font-weight: 800;
-  color: var(--primary-color);
+  color: var(--primary-color, #2c65ba);
   margin-bottom: 14px;
+  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
 }
 
-.quote-subtitle {
+.quote-header p {
   font-size: 1.1rem;
   max-width: 700px;
   margin: 0 auto;
-  color: var(--gray-medium);
+  color: var(--gray-medium, #666);
   line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* ================================
@@ -54,7 +70,6 @@
   align-items: flex-start;
   max-width: 1350px;
   margin: 0 auto;
-  padding: 0 20px;
   position: relative;
   z-index: 1;
 }
@@ -67,7 +82,7 @@
   padding: 40px;
   border-radius: 18px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .quote-info:hover {
@@ -75,66 +90,51 @@
   box-shadow: 0 14px 40px rgba(0,0,0,0.08);
 }
 
-.quote-info-title {
-  font-size: 1.9rem;
-  margin-bottom: 30px;
-  font-weight: 700;
-  color: var(--primary-color);
-}
-
-.info-list {
-  display: grid;
-  gap: 24px;
-  margin-bottom: 35px;
-}
-
 .info-item {
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
 }
 
 .info-icon {
-  font-size: 1.5rem;
-  color: var(--accent-color);
-  margin-top: 4px;
-}
-
-.info-content h4 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.info-content p {
-  font-size: 0.95rem;
-  color: var(--gray-medium);
-  line-height: 1.5;
-}
-
-/* ================================
-   SOCIAL ICONS
-================================ */
-.social-links {
-  display: flex;
-  gap: 16px;
-}
-
-.social-link {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
+  background: var(--accent-light, #fee);
   border-radius: 50%;
-  background: var(--primary-color);
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.3s ease;
+  font-size: 1.3rem;
+  color: var(--accent-color, #d30000);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
-.social-link:hover {
-  background: var(--accent-color);
-  transform: translateY(-3px);
+.info-item:hover .info-icon {
+  background: var(--accent-color, #d30000);
+  color: white;
+  transform: scale(1.1);
+}
+
+.info-item h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--primary-color, #2c65ba);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.info-item p {
+  font-size: 0.95rem;
+  color: var(--gray-medium, #666);
+  line-height: 1.5;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
 }
 
 /* ================================
@@ -145,7 +145,7 @@
   padding: 45px;
   border-radius: 20px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.07);
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .quote-form-container:hover {
@@ -153,47 +153,44 @@
   box-shadow: 0 18px 50px rgba(0,0,0,0.08);
 }
 
-.quote-form {
-  display: grid;
-  gap: 22px;
+.quote-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* ================================
    FORM ELEMENTS
 ================================ */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--primary-color);
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  padding: 14px 16px;
+.quote-form-container input,
+.quote-form-container select,
+.quote-form-container textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  transition: 0.3s ease;
+  font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
   background: #fafafa;
+  transition: all 0.3s ease;
+  color: var(--text-dark, #333);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.quote-form-container input:focus,
+.quote-form-container select:focus,
+.quote-form-container textarea:focus {
   outline: none;
-  border-color: var(--accent-color);
+  border-color: var(--accent-color, #d30000);
   background: white;
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+  box-shadow: 0 0 0 3px rgba(211, 0, 0, 0.05);
 }
 
-.form-group textarea {
+.quote-form-container input::placeholder,
+.quote-form-container textarea::placeholder {
+  color: #999;
+}
+
+.quote-form-container textarea {
   min-height: 120px;
   resize: vertical;
 }
@@ -201,65 +198,95 @@
 /* ================================
    BUTTONS
 ================================ */
-.button-group {
-  display: flex;
-  gap: 16px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.button-group .btn {
-  padding: 12px 22px;
-  border-radius: 30px;
-  font-weight: 600;
-  transition: 0.3s ease;
-}
-
-.btn-primary {
-  background: var(--primary-color);
-  color: white;
+.quote-form-container button {
+  padding: 14px 24px;
   border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
 }
 
-.btn-primary:hover {
-  background: var(--accent-color);
+.quote-form-container button[type="submit"] {
+  background: var(--primary-color, #2c65ba);
+  color: white;
+}
+
+.quote-form-container button[type="submit"]:hover {
+  background: var(--primary-dark, #1a3a6b);
   transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(44, 101, 186, 0.2);
 }
 
-.whatsapp-btn {
+.quote-form-container button[type="button"] {
   background: #25D366;
   color: white;
-  border: none;
+  margin-top: 0;
 }
 
-.whatsapp-btn:hover {
+.quote-form-container button[type="button"]:hover {
   background: #1ebe5b;
   transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+}
+
+/* ================================
+   BUTTON GROUP LAYOUT
+================================ */
+.quote-form-container button[type="submit"],
+.quote-form-container button[type="button"] {
+  width: 100%;
+}
+
+.quote-form-container button[type="button"] {
+  margin-top: 0;
+}
+
+/* Add spacing between buttons */
+.quote-form-container button[type="submit"] {
+  margin-bottom: 10px;
 }
 
 /* ================================
    STATUS MESSAGE
 ================================ */
 .form-status {
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 10px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .form-status.success {
   background: #e6f9ef;
   color: #1a7f42;
+  border-left: 4px solid #1a7f42;
 }
 
 .form-status.error {
   background: #fdeaea;
   color: #b42318;
+  border-left: 4px solid #b42318;
 }
 
 /* ================================
-   RESPONSIVE
+   RESPONSIVE DESIGN
 ================================ */
+@media (max-width: 1200px) {
+  .quote-header h2 {
+    font-size: 2.3rem;
+  }
+}
+
 @media (max-width: 992px) {
   .quote-container {
     grid-template-columns: 1fr;
@@ -268,21 +295,132 @@
 
   .quote-form-container,
   .quote-info {
+    padding: 35px;
+  }
+
+  .quote-header h2 {
+    font-size: 2.1rem;
+  }
+  
+  .quote-header p {
+    font-size: 1rem;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .quote-section {
+    padding: 60px 0;
+  }
+
+  .quote-header {
+    margin-bottom: 40px;
+  }
+
+  .quote-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .quote-form-container,
+  .quote-info {
     padding: 30px;
   }
 
-  .quote-title {
-    font-size: 2.1rem;
+  .info-item {
+    gap: 12px;
+  }
+
+  .info-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+  
+  .info-item h4 {
+    font-size: 1rem;
+  }
+  
+  .info-item p {
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 576px) {
-  .button-group {
-    flex-direction: column;
+  .quote-section {
+    padding: 50px 0;
   }
 
-  .button-group .btn {
-    width: 100%;
-    text-align: center;
+  .quote-header h2 {
+    font-size: 1.7rem;
   }
+
+  .quote-form-container,
+  .quote-info {
+    padding: 25px;
+  }
+
+  .quote-form-container input,
+  .quote-form-container select,
+  .quote-form-container textarea {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .quote-form-container button {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  
+  /* Stack buttons vertically on mobile */
+  .quote-form-container button[type="submit"] {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .quote-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .quote-form-container,
+  .quote-info {
+    padding: 20px;
+  }
+  
+  .info-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  
+  .info-item h4 {
+    font-size: 0.95rem;
+  }
+  
+  .info-item p {
+    font-size: 0.85rem;
+  }
+}
+
+/* ================================
+   ANIMATIONS
+================================ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quote-info,
+.quote-form-container {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.quote-form-container {
+  animation-delay: 0.1s;
 }

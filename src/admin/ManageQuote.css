@@ -1,0 +1,410 @@
+/* ManageQuote.css */
+
+.manage-quote-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  font-family: 'Montserrat', sans-serif;
+  padding: 30px;
+}
+
+/* Header Styles */
+.mq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.mq-header-left h1 {
+  font-size: 2rem;
+  color: #2c65ba;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+}
+
+.mq-total-count {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Export Buttons */
+.mq-export-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.mq-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.mq-export-btn.excel {
+  background: #1d6f42;
+  color: white;
+}
+
+.mq-export-btn.excel:hover {
+  background: #155a32;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(29, 111, 66, 0.3);
+}
+
+.mq-export-btn.pdf {
+  background: #d32f2f;
+  color: white;
+}
+
+.mq-export-btn.pdf:hover {
+  background: #b71c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+}
+
+/* Filters Section */
+.mq-filters-section {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.mq-search-box {
+  margin-bottom: 20px;
+}
+
+.mq-search-input {
+  width: 100%;
+  padding: 12px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.mq-search-input:focus {
+  outline: none;
+  border-color: #2c65ba;
+  box-shadow: 0 0 0 3px rgba(44, 101, 186, 0.1);
+}
+
+.mq-filter-controls {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.mq-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mq-filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.mq-filter-select {
+  padding: 8px 30px 8px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.mq-filter-select:focus {
+  outline: none;
+  border-color: #2c65ba;
+}
+
+/* Table Container */
+.mq-table-container {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow-x: auto;
+}
+
+.mq-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.mq-table th {
+  background: #f8fafc;
+  padding: 15px;
+  text-align: left;
+  font-weight: 700;
+  color: #2c65ba;
+  border-bottom: 2px solid #e0e0e0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.mq-table th:hover {
+  background: #eef2f6;
+}
+
+.mq-table th svg {
+  margin-left: 5px;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.mq-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
+}
+
+.mq-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Message Cell */
+.message-cell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #555;
+  cursor: help;
+}
+
+/* Service Tag */
+.service-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #eef2f6;
+  color: #2c65ba;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Status Select */
+.status-select {
+  padding: 6px 10px;
+  border: 2px solid;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 120px;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 5px;
+}
+
+.status-select.status-pending {
+  border-color: #f39c12;
+  color: #f39c12;
+  background: #fff5e6;
+}
+
+.status-select.status-contacted {
+  border-color: #3498db;
+  color: #3498db;
+  background: #e6f3ff;
+}
+
+.status-select.status-closed {
+  border-color: #27ae60;
+  color: #27ae60;
+  background: #e6f9ef;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge.pending {
+  background: #fff5e6;
+  color: #f39c12;
+}
+
+.status-badge.contacted {
+  background: #e6f3ff;
+  color: #3498db;
+}
+
+.status-badge.closed {
+  background: #e6f9ef;
+  color: #27ae60;
+}
+
+/* Via Badge */
+.via-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #f0f0f0;
+  color: #666;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Delete Button */
+.mq-delete-btn {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mq-delete-btn:hover {
+  background: #fee;
+  transform: scale(1.1);
+}
+
+/* Loading State */
+.mq-loading {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border-radius: 12px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Empty State */
+.mq-empty-state {
+  text-align: center;
+  padding: 60px;
+  background: white;
+  border-radius: 12px;
+  color: #999;
+  font-size: 1.2rem;
+  border: 2px dashed #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .mq-table {
+    font-size: 0.9rem;
+  }
+  
+  .status-select {
+    width: 100px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .manage-quote-page {
+    padding: 20px;
+  }
+  
+  .mq-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .mq-export-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .mq-filter-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .mq-filter-group {
+    width: 100%;
+  }
+  
+  .mq-filter-select {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .mq-table th,
+  .mq-table td {
+    padding: 10px;
+  }
+  
+  .message-cell {
+    max-width: 150px;
+  }
+  
+  .mq-export-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .mq-header-left h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .mq-table-container {
+    padding: 10px;
+  }
+  
+  .mq-table {
+    font-size: 0.85rem;
+  }
+  
+  .mq-table th,
+  .mq-table td {
+    padding: 8px;
+  }
+  
+  .status-select {
+    width: 80px;
+    padding: 4px 6px;
+    font-size: 0.8rem;
+  }
+  
+  .service-tag,
+  .via-badge {
+    padding: 2px 6px;
+    font-size: 0.75rem;
+  }
+  
+  .message-cell {
+    max-width: 100px;
+  }
+}

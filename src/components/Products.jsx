@@ -15,12 +15,7 @@ const Products = () => {
       category: 'transport',
       image: backImg  // Use the imported variable
     },
-    {
-      name: 'Fly Ash bed',
-      description: 'Secure cargo bodies with customizable compartments and advanced security features.',
-      category: 'transport',
-      image: sideImg  // Use the imported variable
-    },
+
     {
       name: 'Silos',
       description: 'We specialize in designing, manufacturing, and installing high-quality industrial silos tailored to meet the storage needs of various industries',

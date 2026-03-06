@@ -19,7 +19,7 @@ const QuoteForm = ({
   subtitle = "Tell us your requirements and we’ll get back to you." 
 }) => {
 
-  const WHATSAPP_NUMBER = "916384153370"; // ✅ UPDATED NUMBER
+  const WHATSAPP_NUMBER = "916384153370"
 
   const [formData, setFormData] = useState({
     name: '',
@@ -32,15 +32,10 @@ const QuoteForm = ({
   const [formStatus, setFormStatus] = useState({ type: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-  }
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
-  const validatePhone = (phone) => {
-    const phoneRegex = /^\d{10,}$/
-    return phoneRegex.test(phone.replace(/\D/g, ''))
-  }
+  const validatePhone = (phone) =>
+    /^\d{10,}$/.test(phone.replace(/\D/g, ''))
 
   const handleChange = (e) => {
     setFormData({
@@ -58,9 +53,6 @@ const QuoteForm = ({
     return null
   }
 
-  /* ===============================
-     EMAIL SUBMIT (SAVE TO FIREBASE)
-  =============================== */
   const handleEmailSubmit = async (e) => {
     e.preventDefault()
 
@@ -76,11 +68,7 @@ const QuoteForm = ({
       const quotesRef = ref(db, 'quotes')
 
       await push(quotesRef, {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        service: formData.service,
-        message: formData.message,
+        ...formData,
         submittedVia: "Email",
         status: "Pending",
         createdAt: Date.now()
@@ -100,7 +88,6 @@ const QuoteForm = ({
       })
 
     } catch (error) {
-      console.error("Firebase Error:", error)
       setFormStatus({
         type: 'error',
         message: 'Failed to submit. Please try again.'
@@ -110,9 +97,6 @@ const QuoteForm = ({
     setIsSubmitting(false)
   }
 
-  /* ===============================
-     WHATSAPP SUBMIT
-  =============================== */
   const handleWhatsAppSubmit = () => {
     const error = validateForm()
     if (error) {
@@ -139,59 +123,35 @@ Requirement: ${formData.message}
 
   const contactInfo = [
     { icon: <FaMapMarkerAlt />, title: 'Address', info: '8/7-1, Navapatti, Bhavani Main Road, Mettur Dam, Salem, Tamil Nadu 636452' },
-    { icon: <FaPhone />, title: 'Phone', info: '6384153370' }, // ✅ UPDATED DISPLAY NUMBER
+    { icon: <FaPhone />, title: 'Phone', info: '6384153370' },
     { icon: <FaEnvelope />, title: 'Email', info: 'srbulkers@gmail.com' },
     { icon: <FaClock />, title: 'Working Hours', info: 'Mon-Fri: 8:00 AM - 6:00 PM' }
   ]
 
-  const socialLinks = [
-    { icon: <FaFacebook />, url: '#' },
-    { icon: <FaTwitter />, url: '#' },
-    { icon: <FaLinkedin />, url: '#' },
-    { icon: <FaInstagram />, url: '#' }
-  ]
-
   return (
-    <section className="quote-section">
+    <section id="quote" className="quote-section">
       <div className="container">
 
         <div className="quote-header">
-          <h2 className="quote-title">{title}</h2>
-          <p className="quote-subtitle">{subtitle}</p>
+          <h2>{title}</h2>
+          <p>{subtitle}</p>
         </div>
 
         <div className="quote-container">
 
-          <motion.div className="quote-info">
-            <h3 className="quote-info-title">Get in Touch</h3>
+          <div className="quote-info">
+            {contactInfo.map((info, index) => (
+              <div key={index} className="info-item">
+                <div className="info-icon">{info.icon}</div>
+                <div>
+                  <h4>{info.title}</h4>
+                  <p>{info.info}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-            <div className="info-list">
-              {contactInfo.map((info, index) => (
-                <motion.div key={index} className="info-item" whileHover={{ x: 10 }}>
-                  <div className="info-icon">{info.icon}</div>
-                  <div className="info-content">
-                    <h4>{info.title}</h4>
-                    <p>{info.info}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="social-links">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.url}
-                  className="social-link"
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {social.icon}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div className="quote-form-container">
+          <div className="quote-form-container">
 
             {formStatus.message && (
               <div className={`form-status ${formStatus.type}`}>
@@ -199,55 +159,28 @@ Requirement: ${formData.message}
               </div>
             )}
 
-            <form className="quote-form" onSubmit={handleEmailSubmit}>
+            <form onSubmit={handleEmailSubmit}>
 
-              <div className="form-group">
-                <label>Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} />
-              </div>
+              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
+              <input type="tel" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} />
+              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
 
-              <div className="form-group">
-                <label>Phone</label>
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
-              </div>
+              <select name="service" value={formData.service} onChange={handleChange}>
+                <option value="">Select Service</option>
+                <option value="Custom Truck Body">Custom Truck Body</option>
+                <option value="Silo Manufacturing">Silo Manufacturing</option>
+                <option value="Repair & Maintenance">Repair & Maintenance</option>
+              </select>
 
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} />
-              </div>
+              <textarea name="message" placeholder="Requirement" value={formData.message} onChange={handleChange} />
 
-              <div className="form-group">
-                <label>Service</label>
-                <select name="service" value={formData.service} onChange={handleChange}>
-                  <option value="">Select Service</option>
-                  <option value="Custom Truck Body">Custom Truck Body</option>
-                  <option value="Silo Manufacturing">Silo Manufacturing</option>
-                  <option value="Repair & Maintenance">Repair & Maintenance</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Requirement</label>
-                <textarea name="message" value={formData.message} onChange={handleChange} />
-              </div>
-
-              <div className="button-group">
-                <button type="submit" className="btn btn-primary">
-                  Send via Email
-                </button>
-
-                <button
-                  type="button"
-                  className="btn whatsapp-btn"
-                  onClick={handleWhatsAppSubmit}
-                >
-                  Send via WhatsApp
-                </button>
-              </div>
+              <button type="submit">Send via Email</button>
+              <button type="button" onClick={handleWhatsAppSubmit}>
+                Send via WhatsApp
+              </button>
 
             </form>
-          </motion.div>
-
+          </div>
         </div>
       </div>
     </section>

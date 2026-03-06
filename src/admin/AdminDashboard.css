@@ -21,6 +21,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .admin-dashboard-header h1 {
@@ -61,13 +63,14 @@
   justify-content: center;
 }
 
-/* GRID */
+/* GRID - Updated for 3 cards per row */
 .admin-actions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(260px, 1fr)); /* Forces exactly 3 columns */
   gap: 28px;
-  max-width: 780px;
+  max-width: 1000px;
   width: 100%;
+  margin: 0 auto;
 }
 
 /* CARD */
@@ -75,29 +78,109 @@
   background-color: var(--card);
   border: 2px solid var(--border);
   border-radius: 12px;
-  padding: 32px;
+  padding: 32px 24px;
   text-align: center;
   cursor: pointer;
   transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 180px;
 }
 
 .admin-action-card h2 {
   color: var(--blue);
   margin-bottom: 10px;
   font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .admin-action-card p {
   color: #666;
   font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* TOGGLE / HOVER EFFECT */
 .admin-action-card:hover {
   border-color: var(--red);
   transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(214, 40, 40, 0.1);
 }
 
 .admin-action-card:hover h2 {
   color: var(--red);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .admin-actions-grid {
+    grid-template-columns: repeat(3, 1fr); /* Still 3 columns on tablets */
+    gap: 20px;
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-actions-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-main {
+    padding: 40px 20px;
+  }
+  
+  .admin-dashboard-header {
+    padding: 15px 20px;
+  }
+  
+  .admin-dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .admin-action-card {
+    padding: 28px 20px;
+    min-height: 160px;
+  }
+  
+  .admin-action-card h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-actions-grid {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+    max-width: 400px;
+    gap: 20px;
+  }
+  
+  .admin-dashboard-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .admin-action-card {
+    min-height: 140px;
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard-main {
+    padding: 30px 15px;
+  }
+  
+  .admin-action-card h2 {
+    font-size: 1.2rem;
+  }
+  
+  .admin-action-card p {
+    font-size: 0.9rem;
+  }
 }

@@ -57,18 +57,34 @@ const Navbar = () => {
           <span className="nav-link" onClick={() => goPage('/services')}>Services</span>
           <span className="nav-link" onClick={() => scrollToSection('products')}>Products</span>
           <span className="nav-link" onClick={() => goPage('/gallery')}>Gallery</span>
-          <span className="nav-link" onClick={() => scrollToSection('contact')}>Contact</span>
+          <span className="nav-link" onClick={() => scrollToSection('quote')}>Contact</span>
         </div>
 
         {/* ACTIONS */}
         <div className="nav-actions">
-          <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noreferrer" className="icon-btn whatsapp" aria-label="WhatsApp">
+          <a
+            href="https://wa.me/916384153370"
+            target="_blank"
+            rel="noreferrer"
+            className="icon-btn whatsapp"
+            aria-label="WhatsApp"
+          >
             <FaWhatsapp />
           </a>
-          <a href="tel:+91XXXXXXXXXX" className="icon-btn call" aria-label="Call">
+
+          <a
+            href="tel:+916384153370"
+            className="icon-btn call"
+            aria-label="Call"
+          >
             <FaPhone />
           </a>
-          <button className="menu-toggle" onClick={() => setIsOpen(true)} aria-label="Open menu">
+
+          <button
+            className="menu-toggle"
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
+          >
             <FiMenu />
           </button>
         </div>
@@ -79,7 +95,11 @@ const Navbar = () => {
         <>
           <div className="overlay" onClick={() => setIsOpen(false)} />
           <div className="mobile-menu">
-            <button className="close-menu" onClick={() => setIsOpen(false)} aria-label="Close menu">
+            <button
+              className="close-menu"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+            >
               <FiX />
             </button>
 
@@ -88,14 +108,24 @@ const Navbar = () => {
             <span onClick={() => goPage('/services')}>Services</span>
             <span onClick={() => scrollToSection('products')}>Products</span>
             <span onClick={() => goPage('/gallery')}>Gallery</span>
-            <span onClick={() => scrollToSection('contact')}>Contact</span>
-            
+            <span onClick={() => scrollToSection('quote')}>Contact</span>
             {/* Icons in Mobile Menu */}
             <div className="mobile-actions">
-              <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noreferrer" className="icon-btn whatsapp" aria-label="WhatsApp">
+              <a
+                href="https://wa.me/916384153370"
+                target="_blank"
+                rel="noreferrer"
+                className="icon-btn whatsapp"
+                aria-label="WhatsApp"
+              >
                 <FaWhatsapp />
               </a>
-              <a href="tel:+91XXXXXXXXXX" className="icon-btn call" aria-label="Call">
+
+              <a
+                href="tel:+916384153370"
+                className="icon-btn call"
+                aria-label="Call"
+              >
                 <FaPhone />
               </a>
             </div>

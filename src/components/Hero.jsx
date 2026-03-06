@@ -52,7 +52,7 @@ const Hero = () => {
           </button>
           <button 
             className="btn btn-secondary"
-            onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('quote').scrollIntoView({ behavior: 'smooth' })}
           >
             Contact Us
           </button>
