@@ -13,12 +13,15 @@ import ServicesPage from "./pages/ServicesPage";
 import ProductsPage from "./pages/ProductsPage";
 import GalleryPage from "./pages/GalleryPage";
 
+/* ===== PRODUCT DETAIL PAGE ===== */
+import Bulkers from "./components/Bulkers";   // ⭐ path changed
+
 /* ===== ADMIN ===== */
 import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import ManageGallery from "./admin/ManageGallery";
 import ManageServices from "./admin/ManageServices";
-import ManageQuote from "./admin/ManageQuote";   // ✅ correct file
+import ManageQuote from "./admin/ManageQuote";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -30,14 +33,18 @@ function App() {
     <Router>
       <>
         <Routes>
-          {/* PUBLIC */}
+
+          {/* ===== PUBLIC ===== */}
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
 
-          {/* ADMIN */}
+          {/* ⭐ BULKERS PRODUCT PAGE */}
+          <Route path="/bulkers" element={<Bulkers />} />
+
+          {/* ===== ADMIN ===== */}
           <Route path="/admin" element={<AdminLogin />} />
 
           <Route
@@ -67,7 +74,6 @@ function App() {
             }
           />
 
-          {/* 🔥 MANAGE QUOTES */}
           <Route
             path="/admin/manage-quotes"
             element={
@@ -76,6 +82,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
         </Routes>
 
         <ChatBot />
