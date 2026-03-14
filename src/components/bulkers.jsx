@@ -57,7 +57,7 @@ const Bulkers = () => {
               {/* Header */}
               <div className="product-header">
                 <span className="product-badge">Premium Series</span>
-                <h1 className="product-title">Bulker Trailer</h1>
+                <h1 className="product-title">Bulkers</h1>
                 <p className="product-description">
                   Engineered for heavy-duty performance. The Bulker Trailer combines robust construction 
                   with advanced suspension systems, designed for efficient bulk material transportation 
