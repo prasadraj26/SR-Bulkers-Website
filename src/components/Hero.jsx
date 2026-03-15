@@ -1,8 +1,29 @@
 import { motion } from 'framer-motion'
 import { FaArrowDown } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
 import './Hero.css'
 
+import traillerTank from '../assets/images/trailler tank.png'
+import sideImage from '../assets/images/side.png'
+import bul2 from '../assets/images/bul2.png'
+
+const carouselImages = [traillerTank, sideImage, bul2]
+
 const Hero = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
+      )
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  const currentImage = carouselImages[currentImageIndex % carouselImages.length]
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,6 +49,30 @@ const Hero = () => {
 
   return (
     <section id="home" className="hero-section">
+      <div className="carousel-container">
+        <motion.div
+          className="carousel-image"
+          key={currentImageIndex}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.5, ease: 'easeInOut' }}
+        >
+          <img src={currentImage} alt="Hero background" className="carousel-image-img" />
+          <div className="carousel-image-overlay" />
+        </motion.div>
+
+        <div className="carousel-indicators">
+          {carouselImages.map((_, index) => (
+            <button
+              key={index}
+              className={`indicator ${index === currentImageIndex ? 'active' : ''}`}
+              onClick={() => setCurrentImageIndex(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
 
       <motion.div
         className="hero-content"

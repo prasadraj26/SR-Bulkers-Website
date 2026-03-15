@@ -14,7 +14,7 @@ import ProductsPage from "./pages/ProductsPage";
 import GalleryPage from "./pages/GalleryPage";
 
 /* ===== PRODUCT DETAIL PAGE ===== */
-import Bulkers from "./components/Bulkers";   // ⭐ path changed
+import Bulkers from "./components/bulkers";   // ⭐ path changed
 
 /* ===== ADMIN ===== */
 import AdminLogin from "./admin/AdminLogin";

@@ -3,13 +3,79 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-            url('https://content.jdmagicbox.com/v2/comp/salem/e2/0427px427.x427.200323221141.r5e2/catalogue/sr-engineering-works-and-fabricators-navapatti-salem-ms-water-tanker-manufacturers-6ouxrqpb23.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   color: var(--secondary-color);
   overflow: hidden;
+  background: #000;
+}
+
+.carousel-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.carousel-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  will-change: opacity;
+}
+
+.carousel-image-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
+  pointer-events: none;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 3;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: white;
+  border-color: white;
+  transform: scale(1.2);
+}
+
+.indicator:hover {
+  border-color: white;
+  transform: scale(1.1);
 }
 
 .hero-content {
