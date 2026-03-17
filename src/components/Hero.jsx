@@ -1,47 +1,119 @@
-﻿import { useEffect, useMemo, useRef, useState } from 'react'
+﻿import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Hero.css'
 
-// Import your local images
 import traillerTank from '../assets/images/trailler tank.png'
-import sideImage from '../assets/images/side.png'
-import bul2 from '../assets/images/bul2.png'
+import sideImage    from '../assets/images/side.png'
+import bul2         from '../assets/images/bul2.png'
 
 const slideData = [
   {
-    title: 'Manufacturing & Servicing of fly ash bulkers',
-    subtitle: 'Custom truck bodies engineered for durability and performance. Over 12+ years of excellence in truck manufacturing.',
-    ctaLabel: 'View Services',
-    image: traillerTank,
-    ctaAction: 'services', // Store the ID instead of function
+    eyebrow: 'Over 12 Years of Excellence',
+    title: 'Manufacturing & Servicing of Fly Ash Bulkers',
+    subtitle: 'Custom truck bodies engineered for durability and performance in demanding industrial environments.',
+    ctaLabel: 'Learn More',
+    image: bul2,
+    ctaAction: 'about',
   },
   {
+    eyebrow: 'Premium Series',
     title: 'Premium Quality Trailers',
-    subtitle: 'Engineered for heavy-duty performance and long-lasting durability.',
+    subtitle: 'Engineered for heavy-duty performance and long-lasting durability on every road.',
     ctaLabel: 'Contact Us',
     image: sideImage,
     ctaAction: 'quote',
   },
   {
+    eyebrow: 'Built to Your Spec',
     title: 'Custom Built Solutions',
-    subtitle: 'Tailored to meet your specific requirements with precision engineering.',
-    ctaLabel: 'Learn More',
-    image: bul2,
-    ctaAction: 'about',
+    subtitle: 'Tailored to meet your specific requirements with precision engineering and quality materials.',
+    ctaLabel: 'View Services',
+    image: traillerTank,
+    ctaAction: 'services',
   },
 ]
 
+const AUTOPLAY_DURATION = 4000 // ms
+
 const Hero = () => {
-  const trackRef = useRef(null)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const autoPlayRef = useRef(null)
+  const trackRef        = useRef(null)
+  const progressRef     = useRef(null)
+  const autoPlayRef     = useRef(null)
+  const progressRaf     = useRef(null)
+  const startTimeRef    = useRef(null)
+
+  const navigate = useNavigate()
+
+  const [activeIndex,    setActiveIndex]    = useState(0)
+  const [isAutoPlaying,  setIsAutoPlaying]  = useState(true)
+  const [progress,       setProgress]       = useState(0)
 
   const slides = useMemo(() => slideData, [])
 
+  /* ── scroll to slide ── */
+  const scrollTo = useCallback((index) => {
+    const track = trackRef.current
+    if (!track) return
+    track.scrollTo({ left: track.offsetWidth * index, behavior: 'smooth' })
+  }, [])
+
+  const handleNext = useCallback(() => {
+    setActiveIndex(prev => {
+      const next = prev === slides.length - 1 ? 0 : prev + 1
+      scrollTo(next)
+      return next
+    })
+  }, [slides.length, scrollTo])
+
+  const handlePrev = useCallback(() => {
+    setActiveIndex(prev => {
+      const next = prev === 0 ? slides.length - 1 : prev - 1
+      scrollTo(next)
+      return next
+    })
+  }, [slides.length, scrollTo])
+
+  /* ── pause / resume helpers ── */
+  const pauseAutoPlay = () => {
+    setIsAutoPlaying(false)
+    clearInterval(autoPlayRef.current)
+    cancelAnimationFrame(progressRaf.current)
+  }
+
+  const resumeAutoPlay = () => {
+    setIsAutoPlaying(true)
+  }
+
+  /* ── progress bar animation ── */
+  useEffect(() => {
+    if (!isAutoPlaying) { setProgress(0); return }
+
+    startTimeRef.current = performance.now()
+
+    const tick = (now) => {
+      const elapsed = now - startTimeRef.current
+      const pct = Math.min((elapsed / AUTOPLAY_DURATION) * 100, 100)
+      setProgress(pct)
+      if (pct < 100) {
+        progressRaf.current = requestAnimationFrame(tick)
+      }
+    }
+
+    progressRaf.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(progressRaf.current)
+  }, [isAutoPlaying, activeIndex])
+
+  /* ── auto-advance ── */
+  useEffect(() => {
+    if (!isAutoPlaying) return
+    autoPlayRef.current = setInterval(handleNext, AUTOPLAY_DURATION)
+    return () => clearInterval(autoPlayRef.current)
+  }, [isAutoPlaying, handleNext])
+
+  /* ── IntersectionObserver to track which slide is visible ── */
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
-
     const slidesEl = Array.from(track.children)
 
     const observer = new IntersectionObserver(
@@ -53,150 +125,121 @@ const Hero = () => {
           }
         })
       },
-      { root: track, threshold: 0.6 }
+      { root: track, threshold: 0.55 }
     )
 
-    slidesEl.forEach((slide) => observer.observe(slide))
-
+    slidesEl.forEach(s => observer.observe(s))
     return () => observer.disconnect()
   }, [])
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (isAutoPlaying) {
-      autoPlayRef.current = setInterval(() => {
-        handleNext()
-      }, 3000) // 3 seconds
-    }
-
-    return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current)
-      }
-    }
-  }, [isAutoPlaying, activeIndex])
-
-  const scrollTo = (index) => {
-    const track = trackRef.current
-    if (!track) return
-    track.scrollTo({ left: track.offsetWidth * index, behavior: 'smooth' })
-  }
-
-  const handleNext = () => {
-    scrollTo(activeIndex === slides.length - 1 ? 0 : activeIndex + 1)
-  }
-
-  const handlePrev = () => {
-    scrollTo(activeIndex === 0 ? slides.length - 1 : activeIndex - 1)
-  }
-
-  // Safe scroll function with error handling
   const handleScrollToSection = (sectionId) => {
-    try {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      } else {
-        console.log(`Section with id "${sectionId}" not found yet`)
-        // Optionally, you could wait for the element to appear
-        // or navigate to a different page
-      }
-    } catch (error) {
-      console.error('Error scrolling to section:', error)
+    if (sectionId === 'services') {
+      navigate('/services')
+    } else {
+      const el = document.getElementById(sectionId)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
-  // Pause auto-play on user interaction
-  const handleUserInteraction = () => {
-    setIsAutoPlaying(false)
-    // Resume auto-play after 5 seconds of inactivity
-    setTimeout(() => {
-      setIsAutoPlaying(true)
-    }, 5000)
+  const handleDotClick = (index) => {
+    scrollTo(index)
+    setActiveIndex(index)
+    pauseAutoPlay()
+    setTimeout(resumeAutoPlay, 5000)
   }
 
   return (
-    <section 
-      id="home" 
-      className="hero-section" 
-      data-purpose="hero-image-carousel"
-      onMouseEnter={() => setIsAutoPlaying(false)}
-      onMouseLeave={() => setIsAutoPlaying(true)}
+    <section
+      id="home"
+      className="hero-section"
+      onMouseEnter={pauseAutoPlay}
+      onMouseLeave={resumeAutoPlay}
     >
-      <div
-        ref={trackRef}
-        id="hero-carousel"
-        className="carousel-track"
-        data-purpose="carousel-track"
-      >
+      {/* Left accent line */}
+      <div className="slide-index-line" />
+
+      {/* Carousel track */}
+      <div ref={trackRef} className="carousel-track">
         {slides.map((slide, index) => (
-          <div key={index} className="carousel-slide" data-purpose="carousel-slide">
+          <div
+            key={index}
+            className={`carousel-slide${index === activeIndex ? ' is-active' : ''}`}
+          >
             <img
-              alt={`Slide ${index + 1} Background`}
-              className="slide-bg"
               src={slide.image}
-              onError={(e) => {
-                console.error('Error loading image:', slide.image)
-                e.target.style.backgroundColor = '#333' // Fallback color
-              }}
+              alt={`Slide ${index + 1}`}
+              className="slide-bg"
+              onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
             />
+
             <div className="slide-content">
+              <span className="slide-eyebrow">{slide.eyebrow}</span>
+
+              {/* h1 — scoped overrides in Hero.css via .hero-section .slide-title */}
               <h1 className="slide-title">{slide.title}</h1>
+
               <p className="slide-subtitle">{slide.subtitle}</p>
-              <button 
-                className="slide-cta" 
+
+              <button
+                className="slide-cta"
                 onClick={() => {
                   handleScrollToSection(slide.ctaAction)
-                  handleUserInteraction()
+                  pauseAutoPlay()
+                  setTimeout(resumeAutoPlay, 5000)
                 }}
               >
                 {slide.ctaLabel}
+                <span className="cta-arrow">→</span>
               </button>
             </div>
           </div>
         ))}
       </div>
 
+      {/* Arrows */}
       <button
         aria-label="Previous slide"
         className="carousel-arrow prev"
-        id="prevBtn"
-        onClick={() => {
-          handlePrev()
-          handleUserInteraction()
-        }}
+        onClick={() => { handlePrev(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
       >
         ‹
       </button>
       <button
         aria-label="Next slide"
         className="carousel-arrow next"
-        id="nextBtn"
-        onClick={() => {
-          handleNext()
-          handleUserInteraction()
-        }}
+        onClick={() => { handleNext(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
       >
         ›
       </button>
 
-      <div className="carousel-indicators" data-purpose="carousel-indicators">
+      {/* Dot indicators */}
+      <div className="carousel-indicators">
         {slides.map((_, index) => (
           <div
             key={index}
-            className={`indicator-dot ${index === activeIndex ? 'active' : ''}`}
-            data-slide={index}
-            onClick={() => {
-              scrollTo(index)
-              handleUserInteraction()
-            }}
+            className={`indicator-dot${index === activeIndex ? ' active' : ''}`}
+            onClick={() => handleDotClick(index)}
           />
         ))}
       </div>
 
-      {/* Auto-play indicator */}
-      <div className={`autoplay-indicator ${isAutoPlaying ? 'active' : ''}`}>
-        <div className="autoplay-progress"></div>
+      {/* Slide counter */}
+      <div className="slide-counter">
+        <span className="counter-current">
+          {String(activeIndex + 1).padStart(2, '0')}
+        </span>
+        <div className="counter-sep" />
+        <span className="counter-total">
+          {String(slides.length).padStart(2, '0')}
+        </span>
+      </div>
+
+      {/* Progress bar */}
+      <div className="hero-progress">
+        <div
+          className="hero-progress-fill"
+          style={{ width: `${progress}%` }}
+        />
       </div>
     </section>
   )

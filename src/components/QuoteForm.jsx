@@ -6,11 +6,7 @@ import {
   FaMapMarkerAlt, 
   FaPhone, 
   FaEnvelope, 
-  FaClock, 
-  FaFacebook, 
-  FaTwitter, 
-  FaLinkedin, 
-  FaInstagram 
+  FaClock 
 } from 'react-icons/fa'
 import './QuoteForm.css'
 
@@ -53,6 +49,17 @@ const QuoteForm = ({
     return null
   }
 
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      service: '',
+      message: ''
+    })
+  }
+
+  // EMAIL SUBMISSION
   const handleEmailSubmit = async (e) => {
     e.preventDefault()
 
@@ -79,13 +86,7 @@ const QuoteForm = ({
         message: 'Quote request submitted successfully!'
       })
 
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        service: '',
-        message: ''
-      })
+      resetForm()
 
     } catch (error) {
       setFormStatus({
@@ -97,28 +98,59 @@ const QuoteForm = ({
     setIsSubmitting(false)
   }
 
-  const handleWhatsAppSubmit = () => {
+  // WHATSAPP SUBMISSION
+  const handleWhatsAppSubmit = async () => {
+
     const error = validateForm()
     if (error) {
       setFormStatus({ type: 'error', message: error })
       return
     }
 
-    const message = `
-Hello SR Builders,
+    try {
+
+      const quotesRef = ref(db, 'quotes')
+
+      // store in Firebase
+      await push(quotesRef, {
+        ...formData,
+        submittedVia: "WhatsApp",
+        status: "Pending",
+        createdAt: Date.now()
+      })
+
+      const message = `
+Hello SR Bulkers,
+
 Name: ${formData.name}
 Phone: ${formData.phone}
 Email: ${formData.email}
 Service: ${formData.service}
-Requirement: ${formData.message}
-    `
 
-    const encodedMessage = encodeURIComponent(message)
+Requirement:
+${formData.message}
+      `
 
-    window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
-      "_blank"
-    )
+      const encodedMessage = encodeURIComponent(message)
+
+      window.open(
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`,
+        "_blank"
+      )
+
+      setFormStatus({
+        type: 'success',
+        message: 'Opening WhatsApp...'
+      })
+
+      resetForm()
+
+    } catch (error) {
+      setFormStatus({
+        type: 'error',
+        message: 'Failed to send quote.'
+      })
+    }
   }
 
   const contactInfo = [
@@ -139,6 +171,7 @@ Requirement: ${formData.message}
 
         <div className="quote-container">
 
+          {/* CONTACT INFO */}
           <div className="quote-info">
             {contactInfo.map((info, index) => (
               <div key={index} className="info-item">
@@ -151,6 +184,7 @@ Requirement: ${formData.message}
             ))}
           </div>
 
+          {/* FORM */}
           <div className="quote-form-container">
 
             {formStatus.message && (
@@ -161,26 +195,60 @@ Requirement: ${formData.message}
 
             <form onSubmit={handleEmailSubmit}>
 
-              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
-              <input type="tel" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} />
-              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+              />
 
-              <select name="service" value={formData.service} onChange={handleChange}>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+
+              <select
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
+              >
                 <option value="">Select Service</option>
                 <option value="Custom Truck Body">Custom Truck Body</option>
                 <option value="Silo Manufacturing">Silo Manufacturing</option>
                 <option value="Repair & Maintenance">Repair & Maintenance</option>
               </select>
 
-              <textarea name="message" placeholder="Requirement" value={formData.message} onChange={handleChange} />
+              <textarea
+                name="message"
+                placeholder="Requirement"
+                value={formData.message}
+                onChange={handleChange}
+              />
 
-              <button type="submit">Send via Email</button>
+              <button type="submit" disabled={isSubmitting}>
+                Send via Email
+              </button>
+
               <button type="button" onClick={handleWhatsAppSubmit}>
                 Send via WhatsApp
               </button>
 
             </form>
+
           </div>
+
         </div>
       </div>
     </section>

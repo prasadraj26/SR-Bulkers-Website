@@ -1,66 +1,122 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { FiMenu, FiX } from 'react-icons/fi'
-import { FaWhatsapp, FaPhone } from 'react-icons/fa'
-import './Navbar.css'
-import logo from '../assets/images/logo.jpg'
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
+import { FaWhatsapp, FaPhone } from "react-icons/fa";
+import "./Navbar.css";
+import logo from "../assets/images/logo.jpg";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  /* =========================
+     NAVBAR SCROLL EFFECT
+  ========================= */
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
 
-  const goTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    setIsOpen(false)
-  }
+    window.addEventListener("scroll", handleScroll);
 
-  const goPage = (path) => {
-    navigate(path)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    setIsOpen(false)
-  }
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const scrollToSection = (id) => {
-    if (location.pathname !== '/') {
-      navigate('/')
+  /* =========================
+     HOME NAVIGATION (Hero)
+  ========================= */
+  const goHome = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+
       setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-      }, 300)
+        const hero = document.getElementById("home");
+        hero?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
     } else {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      const hero = document.getElementById("home");
+      hero?.scrollIntoView({ behavior: "smooth" });
     }
-    setIsOpen(false)
-  }
+
+    setIsOpen(false);
+  };
+
+  /* =========================
+     PAGE NAVIGATION
+  ========================= */
+  const goPage = (path) => {
+    navigate(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsOpen(false);
+  };
+
+  /* =========================
+     SCROLL TO SECTION
+  ========================= */
+  const scrollToSection = (id) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+
+      setTimeout(() => {
+        document
+          .getElementById(id)
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    } else {
+      document
+        .getElementById(id)
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    setIsOpen(false);
+  };
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-container">
 
         {/* LOGO */}
-        <div className="logo" onClick={goTop}>
+        <div className="logo" onClick={goHome}>
           <img src={logo} alt="SR Bulkers" className="logo-image" />
         </div>
 
         {/* DESKTOP LINKS */}
         <div className="nav-links">
-          <span className="nav-link" onClick={goTop}>Home</span>
-          <span className="nav-link" onClick={() => goPage('/about')}>About</span>
-          <span className="nav-link" onClick={() => goPage('/services')}>Services</span>
-          <span className="nav-link" onClick={() => scrollToSection('products')}>Products</span>
-          <span className="nav-link" onClick={() => goPage('/gallery')}>Gallery</span>
-          <span className="nav-link" onClick={() => scrollToSection('quote')}>Contact</span>
+          <span className="nav-link" onClick={goHome}>
+            Home
+          </span>
+
+          <span className="nav-link" onClick={() => goPage("/about")}>
+            About
+          </span>
+
+          <span className="nav-link" onClick={() => goPage("/services")}>
+            Services
+          </span>
+
+          <span
+            className="nav-link"
+            onClick={() => scrollToSection("products")}
+          >
+            Products
+          </span>
+
+          <span className="nav-link" onClick={() => goPage("/gallery")}>
+            Gallery
+          </span>
+
+          <span
+            className="nav-link"
+            onClick={() => scrollToSection("quote")}
+          >
+            Contact
+          </span>
         </div>
 
-        {/* ACTIONS */}
+        {/* ACTION BUTTONS */}
         <div className="nav-actions">
           <a
             href="https://wa.me/916384153370"
@@ -93,8 +149,13 @@ const Navbar = () => {
       {/* MOBILE MENU */}
       {isOpen && (
         <>
-          <div className="overlay" onClick={() => setIsOpen(false)} />
+          <div
+            className="overlay"
+            onClick={() => setIsOpen(false)}
+          />
+
           <div className="mobile-menu">
+
             <button
               className="close-menu"
               onClick={() => setIsOpen(false)}
@@ -103,20 +164,39 @@ const Navbar = () => {
               <FiX />
             </button>
 
-            <span onClick={goTop}>Home</span>
-            <span onClick={() => goPage('/about')}>About</span>
-            <span onClick={() => goPage('/services')}>Services</span>
-            <span onClick={() => scrollToSection('products')}>Products</span>
-            <span onClick={() => goPage('/gallery')}>Gallery</span>
-            <span onClick={() => scrollToSection('quote')}>Contact</span>
-            {/* Icons in Mobile Menu */}
+            <span onClick={goHome}>Home</span>
+
+            <span onClick={() => goPage("/about")}>
+              About
+            </span>
+
+            <span onClick={() => goPage("/services")}>
+              Services
+            </span>
+
+            <span
+              onClick={() => scrollToSection("products")}
+            >
+              Products
+            </span>
+
+            <span onClick={() => goPage("/gallery")}>
+              Gallery
+            </span>
+
+            <span
+              onClick={() => scrollToSection("quote")}
+            >
+              Contact
+            </span>
+
+            {/* MOBILE ICONS */}
             <div className="mobile-actions">
               <a
                 href="https://wa.me/916384153370"
                 target="_blank"
                 rel="noreferrer"
                 className="icon-btn whatsapp"
-                aria-label="WhatsApp"
               >
                 <FaWhatsapp />
               </a>
@@ -124,16 +204,16 @@ const Navbar = () => {
               <a
                 href="tel:+916384153370"
                 className="icon-btn call"
-                aria-label="Call"
               >
                 <FaPhone />
               </a>
             </div>
+
           </div>
         </>
       )}
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
