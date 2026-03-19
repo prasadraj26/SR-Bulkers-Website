@@ -65,145 +65,147 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="about-section">
-      <div className="about-container">
+    <section id="about" className="home-about-section">
+      <div className="home-about-container">
 
-        {/* HEADER */}
+        {/* ── HEADER ── */}
         <motion.div
-          className="section-header"
+          className="home-section-header"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.h2 className="about-title" variants={titleVariants}>
+          <motion.span className="home-eyebrow" variants={subtitleVariants}>
+            WHO WE ARE
+          </motion.span>
+
+          <motion.h2 className="home-about-title" variants={titleVariants}>
             WELCOME
           </motion.h2>
 
-          <motion.p className="section-subtitle" variants={subtitleVariants}>
+          <motion.p className="home-section-subtitle" variants={subtitleVariants}>
             SR Bulkers is a trusted manufacturer of cement bulkers and trailers,
-            established in 2012 at Mettur, Tamil Nadu. With over 12 years of
+            established in 2012 at Mettur, Tamil Nadu. With over 13 years of
             experience, we focus on strong build quality, safety, and long
             service life.
           </motion.p>
 
-          <motion.div className="about-read-more" variants={buttonVariants}>
+          <motion.div className="home-read-more" variants={buttonVariants}>
             <motion.button
-              className="tech-button"
+              className="home-tech-button"
               onClick={() => navigate("/about")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Read More <FaArrowRight className="button-icon" />
+              Read More <FaArrowRight className="home-button-icon" />
             </motion.button>
           </motion.div>
         </motion.div>
 
-        <div className="about-divider"></div>
+        {/* ── DIVIDER ── */}
+        <div className="home-about-divider"></div>
 
-        {/* STATS SECTION */}
+        {/* ── STATS — WHY CHOOSE US ── */}
         <motion.div
-          className="feature-section-wrapper"
+          className="home-feature-wrapper"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.h3 className="why-title" variants={titleVariants}>
+          <motion.h3 className="home-why-title" variants={titleVariants}>
             Why Choose Us
           </motion.h3>
 
+          {/* ✅ Grid is now the direct stagger container — no orphan wrapper class */}
           <motion.div
-            className="feature-section"
+            className="home-feature-grid"
             variants={cardContainerVariants}
           >
-            <div className="feature-grid">
+            <motion.div
+              className="home-feature-box"
+              variants={countBoxVariants}
+              whileHover={{ y: -5 }}
+            >
+              <div className="home-count-box">
+                <span className="home-count-text">13</span><span>+</span>
+              </div>
+              <h6>Years of Experience</h6>
+            </motion.div>
 
-              <motion.div
-                className="feature-box"
-                variants={countBoxVariants}
-                whileHover={{ y: -5 }}
-              >
-                <div className="count-box">
-                  <span className="count-text">13</span><span>+</span>
-                </div>
-                <h6>Years of Experience</h6>
-              </motion.div>
+            <motion.div
+              className="home-feature-box"
+              variants={countBoxVariants}
+              whileHover={{ y: -5 }}
+            >
+              <div className="home-count-box">
+                <span className="home-count-text">7000</span><span>+</span>
+              </div>
+              <h6>Vehicle on Road</h6>
+            </motion.div>
 
-              <motion.div
-                className="feature-box"
-                variants={countBoxVariants}
-                whileHover={{ y: -5 }}
-              >
-                <div className="count-box">
-                  <span className="count-text">7000</span><span>+</span>
-                </div>
-                <h6>Vehicle on Road</h6>
-              </motion.div>
+            <motion.div
+              className="home-feature-box"
+              variants={countBoxVariants}
+              whileHover={{ y: -5 }}
+            >
+              <div className="home-count-box">
+                <span className="home-count-text">1200</span><span>+</span>
+              </div>
+              <h6>Certified Suppliers</h6>
+            </motion.div>
 
-              <motion.div
-                className="feature-box"
-                variants={countBoxVariants}
-                whileHover={{ y: -5 }}
-              >
-                <div className="count-box">
-                  <span className="count-text">1200</span><span>+</span>
-                </div>
-                <h6>Certified Suppliers</h6>
-              </motion.div>
-
-              <motion.div
-                className="feature-box"
-                variants={countBoxVariants}
-                whileHover={{ y: -5 }}
-              >
-                <div className="count-box">
-                  <span className="count-text">100</span><span>+</span>
-                </div>
-                <h6>Prestigious Projects</h6>
-              </motion.div>
-
-            </div>
+            <motion.div
+              className="home-feature-box"
+              variants={countBoxVariants}
+              whileHover={{ y: -5 }}
+            >
+              <div className="home-count-box">
+                <span className="home-count-text">100</span><span>+</span>
+              </div>
+              <h6>Prestigious Projects</h6>
+            </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* WHAT WE PROVIDE */}
+        {/* ── WHAT WE PROVIDE ── */}
         <motion.div
-          className="why-choose-section"
+          className="home-why-section"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.h3 className="why-title" variants={titleVariants}>
+          <motion.h3 className="home-why-title" variants={titleVariants}>
             What We Provide
           </motion.h3>
 
-          <motion.div className="why-grid" variants={cardContainerVariants}>
+          <motion.div className="home-why-grid" variants={cardContainerVariants}>
 
             <motion.div
-              className="why-card"
+              className="home-why-card"
               variants={cardVariants}
               whileHover={{ y: -5 }}
             >
-              <FaTools className="why-icon" />
+              <FaTools className="home-why-icon" />
               <h4>Strong Build Quality</h4>
               <p>Designed for Indian roads</p>
             </motion.div>
 
             <motion.div
-              className="why-card"
+              className="home-why-card"
               variants={cardVariants}
               whileHover={{ y: -5 }}
             >
-              <FaTruck className="why-icon" />
+              <FaTruck className="home-why-icon" />
               <h4>On-Time Delivery</h4>
               <p>Committed timelines</p>
             </motion.div>
 
             <motion.div
-              className="why-card"
+              className="home-why-card"
               variants={cardVariants}
               whileHover={{ y: -5 }}
             >
-              <FaHandshake className="why-icon" />
+              <FaHandshake className="home-why-icon" />
               <h4>After-Sales Support</h4>
               <p>Support after delivery</p>
             </motion.div>

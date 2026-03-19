@@ -1,104 +1,58 @@
 import { motion } from 'framer-motion'
 import {
-  FaPhone,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaClock,
   FaFacebookF,
   FaTwitter,
   FaLinkedinIn,
-  FaInstagram,
-  FaDirections,
-  FaCopy
+  FaInstagram
 } from 'react-icons/fa'
+import { useNavigate } from "react-router-dom";
 import './Footer.css'
 
 const Footer = () => {
-  const companyInfo = {
-    name: "SR Bulkers",
-    description:
-      "Leading truck bulkers with over 12 years of expertise in custom truck solutions, quality fabrication, and reliable service.",
-    address: {
-      plusCode: "PQPH+GG",
-      area: "Navappatti",
-      district: "Salem",
-      state: "Tamil Nadu",
-      pincode: "636452",
-      country: "India"
-    },
-    contact: {
-      phone: "8098389303",
-      email: "srbulkers@gmail.com",
-      hours: {
-        weekdays: "Mon-Fri: 8:00 AM - 6:00 PM",
-        saturday: "Saturday: 9:00 AM - 2:00 PM",
-        sunday: "Sunday: Closed"
-      }
-    },
-    social: [
-      { icon: FaFacebookF, link: "#", label: "Facebook" },
-      { icon: FaTwitter, link: "#", label: "Twitter" },
-      { icon: FaLinkedinIn, link: "#", label: "LinkedIn" },
-      { icon: FaInstagram, link: "#", label: "Instagram" }
-    ]
-  }
+  const navigate = useNavigate();
 
-  const quickLinks = ['Home', 'About', 'Services', 'Products', 'Contact']
-  const servicesList = ['Custom Truck Bodies', 'Trailer Manufacturing', 'Truck Repair']
+  const quickLinks = ['home', 'about', 'services', 'products', 'quote']
 
-  const copyAddress = () => {
-    const fullAddress = `${companyInfo.address.plusCode}, ${companyInfo.address.area}, ${companyInfo.address.district}, ${companyInfo.address.state} ${companyInfo.address.pincode}, ${companyInfo.address.country}`
-    navigator.clipboard.writeText(fullAddress)
-      .then(() => alert('Address copied to clipboard!'))
-      .catch(err => console.error('Copy failed:', err))
-  }
+  // ✅ FINAL SMART NAVIGATION
+  const handleNavigation = (link) => {
+    // 👉 Services is a separate page
+    if (link === "services") {
+      navigate("/services");
+      return;
+    }
 
-  const openDirections = () => {
-    const address = encodeURIComponent(
-      `${companyInfo.address.area}, ${companyInfo.address.district}, ${companyInfo.address.state} ${companyInfo.address.pincode}`
-    )
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${address}`, '_blank')
-  }
+    // 👉 Other sections → Home scroll
+    navigate("/", { state: { scrollTo: link } });
+  };
 
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
 
-          {/* COMPANY INFO */}
-          <motion.div className="footer-column" data-aos="fade-up">
+          {/* COMPANY */}
+          <motion.div className="footer-column">
             <h3 className="logo-text">SR BULKERS</h3>
-            <p className="company-description">{companyInfo.description}</p>
-
-            <div className="social-links">
-              {companyInfo.social.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.link}
-                  className="social-link"
-                  whileHover={{ scale: 1.1 }}
-                  aria-label={social.label}
-                >
-                  <social.icon />
-                </motion.a>
-              ))}
-            </div>
+            <p className="company-description">
+  Leading truck bulkers with over 13 years of expertise in custom truck solutions,
+  quality fabrication, and reliable service.
+</p>
           </motion.div>
 
           {/* QUICK LINKS */}
-          <motion.div className="footer-column" data-aos="fade-up" data-aos-delay="100">
+          <motion.div className="footer-column">
             <h3>Quick Links</h3>
             <ul className="footer-links">
               {quickLinks.map((link, index) => (
                 <li key={index}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href="#"
                     onClick={(e) => {
-                      e.preventDefault()
-                      document.getElementById(link.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+                      e.preventDefault();
+                      handleNavigation(link);
                     }}
                   >
-                    {link}
+                    {link.charAt(0).toUpperCase() + link.slice(1)}
                   </a>
                 </li>
               ))}
@@ -106,14 +60,15 @@ const Footer = () => {
           </motion.div>
 
           {/* SERVICES */}
-          <motion.div className="footer-column" data-aos="fade-up" data-aos-delay="200">
+          <motion.div className="footer-column">
             <h3>Our Services</h3>
             <ul className="footer-links">
-              {servicesList.map((service, index) => (
-                <li key={index}>{service}</li>
-              ))}
+              <li>Custom Truck Bodies</li>
+              <li>Trailer Manufacturing</li>
+              <li>Truck Repair</li>
             </ul>
           </motion.div>
+
         </div>
       </div>
     </footer>

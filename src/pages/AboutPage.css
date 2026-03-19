@@ -5,7 +5,7 @@
   --navy: #1e3f7a;
   --navy-dark: #152d5c;
   --navy-light: #2c5ea4;
-  --gold: #b80e0e;
+  --gold: #c8960c;
   --gold-light: #e8b84b;
   --text-dark: #1a2335;
   --text-mid: #4b5c74;
@@ -40,7 +40,8 @@
 .about-hero {
   position: relative;
   min-height: 420px;
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, #2c5ea4 100%);
+  /* ✅ HERO GRADIENT — mission will match this exactly */
+  background: linear-gradient(135deg, #152d5c 0%, #1e3f7a 50%, #2c5ea4 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,17 +125,35 @@
   background: var(--bg-light);
 }
 
-.mission-bg {
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+/* ========================= */
+/* 🔥 MISSION BG             */
+/* Exact same gradient as .about-hero */
+/* ========================= */
+.about-section.mission-bg {
+  background: linear-gradient(135deg, #152d5c 0%, #1e3f7a 50%, #2c5ea4 100%) !important;
   position: relative;
   overflow: hidden;
 }
 
-.mission-bg::before {
+.about-section.mission-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M40 40L0 0h80L40 40z'/%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial glow overlay — same feel as hero */
+.about-section.mission-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(200, 150, 12, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(44, 94, 164, 0.20) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ========================= */
@@ -161,15 +180,21 @@
 }
 
 .section-label.light {
-  color: var(--gold-light);
+  color: var(--gold-light) !important;
 }
 
-.section-header.center {
-  text-align: center;
+/* ========================= */
+/* SECTION HEADER            */
+/* ========================= */
+.about-page .section-header {
   margin-bottom: 10px;
 }
 
-.section-subtext {
+.about-page .section-header.center {
+  text-align: center;
+}
+
+.about-page .section-subtext {
   font-size: 1.05rem;
   color: var(--text-mid);
   max-width: 580px;
@@ -208,25 +233,33 @@
 }
 
 /* ========================= */
-/* TITLES                    */
+/* TITLES (About Page)       */
 /* ========================= */
-.about-title {
+.about-page .about-title {
   font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   font-weight: 800;
   color: var(--navy);
-  font-family: 'Georgia', 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.2;
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   letter-spacing: -0.3px;
+  text-align: left;
+  text-decoration: none !important;
+  border-bottom: none !important;
 }
 
-.about-title.center {
+.about-page .about-title::after {
+  display: none !important;
+  content: none !important;
+}
+
+.about-page .about-title.center {
   text-align: center;
   width: 100%;
 }
 
-.about-title.light {
-  color: #ffffff;
+.about-page .about-title.light {
+  color: #ffffff !important;
 }
 
 /* ========================= */
@@ -359,7 +392,7 @@
   margin: 0 0 12px;
   font-size: 1.1rem;
   font-weight: 700;
-  font-family: 'Georgia', serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .service-card p {
@@ -417,12 +450,8 @@
 }
 
 /* ========================= */
-/* MISSION                   */
+/* MISSION INNER             */
 /* ========================= */
-.mission-bg {
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%) !important;
-}
-
 .mission-inner {
   display: flex;
   flex-direction: column;
@@ -432,19 +461,23 @@
   z-index: 1;
 }
 
-/* Force white on all text inside mission section */
-.mission-bg .section-label {
+/* Force all text visible against dark gradient */
+.about-section.mission-bg .section-label {
   color: var(--gold-light) !important;
 }
 
-.mission-bg .about-title {
+.about-section.mission-bg .about-title {
   color: #ffffff !important;
+  text-align: center !important;
 }
 
-.mission-bg .about-text {
+.about-section.mission-bg .about-text {
   color: rgba(255, 255, 255, 0.82) !important;
 }
 
+/* ========================= */
+/* MISSION STATS             */
+/* ========================= */
 .mission-stats {
   display: flex;
   align-items: center;
@@ -452,6 +485,8 @@
   margin-top: 52px;
   flex-wrap: wrap;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .stat-item {
@@ -488,7 +523,6 @@
 /* ========================= */
 /* RESPONSIVE                */
 /* ========================= */
-
 @media (max-width: 992px) {
   .two-col {
     grid-template-columns: 1fr;
@@ -509,7 +543,7 @@
     order: -1;
   }
 
-  .about-title {
+  .about-page .about-title {
     text-align: center;
   }
 
@@ -568,7 +602,7 @@
 
   .stat-item {
     padding: 16px 20px;
-    background: rgba(255,255,255,0.06);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     min-width: 120px;
   }
@@ -587,7 +621,7 @@
     font-size: 0.92rem;
   }
 
-  .about-title {
+  .about-page .about-title {
     font-size: 1.7rem;
   }
 

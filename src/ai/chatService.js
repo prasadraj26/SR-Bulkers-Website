@@ -263,7 +263,7 @@ const responseRules = [
   {
     keywords: ['hello', 'hi', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening'],
     response: () => {
-      return "👋 Hello! Welcome to SR Builders. I'm your virtual assistant for industrial product information.\n\n" +
+      return "👋 Hello! Welcome to SR Bulkers. I'm your virtual assistant for industrial product information.\n\n" +
              "I can help you with:\n" +
              "• Bulker ranges (25-45 Cu. Mtr.)\n" +
              "• Silo capacities (50-1000 Tons)\n" +

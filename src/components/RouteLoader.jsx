@@ -1,21 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Loader from "./Loader";
 
 const RouteLoader = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    // Fire loader on every route change
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 2100);
-    return () => clearTimeout(timer);
-  }, [location.pathname]); // triggers on every path change
+
+    const startTime = Date.now();
+
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => {
+        const elapsed = Date.now() - startTime;
+
+        // ✅ ensure loader is visible at least 300ms
+        const minTime = 1500;
+
+        if (elapsed < minTime) {
+          setTimeout(() => setLoading(false), minTime - elapsed);
+        } else {
+          setLoading(false);
+        }
+      });
+
+      return () => cancelAnimationFrame(raf2);
+    });
+
+    return () => cancelAnimationFrame(raf1);
+  }, [location.pathname]);
 
   if (!loading) return null;
 
-  return <Loader onDone={() => setLoading(false)} />;
+  return <Loader />;
 };
 
 export default RouteLoader;

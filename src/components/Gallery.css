@@ -14,7 +14,7 @@
   width: 100%;
 }
 
-/* ===== CONTAINER - FIXED RESPONSIVE ISSUES ===== */
+/* ===== CONTAINER ===== */
 .gallery-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -27,7 +27,6 @@
   .gallery-section {
     padding: 60px 0 30px 0;
   }
-  
   .gallery-container {
     padding: 0 15px;
   }
@@ -37,41 +36,65 @@
   .gallery-section {
     padding: 40px 0 20px 0;
   }
-  
   .gallery-container {
     padding: 0 10px;
   }
 }
 
-/* ===== SECTION HEADER - CENTER ALIGNED ===== */
+/* ===== SECTION HEADER ===== */
 .gallery-header {
   text-align: center;
   margin-bottom: 60px;
   width: 100%;
 }
 
-.gallery-title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  margin: 0 0 15px 0;
-  color: #2c5ea4;
-  font-weight: 800;
-  letter-spacing: 1px;
-  line-height: 1.2;
-  text-align: center;
-  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
+/* ── EYEBROW (optional — add if you want one) ── */
+.gallery-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
   text-transform: uppercase;
+  color: #c8960c;
+  margin-bottom: 12px;
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.gallery-subtitle {
-  color: #2c5ea4;
-  margin: 0 auto;
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  max-width: 600px;
-  line-height: 1.6;
-  font-weight: 500;
+/* ── TITLE — matches About/Products style, beats index.css ── */
+.gallery-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem) !important;
+  font-weight: 800 !important;
+  color: #2c5ea4 !important;
+  font-family: 'Montserrat', sans-serif !important;  /* override Copperplate */
+  line-height: 1.2 !important;
+  margin: 0 0 16px !important;
+  letter-spacing: -0.3px !important;
+  text-transform: none !important;                   /* override uppercase */
+  text-decoration: none !important;
+  border-bottom: none !important;
   display: block;
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
+}
+
+/* No underline bar */
+.gallery-title::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ── SUBTITLE — matches About/Products style ── */
+.gallery-subtitle {
+  font-size: 1.05rem !important;
+  color: #555 !important;
+  line-height: 1.6 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+  font-weight: 400 !important;
+  display: block !important;
+  text-align: center !important;
+  font-family: 'Montserrat', sans-serif !important;
   padding: 0 15px;
 }
 
@@ -111,7 +134,7 @@
   justify-content: center;
 }
 
-/* ===== CAROUSEL WRAPPER - FIXED RESPONSIVE ISSUES ===== */
+/* ===== CAROUSEL WRAPPER ===== */
 .carousel-wrapper {
   position: relative;
   margin: 0;
@@ -128,28 +151,6 @@
   cursor: default;
 }
 
-/* REMOVED FADE EFFECT - commented out */
-/* .carousel-container::before,
-.carousel-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: clamp(40px, 8vw, 100px);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.carousel-container::before {
-  left: 0;
-  background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0));
-}
-
-.carousel-container::after {
-  right: 0;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff);
-} */
-
 /* ===== SEAMLESS INFINITE CAROUSEL ===== */
 .carousel-row {
   display: flex;
@@ -161,41 +162,22 @@
   padding: 15px 0;
 }
 
-/* Top row - moves left */
-.top-row {
-  animation: scroll-left 180s linear infinite;
-}
+.top-row    { animation: scroll-left  180s linear infinite; }
+.bottom-row { animation: scroll-right 190s linear infinite; }
 
-/* Bottom row - moves right */
-.bottom-row {
-  animation: scroll-right 190s linear infinite;
-}
+.carousel-row.paused { animation-play-state: paused; }
 
-/* PAUSE CLASS */
-.carousel-row.paused {
-  animation-play-state: paused;
-}
-
-/* ===== TRUE SEAMLESS LOOP ANIMATIONS ===== */
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes scroll-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
-/* ===== CAROUSEL CARD - FULLY RESPONSIVE ===== */
+/* ===== CAROUSEL CARD ===== */
 .carousel-card {
   flex: 0 0 auto;
   width: clamp(160px, 25vw, 320px);
@@ -204,7 +186,7 @@
   overflow: hidden;
   position: relative;
   background: #f8f9fa;
-  box-shadow: 
+  box-shadow:
     0 8px 30px rgba(44, 94, 164, 0.1),
     0 2px 4px rgba(44, 94, 164, 0.05);
   transform-origin: center;
@@ -220,138 +202,66 @@
 .carousel-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   background: #f5f6fa;
   display: block;
 }
 
 /* ===== RESPONSIVE ANIMATION SPEEDS ===== */
-
-/* Large Desktop */
 @media (max-width: 1600px) {
-  .top-row {
-    animation-duration: 170s;
-  }
-  
-  .bottom-row {
-    animation-duration: 180s;
-  }
+  .top-row    { animation-duration: 170s; }
+  .bottom-row { animation-duration: 180s; }
 }
 
-/* Desktop */
 @media (max-width: 1200px) {
-  .gallery-header {
-    margin-bottom: 50px;
-  }
-  
-  .top-row {
-    animation-duration: 160s;
-  }
-  
-  .bottom-row {
-    animation-duration: 170s;
-  }
+  .gallery-header { margin-bottom: 50px; }
+  .top-row        { animation-duration: 160s; }
+  .bottom-row     { animation-duration: 170s; }
 }
 
-/* Tablet */
 @media (max-width: 1024px) {
-  .gallery-header {
-    margin-bottom: 40px;
-  }
-  
-  .carousel-row {
-    gap: 20px;
-  }
-  
-  .top-row {
-    animation-duration: 150s;
-  }
-  
-  .bottom-row {
-    animation-duration: 160s;
-  }
+  .gallery-header { margin-bottom: 40px; }
+  .carousel-row   { gap: 20px; }
+  .top-row        { animation-duration: 150s; }
+  .bottom-row     { animation-duration: 160s; }
 }
 
-/* Small Tablet */
 @media (max-width: 768px) {
-  .gallery-header {
-    margin-bottom: 35px;
-  }
-  
-  .carousel-row {
-    gap: 16px;
-    padding: 10px 0;
-  }
-  
-  .top-row {
-    animation-duration: 140s;
-  }
-  
-  .bottom-row {
-    animation-duration: 150s;
-  }
+  .gallery-header { margin-bottom: 35px; }
+  .carousel-row   { gap: 16px; padding: 10px 0; }
+  .top-row        { animation-duration: 140s; }
+  .bottom-row     { animation-duration: 150s; }
+  .gallery-title  { font-size: 2rem !important; }
 }
 
-/* Mobile */
 @media (max-width: 640px) {
-  .gallery-header {
-    margin-bottom: 30px;
-  }
-  
-  .carousel-row {
-    gap: 14px;
-  }
-  
-  .top-row {
-    animation-duration: 130s;
-  }
-  
-  .bottom-row {
-    animation-duration: 140s;
-  }
+  .gallery-header { margin-bottom: 30px; }
+  .carousel-row   { gap: 14px; }
+  .top-row        { animation-duration: 130s; }
+  .bottom-row     { animation-duration: 140s; }
 }
 
-/* Small Mobile */
 @media (max-width: 480px) {
-  .gallery-header {
-    margin-bottom: 25px;
-  }
-  
-  .carousel-row {
-    gap: 12px;
-  }
-  
-  .top-row {
-    animation-duration: 120s;
-  }
-  
-  .bottom-row {
-    animation-duration: 130s;
-  }
+  .gallery-header { margin-bottom: 25px; }
+  .carousel-row   { gap: 12px; }
+  .top-row        { animation-duration: 120s; }
+  .bottom-row     { animation-duration: 130s; }
+  .gallery-title  { font-size: 1.8rem !important; }
 }
 
-/* Very Small Mobile */
 @media (max-width: 360px) {
-  .carousel-row {
-    gap: 10px;
-  }
-  
-  .top-row {
-    animation-duration: 110s;
-  }
-  
-  .bottom-row {
-    animation-duration: 120s;
-  }
+  .carousel-row   { gap: 10px; }
+  .top-row        { animation-duration: 110s; }
+  .bottom-row     { animation-duration: 120s; }
 }
 
-/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+/* ===== PERFORMANCE ===== */
 @media (prefers-reduced-motion: reduce) {
   .carousel-row {
     animation-duration: 0.001ms !important;
     animation-play-state: paused;
   }
-  
   .carousel-card:hover {
     transform: none;
   }

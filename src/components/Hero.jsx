@@ -8,7 +8,7 @@ import bul2         from '../assets/images/bul2.png'
 
 const slideData = [
   {
-    eyebrow: 'Over 12 Years of Excellence',
+    eyebrow: 'Over 13 Years of Excellence',
     title: 'Manufacturing & Servicing of Fly Ash Bulkers',
     subtitle: 'Custom truck bodies engineered for durability and performance in demanding industrial environments.',
     ctaLabel: 'Learn More',

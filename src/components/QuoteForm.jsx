@@ -11,7 +11,7 @@ import {
 import './QuoteForm.css'
 
 const QuoteForm = ({ 
-  title = "Get a Quote", 
+  title = "GET A QUOTE", 
   subtitle = "Tell us your requirements and we’ll get back to you." 
 }) => {
 

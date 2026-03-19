@@ -22,6 +22,10 @@ const ServicesPage = () => {
 
         {/* ── HERO ── */}
         <section className="sp-hero-section">
+
+          {/* ✅ White curved bottom — frees ::after for dot texture overlay */}
+          <div className="sp-hero-bottom-curve" />
+
           <div className="sp-container" data-aos="fade-up">
             <div className="sp-hero-content">
               <span className="sp-hero-eyebrow">After Sales & Support</span>
@@ -91,16 +95,12 @@ const ServicesPage = () => {
           </div>
         </section>
 
-        {/* ── BULKER TANK ──
-            Desktop: two columns — text left, image right (via CSS float/grid trick).
-            Mobile: single column — eyebrow → title → desc → bullets → IMAGE → button.
-            The image lives inside .sp-content-side between ul and button.
-            On desktop, .sp-img-inlined is pulled out via absolute/float. */}
+        {/* ── BULKER TANK ── */}
         <section className="sp-product-section">
           <div className="sp-container">
             <div className="sp-product-inner" data-aos="fade-up">
 
-              {/* Desktop-only image column (hidden on mobile) */}
+              {/* Desktop-only image column */}
               <div className="sp-image-col sp-desktop-only">
                 <div className="sp-image-wrapper">
                   <img src={bulkerImg} alt="Bulker Tank" className="sp-product-image" />
@@ -118,20 +118,20 @@ const ServicesPage = () => {
                   tanks are built to meet demanding industrial transportation requirements.
                 </p>
                 <ul className="sp-features-list">
-                  <li>Custom capacity designs from 20 to 60 cubic meters</li>
+                  <li>Custom capacity designs from 36 to 42 cubic meters</li>
                   <li>High-strength steel construction</li>
                   <li>Advanced pressure control systems</li>
                   <li>Corrosion-resistant coatings</li>
                   <li>Compliant with industry safety standards</li>
                 </ul>
 
-                {/* Mobile-only image — sits between ul and button */}
+                {/* Mobile-only image */}
                 <div className="sp-image-wrapper sp-mobile-only">
                   <img src={bulkerImg} alt="Bulker Tank" className="sp-product-image" />
                   <div className="sp-image-overlay"><span>Bulker Tanks</span></div>
                 </div>
 
-                <button className="sp-learn-more-btn" onClick={() => navigate('/bulker-solutions')}>
+                <button className="sp-learn-more-btn" onClick={() => navigate('/bulkers')}>
                   Learn More
                 </button>
               </div>
@@ -170,7 +170,7 @@ const ServicesPage = () => {
                   <li>Easy installation and maintenance</li>
                 </ul>
 
-                {/* Mobile-only image — sits between ul and button */}
+                {/* Mobile-only image */}
                 <div className="sp-image-wrapper sp-mobile-only">
                   <img src={siloImg} alt="Industrial Silo" className="sp-product-image" />
                   <div className="sp-image-overlay"><span>Storage Silos</span></div>

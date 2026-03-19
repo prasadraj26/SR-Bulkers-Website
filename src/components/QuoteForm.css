@@ -7,7 +7,6 @@
   position: relative;
 }
 
-/* Subtle background glow */
 .quote-section::before {
   content: "";
   position: absolute;
@@ -42,22 +41,38 @@
   z-index: 1;
 }
 
+/* ── TITLE — matches About / Products / Gallery ── */
 .quote-header h2 {
-  font-size: 2.6rem;
-  font-weight: 800;
-  color: var(--primary-color, #2c65ba);
-  margin-bottom: 14px;
-  font-family: 'Copperplate Gothic Bold', 'Roboto Condensed', sans-serif;
-  text-transform: uppercase;
+  font-size: clamp(1.8rem, 3.5vw, 2.3rem) !important;
+  font-weight: 800 !important;
+  color: #2c5ea4 !important;
+  font-family: 'Montserrat', sans-serif !important;  /* override Copperplate */
+  line-height: 1.2 !important;
+  margin: 0 0 14px !important;
+  letter-spacing: -0.3px !important;
+  text-transform: none !important;                   /* override uppercase */
+  text-decoration: none !important;
+  border-bottom: none !important;
+  display: block;
+  text-align: center;
 }
 
+/* No underline bar */
+.quote-header h2::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ── SUBTITLE ── */
 .quote-header p {
-  font-size: 1.1rem;
+  font-size: 1.05rem !important;
   max-width: 700px;
   margin: 0 auto;
-  color: var(--gray-medium, #666);
+  color: #555 !important;
   line-height: 1.6;
   font-family: 'Montserrat', sans-serif;
+  letter-spacing: normal !important;
+  text-transform: none !important;
 }
 
 /* ================================
@@ -122,11 +137,13 @@
 }
 
 .info-item h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
   margin-bottom: 5px;
   color: var(--primary-color, #2c65ba);
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif !important;  /* override Copperplate */
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .info-item p {
@@ -235,19 +252,11 @@
   box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
 }
 
-/* ================================
-   BUTTON GROUP LAYOUT
-================================ */
 .quote-form-container button[type="submit"],
 .quote-form-container button[type="button"] {
   width: 100%;
 }
 
-.quote-form-container button[type="button"] {
-  margin-top: 0;
-}
-
-/* Add spacing between buttons */
 .quote-form-container button[type="submit"] {
   margin-bottom: 10px;
 }
@@ -279,12 +288,10 @@
 }
 
 /* ================================
-   RESPONSIVE DESIGN
+   RESPONSIVE
 ================================ */
 @media (max-width: 1200px) {
-  .quote-header h2 {
-    font-size: 2.3rem;
-  }
+  .quote-header h2 { font-size: 2.1rem !important; }
 }
 
 @media (max-width: 992px) {
@@ -292,128 +299,51 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
-
   .quote-form-container,
-  .quote-info {
-    padding: 35px;
-  }
-
-  .quote-header h2 {
-    font-size: 2.1rem;
-  }
-  
-  .quote-header p {
-    font-size: 1rem;
-    padding: 0 20px;
-  }
+  .quote-info { padding: 35px; }
+  .quote-header h2 { font-size: 2rem !important; }
+  .quote-header p  { font-size: 1rem !important; padding: 0 20px; }
 }
 
 @media (max-width: 768px) {
-  .quote-section {
-    padding: 60px 0;
-  }
-
-  .quote-header {
-    margin-bottom: 40px;
-  }
-
-  .quote-header h2 {
-    font-size: 1.9rem;
-  }
-
+  .quote-section   { padding: 60px 0; }
+  .quote-header    { margin-bottom: 40px; }
+  .quote-header h2 { font-size: 1.9rem !important; }
   .quote-form-container,
-  .quote-info {
-    padding: 30px;
-  }
-
-  .info-item {
-    gap: 12px;
-  }
-
-  .info-icon {
-    width: 42px;
-    height: 42px;
-    font-size: 1.1rem;
-  }
-  
-  .info-item h4 {
-    font-size: 1rem;
-  }
-  
-  .info-item p {
-    font-size: 0.9rem;
-  }
+  .quote-info { padding: 30px; }
+  .info-item  { gap: 12px; }
+  .info-icon  { width: 42px; height: 42px; font-size: 1.1rem; }
+  .info-item h4 { font-size: 1rem !important; }
+  .info-item p  { font-size: 0.9rem; }
 }
 
 @media (max-width: 576px) {
-  .quote-section {
-    padding: 50px 0;
-  }
-
-  .quote-header h2 {
-    font-size: 1.7rem;
-  }
-
+  .quote-section   { padding: 50px 0; }
+  .quote-header h2 { font-size: 1.7rem !important; }
   .quote-form-container,
-  .quote-info {
-    padding: 25px;
-  }
-
+  .quote-info { padding: 25px; }
   .quote-form-container input,
   .quote-form-container select,
-  .quote-form-container textarea {
-    padding: 12px 16px;
-    font-size: 0.9rem;
-  }
-
-  .quote-form-container button {
-    padding: 12px 20px;
-    font-size: 0.95rem;
-  }
-  
-  /* Stack buttons vertically on mobile */
-  .quote-form-container button[type="submit"] {
-    margin-bottom: 8px;
-  }
+  .quote-form-container textarea { padding: 12px 16px; font-size: 0.9rem; }
+  .quote-form-container button   { padding: 12px 20px; font-size: 0.95rem; }
+  .quote-form-container button[type="submit"] { margin-bottom: 8px; }
 }
 
 @media (max-width: 380px) {
-  .quote-header h2 {
-    font-size: 1.5rem;
-  }
-  
+  .quote-header h2 { font-size: 1.5rem !important; }
   .quote-form-container,
-  .quote-info {
-    padding: 20px;
-  }
-  
-  .info-icon {
-    width: 38px;
-    height: 38px;
-    font-size: 1rem;
-  }
-  
-  .info-item h4 {
-    font-size: 0.95rem;
-  }
-  
-  .info-item p {
-    font-size: 0.85rem;
-  }
+  .quote-info { padding: 20px; }
+  .info-icon    { width: 38px; height: 38px; font-size: 1rem; }
+  .info-item h4 { font-size: 0.95rem !important; }
+  .info-item p  { font-size: 0.85rem; }
 }
 
 /* ================================
    ANIMATIONS
 ================================ */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .quote-info,

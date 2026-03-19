@@ -32,7 +32,9 @@ const AboutPage = () => {
           <div className="hero-overlay" />
           <div className="hero-content" data-aos="fade-up">
             <span className="hero-eyebrow">Since 2012</span>
-            <h1 className="hero-title">Engineered for Strength.<br />Delivered with Precision.</h1>
+            <h1 className="hero-title">
+              Engineered for Strength.<br />Delivered with Precision.
+            </h1>
             <p className="hero-subtitle">
               "Engineering excellence isn't just our standard — it's our promise."
             </p>
@@ -44,7 +46,9 @@ const AboutPage = () => {
           <div className="about-container two-col">
             <div className="col-text" data-aos="fade-right">
               <span className="section-label">Who We Are</span>
-              <h2 className="about-title">Precision Fabrication,<br />Trusted Results</h2>
+              <h2 className="about-title">
+                Precision Fabrication,<br />Trusted Results
+              </h2>
               <p className="about-text">
                 SR Bulkers is a trusted manufacturer specializing in custom truck bulker
                 fabrication. With years of industry experience, we focus on durability,
@@ -84,7 +88,6 @@ const AboutPage = () => {
                   industry standards, engineered for heavy-duty performance.
                 </p>
               </div>
-
               <div className="service-card" data-aos="fade-up" data-aos-delay="200">
                 <div className="service-icon">🔧</div>
                 <h3>Vehicle Modification</h3>
@@ -93,7 +96,6 @@ const AboutPage = () => {
                   requirements — no two projects are exactly alike.
                 </p>
               </div>
-
               <div className="service-card" data-aos="fade-up" data-aos-delay="300">
                 <div className="service-icon">🛠️</div>
                 <h3>Repair & Maintenance</h3>
@@ -121,7 +123,9 @@ const AboutPage = () => {
           <div className="about-container two-col reverse">
             <div className="col-text" data-aos="fade-left">
               <span className="section-label">Our Team</span>
-              <h2 className="about-title">The People Behind<br />Every Build</h2>
+              <h2 className="about-title">
+                The People Behind<br />Every Build
+              </h2>
               <p className="about-text">
                 Our experienced engineers, technicians, and fabricators work
                 together with dedication and teamwork to deliver reliable,
@@ -140,32 +144,44 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* MISSION */}
+        {/* ✅ MISSION — className must be "about-section mission-bg" together */}
         <section className="about-section mission-bg">
           <div className="about-container">
             <div className="mission-inner" data-aos="fade-up">
+
               <span className="section-label light">Our Mission</span>
-              <h2 className="about-title center light">Driving Industry Forward</h2>
+
+              <h2 className="about-title center light">
+                Driving Industry Forward
+              </h2>
+
               <p className="about-text max-width center">
                 Our mission is to deliver durable, safe, and efficient truck solutions
                 while maintaining the highest standards of quality, safety, and
                 long-term customer trust — because your success is our success.
               </p>
+
               <div className="mission-stats">
+
                 <div className="stat-item" data-aos="fade-up" data-aos-delay="100">
                   <span className="stat-number">500+</span>
                   <span className="stat-label">Vehicles Delivered</span>
                 </div>
+
                 <div className="stat-divider" />
+
                 <div className="stat-item" data-aos="fade-up" data-aos-delay="200">
                   <span className="stat-number">15+</span>
                   <span className="stat-label">Years of Experience</span>
                 </div>
+
                 <div className="stat-divider" />
+
                 <div className="stat-item" data-aos="fade-up" data-aos-delay="300">
                   <span className="stat-number">100%</span>
                   <span className="stat-label">Client Satisfaction</span>
                 </div>
+
               </div>
             </div>
           </div>

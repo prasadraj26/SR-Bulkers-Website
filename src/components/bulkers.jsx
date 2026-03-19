@@ -109,8 +109,8 @@ const Bulkers = () => {
                     <div className="spec-range">
                       <div className="range-track">
                         <div className="range-fill" />
-                        <span className="range-min">40 CBM</span>
-                        <span className="range-max">60 CBM</span>
+                        <span className="range-min">36 CBM-</span>
+                        <span className="range-max">42 CBM</span>
                       </div>
                       <span className="range-note">Customisable per order</span>
                     </div>
@@ -136,7 +136,7 @@ const Bulkers = () => {
                   {[
                     "High-strength steel chassis for maximum durability",
                     "Advanced pneumatic brake system for safety",
-                    "40–60 CBM capacity for efficient bulk transport",
+                    "36–42 CBM capacity for efficient bulk transport",
                   ].map((f) => (
                     <li className="feature-item" key={f}>
                       <svg className="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -150,12 +150,19 @@ const Bulkers = () => {
 
               {/* Buttons */}
               <div className="action-buttons">
-                <button className="btn-primary" onClick={() => navigate('/#quote')}>
-                  Request Quote — Contact Sales
-                </button>
-                <button className="btn-secondary">
-                  Download Specs
-                </button>
+                <button
+  className="btn-primary"
+  onClick={() => {
+    navigate("/");
+
+    setTimeout(() => {
+      const section = document.getElementById("quote");
+      section?.scrollIntoView({ behavior: "smooth" });
+    }, 300);
+  }}
+>
+  Request Quote — Contact Sales
+</button>
               </div>
 
             </section>
