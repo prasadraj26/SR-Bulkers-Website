@@ -11,7 +11,7 @@
   height: 100vh;
   overflow: hidden;
   background: #0a0f1e;
-  padding: 0 !important;   /* beats index.css section rule */
+  padding: 0 !important;
   margin: 0;
 }
 
@@ -43,7 +43,7 @@
   scroll-snap-align: start;
   height: 100%;
   display: flex;
-  align-items: flex-end;     /* content anchored to bottom-left */
+  align-items: flex-end;
   justify-content: flex-start;
   overflow: hidden;
 }
@@ -58,7 +58,7 @@
   object-position: center;
   z-index: 0;
   transform: scale(1.04);
-  transition: transform 8s ease;
+  transition: transform 8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
 /* Subtle zoom on active slide */
@@ -66,7 +66,7 @@
   transform: scale(1);
 }
 
-/* Layered dark gradient — bottom-left strong, top-right light */
+/* Layered dark gradient */
 .hero-section .carousel-slide::before {
   content: '';
   position: absolute;
@@ -84,6 +84,7 @@
       rgba(10, 15, 30, 0.7) 0%,
       transparent 60%
     );
+  pointer-events: none;
 }
 
 /* Subtle texture grain overlay */
@@ -111,12 +112,12 @@
   gap: 0;
 }
 
-/* Staggered entrance — each child animates in */
+/* Staggered entrance animation */
 .hero-section .carousel-slide.is-active .slide-eyebrow,
 .hero-section .carousel-slide.is-active .slide-title,
 .hero-section .carousel-slide.is-active .slide-subtitle,
 .hero-section .carousel-slide.is-active .slide-cta {
-  animation: heroFadeUp 0.8s ease both;
+  animation: heroFadeUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) both;
 }
 
 .hero-section .carousel-slide.is-active .slide-eyebrow  { animation-delay: 0.05s; }
@@ -125,8 +126,14 @@
 .hero-section .carousel-slide.is-active .slide-cta      { animation-delay: 0.46s; }
 
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(32px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
 /* ========================= */
@@ -140,7 +147,7 @@
   font-weight: 700 !important;
   letter-spacing: 3px !important;
   text-transform: uppercase !important;
-  color: rgba(232, 184, 75, 0.4) !important;
+  color: #e8b84b !important;
   font-family: 'Montserrat', sans-serif !important;
   margin-bottom: 18px;
   opacity: 0;
@@ -158,8 +165,6 @@
 /* ========================= */
 /* TITLE                     */
 /* ========================= */
-/* index.css h1 → Copperplate, uppercase, letter-spacing 1px
-   We keep uppercase/tracking but fix font + color + size */
 .hero-section .slide-title {
   font-size: clamp(2rem, 4.5vw, 3.6rem) !important;
   font-weight: 800 !important;
@@ -173,9 +178,28 @@
   opacity: 0;
 }
 
-/* Gold accent on first word via a wrapper span added in JSX */
+/* Gold accent on first word */
 .hero-section .slide-title .accent {
   color: #e8b84b !important;
+  position: relative;
+  display: inline-block;
+}
+
+.hero-section .slide-title .accent::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #e8b84b, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: titleUnderline 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) 0.5s forwards;
+}
+
+@keyframes titleUnderline {
+  to { transform: scaleX(1); }
 }
 
 /* ========================= */
@@ -186,7 +210,7 @@
   font-weight: 400 !important;
   max-width: 520px;
   line-height: 1.7 !important;
-  color: rgba(255, 255, 255, 0.82) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
   font-family: 'Montserrat', sans-serif !important;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   margin: 0 0 36px;
@@ -198,7 +222,6 @@
 /* ========================= */
 /* CTA BUTTON                */
 /* ========================= */
-/* index.css .btn-primary uses red background — .slide-cta is unique, safe */
 .hero-section .slide-cta {
   display: inline-flex !important;
   align-items: center;
@@ -210,29 +233,51 @@
   font-family: 'Montserrat', sans-serif !important;
   letter-spacing: 1.5px !important;
   text-transform: uppercase !important;
-  background: #c8960c !important;
+  background: linear-gradient(135deg, #c8960c 0%, #e8b84b 100%) !important;
   color: #ffffff !important;
   border: none !important;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   box-shadow: 0 6px 24px rgba(200, 150, 12, 0.4);
   opacity: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section .slide-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.hero-section .slide-cta:hover::before {
+  left: 100%;
 }
 
 .hero-section .slide-cta:hover {
-  background: #e8b84b !important;
+  background: linear-gradient(135deg, #e8b84b 0%, #c8960c 100%) !important;
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(200, 150, 12, 0.55) !important;
+  box-shadow: 0 10px 30px rgba(200, 150, 12, 0.65) !important;
 }
 
-/* Arrow icon inside button */
 .hero-section .slide-cta .cta-arrow {
   display: inline-block;
   transition: transform 0.3s ease;
+  font-size: 1.2rem;
 }
 
 .hero-section .slide-cta:hover .cta-arrow {
   transform: translateX(4px);
+}
+
+.hero-section .slide-cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ========================= */
@@ -247,6 +292,11 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  background: rgba(10, 15, 30, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 12px 8px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hero-section .counter-current {
@@ -255,6 +305,10 @@
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
   line-height: 1;
+  background: linear-gradient(135deg, #c8960c, #e8b84b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-section .counter-sep {
@@ -282,21 +336,26 @@
   border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
   background: rgba(255, 255, 255, 0.08) !important;
   color: #ffffff !important;
-  font-size: 1.8rem !important;
+  font-size: 2rem !important;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   z-index: 10;
+  font-weight: 300;
 }
 
-.hero-section .carousel-arrow:hover {
-  background: rgba(200, 150, 12, 0.7) !important;
+.hero-section .carousel-arrow:hover:not(:disabled) {
+  background: rgba(200, 150, 12, 0.8) !important;
   border-color: #c8960c !important;
   transform: translateY(-50%) scale(1.08);
+}
+
+.hero-section .carousel-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .hero-section .carousel-arrow.prev { left: 30px; }
@@ -321,19 +380,29 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.35);
   cursor: pointer;
-  transition: all 0.35s ease;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   border: none;
+  padding: 0;
+}
+
+.hero-section .indicator-dot:hover:not(:disabled) {
+  background: rgba(200, 150, 12, 0.7);
+  transform: scale(1.2);
 }
 
 .hero-section .indicator-dot.active {
   width: 32px;
   border-radius: 4px;
-  background: #c8960c;
+  background: linear-gradient(90deg, #c8960c, #e8b84b);
+}
+
+.hero-section .indicator-dot:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* ========================= */
 /* PROGRESS BAR              */
-/* Replaces pulse indicator  */
 /* ========================= */
 .hero-section .hero-progress {
   position: absolute;
@@ -343,18 +412,20 @@
   height: 3px;
   background: rgba(255, 255, 255, 0.1);
   z-index: 10;
+  overflow: hidden;
 }
 
 .hero-section .hero-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #1e3f7a, #c8960c);
+  background: linear-gradient(90deg, #1e3f7a, #c8960c, #e8b84b);
   border-radius: 0 2px 2px 0;
-  transition: width 0.1s linear;
+  transition: width 0.05s linear;
+  will-change: width;
+  box-shadow: 0 0 8px rgba(200, 150, 12, 0.5);
 }
 
 /* ========================= */
 /* SLIDE INDEX LINE          */
-/* Vertical rule left edge   */
 /* ========================= */
 .hero-section .slide-index-line {
   position: absolute;
@@ -364,6 +435,12 @@
   width: 4px;
   background: linear-gradient(to bottom, #c8960c, #1e3f7a);
   z-index: 6;
+  animation: spineGlow 3s ease-in-out infinite;
+}
+
+@keyframes spineGlow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* ========================= */
@@ -378,6 +455,12 @@
   .hero-section .slide-counter {
     right: 40px;
     bottom: 88px;
+  }
+  
+  .hero-section .carousel-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 1.8rem !important;
   }
 }
 
@@ -412,6 +495,7 @@
   .hero-section .carousel-indicators {
     left: 50%;
     transform: translateX(-50%);
+    bottom: 30px;
   }
 
   .hero-section .carousel-slide::before {
@@ -419,8 +503,12 @@
       linear-gradient(
         to bottom,
         rgba(10, 15, 30, 0.3) 0%,
-        rgba(10, 15, 30, 0.75) 100%
+        rgba(10, 15, 30, 0.85) 100%
       );
+  }
+  
+  .hero-section .hero-progress {
+    height: 2px;
   }
 }
 
@@ -431,5 +519,55 @@
 
   .hero-section .slide-content {
     padding: 0 20px 72px;
+  }
+  
+  .hero-section .slide-title {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+  }
+  
+  .hero-section .slide-cta {
+    padding: 10px 24px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .hero-section .indicator-dot.active {
+    width: 24px;
+  }
+}
+
+/* ========================= */
+/* PERFORMANCE OPTIMIZATIONS */
+/* ========================= */
+@media (prefers-reduced-motion: reduce) {
+  .hero-section .carousel-track {
+    scroll-behavior: auto;
+  }
+  
+  .hero-section .slide-bg,
+  .hero-section .carousel-slide.is-active .slide-bg,
+  .hero-section .slide-cta,
+  .hero-section .carousel-arrow {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  .hero-section .carousel-slide.is-active .slide-eyebrow,
+  .hero-section .carousel-slide.is-active .slide-title,
+  .hero-section .carousel-slide.is-active .slide-subtitle,
+  .hero-section .carousel-slide.is-active .slide-cta {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .hero-section .carousel-arrow:hover {
+    transform: translateY(-50%);
+  }
+  
+  .hero-section .slide-cta:hover {
+    transform: none;
   }
 }

@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+﻿import { useEffect, useRef, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Hero.css'
 
@@ -33,60 +33,81 @@ const slideData = [
   },
 ]
 
-const AUTOPLAY_DURATION = 4000 // ms
+const AUTOPLAY_DURATION = 4000
 
 const Hero = () => {
-  const trackRef        = useRef(null)
-  const progressRef     = useRef(null)
-  const autoPlayRef     = useRef(null)
-  const progressRaf     = useRef(null)
-  const startTimeRef    = useRef(null)
-
+  const trackRef = useRef(null)
+  const autoPlayRef = useRef(null)
+  const progressRaf = useRef(null)
+  const startTimeRef = useRef(null)
   const navigate = useNavigate()
 
-  const [activeIndex,    setActiveIndex]    = useState(0)
-  const [isAutoPlaying,  setIsAutoPlaying]  = useState(true)
-  const [progress,       setProgress]       = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
-  const slides = useMemo(() => slideData, [])
+  const totalSlides = slideData.length
 
-  /* ── scroll to slide ── */
-  const scrollTo = useCallback((index) => {
+  const goToSlide = useCallback((index) => {
+    if (isTransitioning) return
+    
+    setIsTransitioning(true)
+    setActiveIndex(index)
+    
+    // Reset progress
+    setProgress(0)
+    
+    // Update scroll position
     const track = trackRef.current
-    if (!track) return
-    track.scrollTo({ left: track.offsetWidth * index, behavior: 'smooth' })
-  }, [])
+    if (track) {
+      const slideWidth = track.offsetWidth
+      track.scrollTo({
+        left: slideWidth * index,
+        behavior: 'smooth'
+      })
+    }
+    
+    // Reset transition lock after animation
+    setTimeout(() => {
+      setIsTransitioning(false)
+    }, 600)
+  }, [isTransitioning])
 
   const handleNext = useCallback(() => {
-    setActiveIndex(prev => {
-      const next = prev === slides.length - 1 ? 0 : prev + 1
-      scrollTo(next)
-      return next
-    })
-  }, [slides.length, scrollTo])
+    if (isTransitioning) return
+    const nextIndex = (activeIndex + 1) % totalSlides
+    goToSlide(nextIndex)
+  }, [activeIndex, totalSlides, isTransitioning, goToSlide])
 
   const handlePrev = useCallback(() => {
-    setActiveIndex(prev => {
-      const next = prev === 0 ? slides.length - 1 : prev - 1
-      scrollTo(next)
-      return next
-    })
-  }, [slides.length, scrollTo])
+    if (isTransitioning) return
+    const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides
+    goToSlide(prevIndex)
+  }, [activeIndex, totalSlides, isTransitioning, goToSlide])
 
-  /* ── pause / resume helpers ── */
-  const pauseAutoPlay = () => {
+  const pauseAutoPlay = useCallback(() => {
     setIsAutoPlaying(false)
-    clearInterval(autoPlayRef.current)
-    cancelAnimationFrame(progressRaf.current)
-  }
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current)
+      autoPlayRef.current = null
+    }
+    if (progressRaf.current) {
+      cancelAnimationFrame(progressRaf.current)
+      progressRaf.current = null
+    }
+  }, [])
 
-  const resumeAutoPlay = () => {
+  const resumeAutoPlay = useCallback(() => {
     setIsAutoPlaying(true)
-  }
+  }, [])
 
-  /* ── progress bar animation ── */
+  // Progress bar animation
   useEffect(() => {
-    if (!isAutoPlaying) { setProgress(0); return }
+    if (!isAutoPlaying) {
+      setProgress(0)
+      return
+    }
 
     startTimeRef.current = performance.now()
 
@@ -100,41 +121,57 @@ const Hero = () => {
     }
 
     progressRaf.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(progressRaf.current)
+    return () => {
+      if (progressRaf.current) {
+        cancelAnimationFrame(progressRaf.current)
+      }
+    }
   }, [isAutoPlaying, activeIndex])
 
-  /* ── auto-advance ── */
+  // Auto advance
   useEffect(() => {
     if (!isAutoPlaying) return
-    autoPlayRef.current = setInterval(handleNext, AUTOPLAY_DURATION)
-    return () => clearInterval(autoPlayRef.current)
-  }, [isAutoPlaying, handleNext])
+    
+    autoPlayRef.current = setInterval(() => {
+      if (!isTransitioning) {
+        const nextIndex = (activeIndex + 1) % totalSlides
+        goToSlide(nextIndex)
+      }
+    }, AUTOPLAY_DURATION)
+    
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current)
+      }
+    }
+  }, [isAutoPlaying, activeIndex, totalSlides, isTransitioning, goToSlide])
 
-  /* ── IntersectionObserver to track which slide is visible ── */
+  // Scroll observer
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
-    const slidesEl = Array.from(track.children)
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = slidesEl.indexOf(entry.target)
-            if (index >= 0) setActiveIndex(index)
-          }
-        })
-      },
-      { root: track, threshold: 0.55 }
-    )
+    const handleScroll = () => {
+      if (isTransitioning) return
+      
+      const scrollLeft = track.scrollLeft
+      const slideWidth = track.offsetWidth
+      const newIndex = Math.round(scrollLeft / slideWidth)
+      
+      if (newIndex >= 0 && newIndex < totalSlides && newIndex !== activeIndex) {
+        setActiveIndex(newIndex)
+      }
+    }
 
-    slidesEl.forEach(s => observer.observe(s))
-    return () => observer.disconnect()
-  }, [])
+    track.addEventListener('scroll', handleScroll)
+    return () => track.removeEventListener('scroll', handleScroll)
+  }, [activeIndex, totalSlides, isTransitioning])
 
   const handleScrollToSection = (sectionId) => {
     if (sectionId === 'services') {
       navigate('/services')
+    } else if (sectionId === 'about') {
+      navigate('/about')
     } else {
       const el = document.getElementById(sectionId)
       if (el) el.scrollIntoView({ behavior: 'smooth' })
@@ -142,9 +179,19 @@ const Hero = () => {
   }
 
   const handleDotClick = (index) => {
-    scrollTo(index)
-    setActiveIndex(index)
+    if (index === activeIndex || isTransitioning) return
     pauseAutoPlay()
+    goToSlide(index)
+    setTimeout(resumeAutoPlay, 5000)
+  }
+
+  const handleArrowClick = (direction) => {
+    pauseAutoPlay()
+    if (direction === 'next') {
+      handleNext()
+    } else {
+      handlePrev()
+    }
     setTimeout(resumeAutoPlay, 5000)
   }
 
@@ -160,7 +207,7 @@ const Hero = () => {
 
       {/* Carousel track */}
       <div ref={trackRef} className="carousel-track">
-        {slides.map((slide, index) => (
+        {slideData.map((slide, index) => (
           <div
             key={index}
             className={`carousel-slide${index === activeIndex ? ' is-active' : ''}`}
@@ -169,14 +216,18 @@ const Hero = () => {
               src={slide.image}
               alt={`Slide ${index + 1}`}
               className="slide-bg"
+              loading={index === activeIndex ? "eager" : "lazy"}
               onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
             />
 
             <div className="slide-content">
               <span className="slide-eyebrow">{slide.eyebrow}</span>
 
-              {/* h1 — scoped overrides in Hero.css via .hero-section .slide-title */}
-              <h1 className="slide-title">{slide.title}</h1>
+              <h1 className="slide-title">
+                {slide.title.split(' ').map((word, i) => 
+                  i === 0 ? <span key={i} className="accent">{word} </span> : word + ' '
+                )}
+              </h1>
 
               <p className="slide-subtitle">{slide.subtitle}</p>
 
@@ -200,25 +251,29 @@ const Hero = () => {
       <button
         aria-label="Previous slide"
         className="carousel-arrow prev"
-        onClick={() => { handlePrev(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
+        onClick={() => handleArrowClick('prev')}
+        disabled={isTransitioning}
       >
         ‹
       </button>
       <button
         aria-label="Next slide"
         className="carousel-arrow next"
-        onClick={() => { handleNext(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
+        onClick={() => handleArrowClick('next')}
+        disabled={isTransitioning}
       >
         ›
       </button>
 
       {/* Dot indicators */}
       <div className="carousel-indicators">
-        {slides.map((_, index) => (
-          <div
+        {slideData.map((_, index) => (
+          <button
             key={index}
             className={`indicator-dot${index === activeIndex ? ' active' : ''}`}
             onClick={() => handleDotClick(index)}
+            disabled={isTransitioning}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
@@ -230,7 +285,7 @@ const Hero = () => {
         </span>
         <div className="counter-sep" />
         <span className="counter-total">
-          {String(slides.length).padStart(2, '0')}
+          {String(slideData.length).padStart(2, '0')}
         </span>
       </div>
 
