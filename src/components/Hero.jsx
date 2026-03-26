@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
+﻿import { useEffect, useRef, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Hero.css'
 
@@ -14,6 +14,7 @@ const slideData = [
     ctaLabel: 'Learn More',
     image: bul2,
     ctaAction: 'about',
+    tag: 'Flagship',
   },
   {
     eyebrow: 'Premium Series',
@@ -22,6 +23,7 @@ const slideData = [
     ctaLabel: 'Contact Us',
     image: sideImage,
     ctaAction: 'quote',
+    tag: 'Best Seller',
   },
   {
     eyebrow: 'Built to Your Spec',
@@ -30,107 +32,78 @@ const slideData = [
     ctaLabel: 'View Services',
     image: traillerTank,
     ctaAction: 'services',
+    tag: 'Custom',
   },
 ]
 
-const AUTOPLAY_DURATION = 4000 // ms
+const AUTOPLAY_DURATION = 4500
 
 const Hero = () => {
-  const trackRef        = useRef(null)
-  const progressRef     = useRef(null)
-  const autoPlayRef     = useRef(null)
-  const progressRaf     = useRef(null)
-  const startTimeRef    = useRef(null)
+  const autoPlayRef  = useRef(null)
+  const progressRaf  = useRef(null)
+  const startTimeRef = useRef(null)
+  const navigate     = useNavigate()
 
-  const navigate = useNavigate()
+  const [activeIndex,   setActiveIndex]   = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [progress,      setProgress]      = useState(0)
+  const [animKey,       setAnimKey]       = useState(0)
 
-  const [activeIndex,    setActiveIndex]    = useState(0)
-  const [isAutoPlaying,  setIsAutoPlaying]  = useState(true)
-  const [progress,       setProgress]       = useState(0)
+  const total = slideData.length
 
-  const slides = useMemo(() => slideData, [])
-
-  /* ── scroll to slide ── */
-  const scrollTo = useCallback((index) => {
-    const track = trackRef.current
-    if (!track) return
-    track.scrollTo({ left: track.offsetWidth * index, behavior: 'smooth' })
+  const goTo = useCallback((index) => {
+    setActiveIndex(index)
+    setAnimKey(k => k + 1)
   }, [])
 
   const handleNext = useCallback(() => {
-    setActiveIndex(prev => {
-      const next = prev === slides.length - 1 ? 0 : prev + 1
-      scrollTo(next)
-      return next
+    goTo(prev => {
+      const n = (prev + 1) % total
+      goTo(n)
+      return n
     })
-  }, [slides.length, scrollTo])
+    setActiveIndex(prev => (prev + 1) % total)
+    setAnimKey(k => k + 1)
+  }, [total])
 
   const handlePrev = useCallback(() => {
-    setActiveIndex(prev => {
-      const next = prev === 0 ? slides.length - 1 : prev - 1
-      scrollTo(next)
-      return next
-    })
-  }, [slides.length, scrollTo])
+    setActiveIndex(prev => (prev - 1 + total) % total)
+    setAnimKey(k => k + 1)
+  }, [total])
 
-  /* ── pause / resume helpers ── */
-  const pauseAutoPlay = () => {
+  const pauseAutoPlay = useCallback(() => {
     setIsAutoPlaying(false)
     clearInterval(autoPlayRef.current)
     cancelAnimationFrame(progressRaf.current)
-  }
+    setProgress(0)
+  }, [])
 
-  const resumeAutoPlay = () => {
+  const resumeAutoPlay = useCallback(() => {
     setIsAutoPlaying(true)
-  }
+  }, [])
 
-  /* ── progress bar animation ── */
+  /* Progress bar RAF */
   useEffect(() => {
     if (!isAutoPlaying) { setProgress(0); return }
-
     startTimeRef.current = performance.now()
-
     const tick = (now) => {
-      const elapsed = now - startTimeRef.current
-      const pct = Math.min((elapsed / AUTOPLAY_DURATION) * 100, 100)
+      const pct = Math.min(((now - startTimeRef.current) / AUTOPLAY_DURATION) * 100, 100)
       setProgress(pct)
-      if (pct < 100) {
-        progressRaf.current = requestAnimationFrame(tick)
-      }
+      if (pct < 100) progressRaf.current = requestAnimationFrame(tick)
     }
-
     progressRaf.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(progressRaf.current)
   }, [isAutoPlaying, activeIndex])
 
-  /* ── auto-advance ── */
+  /* Auto-advance */
   useEffect(() => {
     if (!isAutoPlaying) return
-    autoPlayRef.current = setInterval(handleNext, AUTOPLAY_DURATION)
+    autoPlayRef.current = setInterval(() => {
+      setActiveIndex(prev => (prev + 1) % total)
+      setAnimKey(k => k + 1)
+    }, AUTOPLAY_DURATION)
     return () => clearInterval(autoPlayRef.current)
-  }, [isAutoPlaying, handleNext])
-
-  /* ── IntersectionObserver to track which slide is visible ── */
-  useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-    const slidesEl = Array.from(track.children)
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = slidesEl.indexOf(entry.target)
-            if (index >= 0) setActiveIndex(index)
-          }
-        })
-      },
-      { root: track, threshold: 0.55 }
-    )
-
-    slidesEl.forEach(s => observer.observe(s))
-    return () => observer.disconnect()
-  }, [])
+  }, [isAutoPlaying, total])
 
   const handleScrollToSection = (sectionId) => {
     if (sectionId === 'services') {
@@ -142,10 +115,21 @@ const Hero = () => {
   }
 
   const handleDotClick = (index) => {
-    scrollTo(index)
     setActiveIndex(index)
+    setAnimKey(k => k + 1)
     pauseAutoPlay()
     setTimeout(resumeAutoPlay, 5000)
+  }
+
+  /* Compute prev/next indices */
+  const prevIndex = (activeIndex - 1 + total) % total
+  const nextIndex = (activeIndex + 1) % total
+
+  const getCardClass = (index) => {
+    if (index === activeIndex) return 'hero-card is-active'
+    if (index === prevIndex)   return 'hero-card is-prev'
+    if (index === nextIndex)   return 'hero-card is-next'
+    return 'hero-card is-hidden'
   }
 
   return (
@@ -155,92 +139,126 @@ const Hero = () => {
       onMouseEnter={pauseAutoPlay}
       onMouseLeave={resumeAutoPlay}
     >
-      {/* Left accent line */}
-      <div className="slide-index-line" />
+      {/* Ambient background — blurred version of active slide */}
+      <div
+        className="hero-ambient"
+        style={{ backgroundImage: `url(${slideData[activeIndex].image})` }}
+      />
 
-      {/* Carousel track */}
-      <div ref={trackRef} className="carousel-track">
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`carousel-slide${index === activeIndex ? ' is-active' : ''}`}
-          >
-            <img
-              src={slide.image}
-              alt={`Slide ${index + 1}`}
-              className="slide-bg"
-              onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
-            />
-
-            <div className="slide-content">
-              <span className="slide-eyebrow">{slide.eyebrow}</span>
-
-              {/* h1 — scoped overrides in Hero.css via .hero-section .slide-title */}
-              <h1 className="slide-title">{slide.title}</h1>
-
-              <p className="slide-subtitle">{slide.subtitle}</p>
-
-              <button
-                className="slide-cta"
-                onClick={() => {
-                  handleScrollToSection(slide.ctaAction)
-                  pauseAutoPlay()
-                  setTimeout(resumeAutoPlay, 5000)
-                }}
-              >
-                {slide.ctaLabel}
-                <span className="cta-arrow">→</span>
-              </button>
-            </div>
-          </div>
-        ))}
+      {/* Top bar */}
+      <div className="hero-topbar">
+        <span className="hero-label">Theme</span>
+        <span className="hero-counter-top">
+          <strong>{String(activeIndex + 1).padStart(2, '0')}</strong>
+          <span>/{String(total).padStart(2, '0')}</span>
+        </span>
       </div>
 
-      {/* Arrows */}
-      <button
-        aria-label="Previous slide"
-        className="carousel-arrow prev"
-        onClick={() => { handlePrev(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
-      >
-        ‹
-      </button>
-      <button
-        aria-label="Next slide"
-        className="carousel-arrow next"
-        onClick={() => { handleNext(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
-      >
-        ›
-      </button>
+      {/* 3D Card Stage */}
+      <div className="hero-stage">
+        {/* Prev arrow */}
+        <button
+          className="hero-arrow hero-arrow--prev"
+          aria-label="Previous"
+          onClick={() => { handlePrev(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        {/* Cards */}
+        <div className="hero-cards">
+          {slideData.map((slide, index) => (
+            <div
+              key={index}
+              className={getCardClass(index)}
+              onClick={() => {
+                if (index !== activeIndex) {
+                  setActiveIndex(index)
+                  setAnimKey(k => k + 1)
+                  pauseAutoPlay()
+                  setTimeout(resumeAutoPlay, 5000)
+                }
+              }}
+            >
+              {/* Card image */}
+              <div className="hero-card__img-wrap">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="hero-card__img"
+                />
+                <div className="hero-card__overlay" />
+              </div>
+
+              {/* Card tag badge */}
+              <div className="hero-card__tag">{slide.tag}</div>
+
+              {/* Card text — only visible on active */}
+              {index === activeIndex && (
+                <div className="hero-card__content" key={animKey}>
+                  <span className="hero-card__eyebrow">{slide.eyebrow}</span>
+                  <h1 className="hero-card__title">{slide.title}</h1>
+                  <p className="hero-card__subtitle">{slide.subtitle}</p>
+                  <button
+                    className="hero-card__cta"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleScrollToSection(slide.ctaAction)
+                      pauseAutoPlay()
+                      setTimeout(resumeAutoPlay, 5000)
+                    }}
+                  >
+                    {slide.ctaLabel}
+                    <span className="hero-card__cta-arrow">
+                      <svg viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              )}
+
+              {/* Side card label (prev/next) */}
+              {index !== activeIndex && (
+                <div className="hero-card__side-label">{slide.title}</div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Next arrow */}
+        <button
+          className="hero-arrow hero-arrow--next"
+          aria-label="Next"
+          onClick={() => { handleNext(); pauseAutoPlay(); setTimeout(resumeAutoPlay, 5000) }}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
 
       {/* Dot indicators */}
-      <div className="carousel-indicators">
-        {slides.map((_, index) => (
-          <div
+      <div className="hero-dots">
+        {slideData.map((_, index) => (
+          <button
             key={index}
-            className={`indicator-dot${index === activeIndex ? ' active' : ''}`}
+            className={`hero-dot${index === activeIndex ? ' is-active' : ''}`}
             onClick={() => handleDotClick(index)}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
 
-      {/* Slide counter */}
-      <div className="slide-counter">
-        <span className="counter-current">
-          {String(activeIndex + 1).padStart(2, '0')}
-        </span>
-        <div className="counter-sep" />
-        <span className="counter-total">
-          {String(slides.length).padStart(2, '0')}
-        </span>
-      </div>
-
       {/* Progress bar */}
       <div className="hero-progress">
-        <div
-          className="hero-progress-fill"
-          style={{ width: `${progress}%` }}
-        />
+        <div className="hero-progress__fill" style={{ width: `${progress}%` }} />
       </div>
+
+      {/* Left accent spine */}
+      <div className="hero-spine" />
     </section>
   )
 }
