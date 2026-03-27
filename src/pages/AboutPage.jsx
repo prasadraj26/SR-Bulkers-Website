@@ -164,14 +164,14 @@ const AboutPage = () => {
               <div className="mission-stats">
 
                 <div className="stat-item" data-aos="fade-up" data-aos-delay="100">
-                  <span className="stat-number">500+</span>
+                  <span className="stat-number">1000+</span>
                   <span className="stat-label">Vehicles Delivered</span>
                 </div>
 
                 <div className="stat-divider" />
 
                 <div className="stat-item" data-aos="fade-up" data-aos-delay="200">
-                  <span className="stat-number">15+</span>
+                  <span className="stat-number">13+</span>
                   <span className="stat-label">Years of Experience</span>
                 </div>
 

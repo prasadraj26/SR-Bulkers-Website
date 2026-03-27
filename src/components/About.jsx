@@ -138,7 +138,7 @@ const About = () => {
               whileHover={{ y: -5 }}
             >
               <div className="home-count-box">
-                <span className="home-count-text">7000</span><span>+</span>
+                <span className="home-count-text">1000</span><span>+</span>
               </div>
               <h6>Vehicle on Road</h6>
             </motion.div>

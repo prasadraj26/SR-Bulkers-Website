@@ -6,9 +6,9 @@ import "./bulkers.css";
 
 import bulkerMain from "../assets/images/BUL-T.png";
 import img1 from "../assets/images/trailler tank.png";
-import img2 from "../assets/images/silo.png";
-import img3 from "../assets/images/team.png";
-import img4 from "../assets/images/wheel.png";
+import img2 from "../assets/images/bul2.png";
+import img3 from "../assets/images/side.png";
+import img4 from "../assets/images/back.png";
 
 const thumbnails = [
   { src: img1, alt: "Side view" },
