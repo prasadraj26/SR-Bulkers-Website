@@ -96,7 +96,7 @@ const GalleryPage = () => {
           {/* TITLE WITH ANIMATION */}
           <div className="gallery-title-wrapper" data-aos="gallery-fade-down" data-aos-delay="100">
             <h2 className="gallery-title">
-              Our <span>Gallery</span>
+              OUR <span>GALLERY</span>
             </h2>
             
             {/* Show total images count */}

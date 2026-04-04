@@ -14,7 +14,6 @@ import ChatBot from "./ai/ChatBot";
 import Home from "./pages/Home";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
-import ProductsPage from "./pages/ProductsPage";
 import GalleryPage from "./pages/GalleryPage";
 
 /* ===== SCROLL FIX ===== */
@@ -68,7 +67,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="/products" element={<ProductsPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
 
         {/* ===== PRODUCT DETAIL ===== */}
