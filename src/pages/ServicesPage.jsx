@@ -42,58 +42,77 @@ const ServicesPage = () => {
         </section>
 
         {/* ── CORE SERVICES ── */}
-        <section className="sp-core-services-section">
-          <div className="sp-container">
-            <div className="sp-section-header" data-aos="fade-up">
-              <span className="sp-section-eyebrow">What We Offer</span>
-              <h2 className="sp-section-title">Our Core Services</h2>
-              <p className="sp-section-subtitle">
-                Comprehensive solutions designed to keep your operations running smoothly and efficiently.
-              </p>
-            </div>
-            <div className="sp-services-grid">
-              <div className="sp-service-card" data-aos="fade-up" data-aos-delay="100">
-                <div className="sp-card-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-                  </svg>
-                </div>
-                <h3>Maintenance</h3>
-                <p>Regular checks and maintenance to prevent issues and ensure optimal equipment performance.</p>
-              </div>
-              <div className="sp-service-card" data-aos="fade-up" data-aos-delay="150">
-                <div className="sp-card-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  </svg>
-                </div>
-                <h3>Repairs</h3>
-                <p>Prompt and efficient repair services to minimize downtime and get you back on track quickly.</p>
-              </div>
-              <div className="sp-service-card" data-aos="fade-up" data-aos-delay="200">
-                <div className="sp-card-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-                    <polyline points="17 6 23 6 23 12"/>
-                  </svg>
-                </div>
-                <h3>Upgrades</h3>
-                <p>Enhancements to improve product functionality, safety, and operational efficiency.</p>
-              </div>
-              <div className="sp-service-card" data-aos="fade-up" data-aos-delay="250">
-                <div className="sp-card-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="2" y1="12" x2="22" y2="12"/>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                  </svg>
-                </div>
-                <h3>Technical Assistance</h3>
-                <p>Immediate support when you need it, with expert guidance for any technical challenges.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+<section className="sp-core-services-section">
+  <div className="sp-container">
+    <div className="sp-section-header" data-aos="fade-up">
+      <span className="sp-section-eyebrow">What We Offer</span>
+      <h2 className="sp-section-title">Our Core Services</h2>
+      <p className="sp-section-subtitle">
+        Comprehensive solutions designed to keep your operations running smoothly and efficiently.
+      </p>
+    </div>
+    <div className="sp-services-grid">
+      <div className="sp-service-card" data-aos="fade-up" data-aos-delay="100">
+        <div className="sp-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <h3>Maintenance</h3>
+        <p>Regular checks and maintenance to prevent issues and ensure optimal equipment performance.</p>
+      </div>
+      
+      <div className="sp-service-card" data-aos="fade-up" data-aos-delay="150">
+        <div className="sp-card-icon">
+         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+  <path d="M18.37 3.67L15.5 5.5a8.5 8.5 0 0 0-7 0L5.63 3.67a10 10 0 0 0-2 2L5.5 8.5a8.5 8.5 0 0 0 0 7l-1.87 2.83a10 10 0 0 0 2 2l2.83-1.87a8.5 8.5 0 0 0 7 0l2.83 1.87a10 10 0 0 0 2-2l-1.87-2.83a8.5 8.5 0 0 0 0-7l1.87-2.83a10 10 0 0 0-2-2z"/>
+</svg>
+        </div>
+        <h3>Repairs</h3>
+        <p>Prompt and efficient repair services to minimize downtime and get you back on track quickly.</p>
+      </div>
+      
+      <div className="sp-service-card" data-aos="fade-up" data-aos-delay="200">
+        <div className="sp-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <h3>Upgrades</h3>
+        <p>Enhancements to improve product functionality, safety, and operational efficiency.</p>
+      </div>
+      
+      {/* REPLACED: FC Painting instead of Technical Assistance */}
+      <div className="sp-service-card" data-aos="fade-up" data-aos-delay="250">
+        <div className="sp-card-icon">
+          {/* Paint Bucket Icon */}
+{/* Color Palette Icon - Paint Palette */}
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  width="28" 
+  height="28" 
+  viewBox="0 0 24 24" 
+  fill="none" 
+  stroke="currentColor" 
+  strokeWidth="2" 
+  strokeLinecap="round" 
+  strokeLinejoin="round"
+>
+  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+</svg>
+        </div>
+        <h3>FC Painting</h3>
+        <p>Industrial-grade coating services providing superior corrosion protection and long-lasting finish for all equipment types.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* ── BULKER TANK ── */}
         <section className="sp-product-section">
@@ -176,7 +195,7 @@ const ServicesPage = () => {
                   <div className="sp-image-overlay"><span>Storage Silos</span></div>
                 </div>
 
-                <button className="sp-learn-more-btn" onClick={() => navigate('/silo-solutions')}>
+                <button className="sp-learn-more-btn" onClick={() => navigate('/silos')}>
                   Learn More
                 </button>
               </div>

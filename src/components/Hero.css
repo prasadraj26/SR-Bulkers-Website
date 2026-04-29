@@ -1,54 +1,70 @@
-/* ========================= */
-/* HERO — all rules scoped   */
-/* under .hero-section to    */
-/* beat index.css globals    */
-/* ========================= */
+/* ============================================ */
+/* HERO — 3D CAROUSEL EDITION                   */
+/* ============================================ */
 
-/* index.css sets section { padding: 80px 0 } — override */
 .hero-section {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: #0a0f1e;
+  background: #050a18;
   padding: 0 !important;
   margin: 0;
-}
-
-/* ========================= */
-/* CAROUSEL TRACK            */
-/* ========================= */
-.hero-section .carousel-track {
   display: flex;
-  height: 100%;
-  width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-section .carousel-track::-webkit-scrollbar {
-  display: none;
-}
-
-/* ========================= */
-/* SLIDES                    */
-/* ========================= */
-.hero-section .carousel-slide {
-  flex: 0 0 100%;
+/* ============================================ */
+/* 3D SCENE CONTAINER                           */
+/* ============================================ */
+.hero-section .carousel-3d-scene {
   position: relative;
-  scroll-snap-align: start;
+  width: 100%;
   height: 100%;
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
 }
 
-/* Background image */
+/* ============================================ */
+/* INDIVIDUAL SLIDES                            */
+/* ============================================ */
+.hero-section .carousel-3d-slide {
+  position: absolute;
+  width: 72vw;
+  max-width: 920px;
+  height: 78vh;
+  max-height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  transition:
+    transform  0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity    0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter     0.75s ease,
+    box-shadow 0.75s ease;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+/* Shadow only on active */
+.hero-section .carousel-3d-slide.is-active {
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Side slides get a subtle shadow too */
+.hero-section .carousel-3d-slide:not(.is-active) {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================ */
+/* BACKGROUND IMAGE                             */
+/* ============================================ */
 .hero-section .slide-bg {
   position: absolute;
   inset: 0;
@@ -57,128 +73,126 @@
   object-fit: cover;
   object-position: center;
   z-index: 0;
-  transform: scale(1.04);
-  transition: transform 8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  transform: scale(1.06);
+  transition: transform 10s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
-/* Subtle zoom on active slide */
-.hero-section .carousel-slide.is-active .slide-bg {
+.hero-section .carousel-3d-slide.is-active .slide-bg {
   transform: scale(1);
 }
 
-/* Layered dark gradient */
-.hero-section .carousel-slide::before {
-  content: '';
+/* ============================================ */
+/* GRADIENT OVERLAY                             */
+/* ============================================ */
+.hero-section .slide-gradient {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
     linear-gradient(
       to right,
-      rgba(10, 15, 30, 0.85) 0%,
-      rgba(10, 15, 30, 0.55) 50%,
-      rgba(10, 15, 30, 0.15) 100%
+      rgba(5, 10, 24, 0.88) 0%,
+      rgba(5, 10, 24, 0.5)  45%,
+      rgba(5, 10, 24, 0.1)  100%
     ),
     linear-gradient(
       to top,
-      rgba(10, 15, 30, 0.7) 0%,
-      transparent 60%
+      rgba(5, 10, 24, 0.75) 0%,
+      transparent 55%
     );
   pointer-events: none;
 }
 
-/* Subtle texture grain overlay */
-.hero-section .carousel-slide::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.4;
+/* Darker overlay on non-active slides */
+.hero-section .carousel-3d-slide:not(.is-active) .slide-gradient {
+  background: rgba(5, 10, 24, 0.5);
 }
 
-/* ========================= */
-/* SLIDE CONTENT             */
-/* ========================= */
+/* ============================================ */
+/* SLIDE CONTENT                                */
+/* ============================================ */
 .hero-section .slide-content {
-  position: relative;
+  position: absolute;
   z-index: 5;
-  max-width: 680px;
-  padding: 0 60px 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 56px 60px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
 }
 
-/* Staggered entrance animation */
-.hero-section .carousel-slide.is-active .slide-eyebrow,
-.hero-section .carousel-slide.is-active .slide-title,
-.hero-section .carousel-slide.is-active .slide-subtitle,
-.hero-section .carousel-slide.is-active .slide-cta {
-  animation: heroFadeUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) both;
+.hero-section .slide-content.content-visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
 }
 
-.hero-section .carousel-slide.is-active .slide-eyebrow  { animation-delay: 0.05s; }
-.hero-section .carousel-slide.is-active .slide-title    { animation-delay: 0.18s; }
-.hero-section .carousel-slide.is-active .slide-subtitle { animation-delay: 0.32s; }
-.hero-section .carousel-slide.is-active .slide-cta      { animation-delay: 0.46s; }
+/* Staggered entrance on active */
+.hero-section .slide-content.content-visible .slide-eyebrow,
+.hero-section .slide-content.content-visible .slide-title,
+.hero-section .slide-content.content-visible .slide-subtitle,
+.hero-section .slide-content.content-visible .slide-cta {
+  animation: heroFadeUp 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1) both;
+}
+
+.hero-section .slide-content.content-visible .slide-eyebrow  { animation-delay: 0.1s;  }
+.hero-section .slide-content.content-visible .slide-title    { animation-delay: 0.22s; }
+.hero-section .slide-content.content-visible .slide-subtitle { animation-delay: 0.36s; }
+.hero-section .slide-content.content-visible .slide-cta      { animation-delay: 0.5s;  }
 
 @keyframes heroFadeUp {
-  from { 
-    opacity: 0; 
-    transform: translateY(32px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* ========================= */
-/* EYEBROW LABEL             */
-/* ========================= */
+/* ============================================ */
+/* EYEBROW                                      */
+/* ============================================ */
 .hero-section .slide-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.72rem !important;
+  font-size: 0.70rem !important;
   font-weight: 700 !important;
   letter-spacing: 3px !important;
   text-transform: uppercase !important;
   color: #e8b84b !important;
   font-family: 'Montserrat', sans-serif !important;
-  margin-bottom: 18px;
-  opacity: 0;
+  margin-bottom: 16px;
 }
 
 .hero-section .slide-eyebrow::before {
   content: '';
   display: inline-block;
-  width: 32px;
+  width: 28px;
   height: 2px;
   background: #e8b84b;
   border-radius: 2px;
+  flex-shrink: 0;
 }
 
-/* ========================= */
-/* TITLE                     */
-/* ========================= */
+/* ============================================ */
+/* TITLE                                        */
+/* ============================================ */
 .hero-section .slide-title {
-  font-size: clamp(2rem, 4.5vw, 3.6rem) !important;
+  font-size: clamp(1.9rem, 4vw, 3.4rem) !important;
   font-weight: 800 !important;
   letter-spacing: 1.5px !important;
   text-transform: uppercase !important;
   line-height: 1.15 !important;
   color: #ffffff !important;
   font-family: 'Montserrat', sans-serif !important;
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  margin: 0 0 20px;
-  opacity: 0;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+  margin: 0 0 18px;
 }
 
-/* Gold accent on first word */
 .hero-section .slide-title .accent {
   color: #e8b84b !important;
   position: relative;
@@ -195,41 +209,40 @@
   background: linear-gradient(90deg, #e8b84b, transparent);
   transform: scaleX(0);
   transform-origin: left;
-  animation: titleUnderline 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1) 0.5s forwards;
+  animation: titleUnderline 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1) 0.55s forwards;
 }
 
 @keyframes titleUnderline {
   to { transform: scaleX(1); }
 }
 
-/* ========================= */
-/* SUBTITLE                  */
-/* ========================= */
+/* ============================================ */
+/* SUBTITLE                                     */
+/* ============================================ */
 .hero-section .slide-subtitle {
-  font-size: clamp(0.95rem, 1.8vw, 1.15rem) !important;
+  font-size: clamp(0.88rem, 1.6vw, 1.08rem) !important;
   font-weight: 400 !important;
-  max-width: 520px;
+  max-width: 480px;
   line-height: 1.7 !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
   font-family: 'Montserrat', sans-serif !important;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  margin: 0 0 36px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  margin: 0 0 32px;
   text-transform: none !important;
   letter-spacing: 0 !important;
-  opacity: 0;
 }
 
-/* ========================= */
-/* CTA BUTTON                */
-/* ========================= */
+/* ============================================ */
+/* CTA BUTTON                                   */
+/* ============================================ */
 .hero-section .slide-cta {
   display: inline-flex !important;
   align-items: center;
   gap: 10px;
-  padding: 14px 32px !important;
+  padding: 13px 30px !important;
   border-radius: 6px !important;
   font-weight: 700 !important;
-  font-size: 0.85rem !important;
+  font-size: 0.82rem !important;
   font-family: 'Montserrat', sans-serif !important;
   letter-spacing: 1.5px !important;
   text-transform: uppercase !important;
@@ -238,8 +251,7 @@
   border: none !important;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  box-shadow: 0 6px 24px rgba(200, 150, 12, 0.4);
-  opacity: 0;
+  box-shadow: 0 6px 22px rgba(200, 150, 12, 0.45);
   position: relative;
   overflow: hidden;
 }
@@ -247,85 +259,51 @@
 .hero-section .slide-cta::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
   transition: left 0.5s ease;
 }
 
-.hero-section .slide-cta:hover::before {
-  left: 100%;
-}
+.hero-section .slide-cta:hover::before { left: 100%; }
 
 .hero-section .slide-cta:hover {
   background: linear-gradient(135deg, #e8b84b 0%, #c8960c 100%) !important;
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(200, 150, 12, 0.65) !important;
+  box-shadow: 0 10px 28px rgba(200, 150, 12, 0.65) !important;
 }
 
 .hero-section .slide-cta .cta-arrow {
   display: inline-block;
   transition: transform 0.3s ease;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
-.hero-section .slide-cta:hover .cta-arrow {
-  transform: translateX(4px);
-}
+.hero-section .slide-cta:hover .cta-arrow { transform: translateX(4px); }
 
-.hero-section .slide-cta:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* ========================= */
-/* SLIDE NUMBER INDICATOR    */
-/* ========================= */
-.hero-section .slide-counter {
+/* ============================================ */
+/* SIDE-SLIDE CLICK HINT                        */
+/* ============================================ */
+.hero-section .slide-click-hint {
   position: absolute;
-  right: 60px;
-  bottom: 108px;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  background: rgba(10, 15, 30, 0.4);
-  backdrop-filter: blur(8px);
-  padding: 12px 8px;
-  border-radius: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 3rem;
+  font-weight: 300;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-.hero-section .counter-current {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1;
-  background: linear-gradient(135deg, #c8960c, #e8b84b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.hero-section .carousel-3d-slide:not(.is-active):hover .slide-click-hint {
+  opacity: 0;
 }
 
-.hero-section .counter-sep {
-  width: 1px;
-  height: 28px;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.hero-section .counter-total {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: 'Montserrat', sans-serif;
-}
-
-/* ========================= */
-/* NAVIGATION ARROWS         */
-/* ========================= */
+/* ============================================ */
+/* NAVIGATION ARROWS                            */
+/* ============================================ */
 .hero-section .carousel-arrow {
   position: absolute;
   top: 50%;
@@ -333,52 +311,52 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
   color: #ffffff !important;
   font-size: 2rem !important;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-  z-index: 10;
+  z-index: 20;
   font-weight: 300;
 }
 
 .hero-section .carousel-arrow:hover:not(:disabled) {
-  background: rgba(200, 150, 12, 0.8) !important;
+  background: rgba(200, 150, 12, 0.85) !important;
   border-color: #c8960c !important;
-  transform: translateY(-50%) scale(1.08);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 24px rgba(200, 150, 12, 0.45);
 }
 
-.hero-section .carousel-arrow:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.hero-section .carousel-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
 
-.hero-section .carousel-arrow.prev { left: 30px; }
-.hero-section .carousel-arrow.next { right: 30px; }
+.hero-section .carousel-arrow.prev { left: 28px; }
+.hero-section .carousel-arrow.next { right: 28px; }
 
-/* ========================= */
-/* INDICATORS (dots)         */
-/* ========================= */
+/* ============================================ */
+/* DOT INDICATORS                               */
+/* ============================================ */
 .hero-section .carousel-indicators {
   position: absolute;
-  bottom: 44px;
-  left: 60px;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 10px;
-  z-index: 10;
+  z-index: 20;
   align-items: center;
 }
 
 .hero-section .indicator-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.32);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   border: none;
@@ -391,27 +369,66 @@
 }
 
 .hero-section .indicator-dot.active {
-  width: 32px;
+  width: 30px;
   border-radius: 4px;
   background: linear-gradient(90deg, #c8960c, #e8b84b);
 }
 
-.hero-section .indicator-dot:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.hero-section .indicator-dot:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ============================================ */
+/* SLIDE COUNTER                                */
+/* ============================================ */
+.hero-section .slide-counter {
+  position: absolute;
+  right: 52px;
+  bottom: 100px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(5, 10, 24, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 12px 10px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ========================= */
-/* PROGRESS BAR              */
-/* ========================= */
+.hero-section .counter-current {
+  font-size: 1.9rem;
+  font-weight: 800;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1;
+  background: linear-gradient(135deg, #c8960c, #e8b84b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-section .counter-sep {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.hero-section .counter-total {
+  font-size: 0.80rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ============================================ */
+/* PROGRESS BAR                                 */
+/* ============================================ */
 .hero-section .hero-progress {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   height: 3px;
-  background: rgba(255, 255, 255, 0.1);
-  z-index: 10;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 20;
   overflow: hidden;
 }
 
@@ -421,153 +438,111 @@
   border-radius: 0 2px 2px 0;
   transition: width 0.05s linear;
   will-change: width;
-  box-shadow: 0 0 8px rgba(200, 150, 12, 0.5);
+  box-shadow: 0 0 6px rgba(200, 150, 12, 0.5);
 }
 
-/* ========================= */
-/* SLIDE INDEX LINE          */
-/* ========================= */
+/* ============================================ */
+/* LEFT ACCENT SPINE                            */
+/* ============================================ */
 .hero-section .slide-index-line {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 4px;
   background: linear-gradient(to bottom, #c8960c, #1e3f7a);
-  z-index: 6;
+  z-index: 25;
   animation: spineGlow 3s ease-in-out infinite;
 }
 
 @keyframes spineGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1;    }
 }
 
-/* ========================= */
-/* RESPONSIVE                */
-/* ========================= */
-@media (max-width: 992px) {
-  .hero-section .slide-content {
-    padding: 0 40px 80px;
-    max-width: 580px;
-  }
-
-  .hero-section .slide-counter {
-    right: 40px;
-    bottom: 88px;
-  }
-  
-  .hero-section .carousel-arrow {
-    width: 44px;
-    height: 44px;
-    font-size: 1.8rem !important;
+/* ============================================ */
+/* RESPONSIVE                                   */
+/* ============================================ */
+@media (max-width: 1100px) {
+  .hero-section .carousel-3d-slide {
+    width: 78vw;
+    height: 70vh;
   }
 }
 
 @media (max-width: 768px) {
-  .hero-section {
-    height: 85vh;
+  .hero-section { height: 88vh; }
+
+  .hero-section .carousel-3d-scene { perspective: 900px; }
+
+  .hero-section .carousel-3d-slide {
+    width: 86vw;
+    height: 60vh;
+    border-radius: 12px;
   }
 
-  .hero-section .slide-content {
-    padding: 0 24px 80px;
-    max-width: 100%;
-    align-items: center;
-    text-align: center;
+  /* Simplify 3D on mobile — just opacity fade */
+  .hero-section .carousel-3d-slide:not(.is-active) {
+    transform: translateX(0) translateZ(-80px) scale(0.88) !important;
   }
 
-  .hero-section .slide-eyebrow {
-    justify-content: center;
-  }
+  .hero-section .slide-content { padding: 0 28px 44px; }
 
-  .hero-section .slide-subtitle {
-    max-width: 100%;
-  }
+  .hero-section .carousel-arrow { display: none; }
+  .hero-section .slide-counter  { display: none; }
 
-  .hero-section .carousel-arrow {
-    display: none;
-  }
-
-  .hero-section .slide-counter {
-    display: none;
-  }
-
-  .hero-section .carousel-indicators {
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 30px;
-  }
-
-  .hero-section .carousel-slide::before {
-    background:
-      linear-gradient(
-        to bottom,
-        rgba(10, 15, 30, 0.3) 0%,
-        rgba(10, 15, 30, 0.85) 100%
-      );
-  }
-  
-  .hero-section .hero-progress {
-    height: 2px;
-  }
+  .hero-section .carousel-indicators { bottom: 24px; }
 }
 
 @media (max-width: 480px) {
-  .hero-section {
-    height: 80vh;
+  .hero-section { height: 82vh; }
+
+  .hero-section .carousel-3d-slide {
+    width: 92vw;
+    height: 56vh;
   }
 
-  .hero-section .slide-content {
-    padding: 0 20px 72px;
-  }
-  
+  .hero-section .slide-content { padding: 0 20px 36px; }
+
   .hero-section .slide-title {
-    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+    font-size: clamp(1.3rem, 6vw, 1.8rem) !important;
   }
-  
+
   .hero-section .slide-cta {
-    padding: 10px 24px !important;
-    font-size: 0.75rem !important;
-  }
-  
-  .hero-section .indicator-dot.active {
-    width: 24px;
+    padding: 10px 22px !important;
+    font-size: 0.72rem !important;
   }
 }
 
-/* ========================= */
-/* PERFORMANCE OPTIMIZATIONS */
-/* ========================= */
+/* ============================================ */
+/* REDUCED MOTION                               */
+/* ============================================ */
 @media (prefers-reduced-motion: reduce) {
-  .hero-section .carousel-track {
-    scroll-behavior: auto;
-  }
-  
+  .hero-section .carousel-3d-slide,
   .hero-section .slide-bg,
-  .hero-section .carousel-slide.is-active .slide-bg,
   .hero-section .slide-cta,
   .hero-section .carousel-arrow {
-    transition: none !important;
+    transition: opacity 0.3s ease !important;
     animation: none !important;
+    transform: none !important;
   }
-  
-  .hero-section .carousel-slide.is-active .slide-eyebrow,
-  .hero-section .carousel-slide.is-active .slide-title,
-  .hero-section .carousel-slide.is-active .slide-subtitle,
-  .hero-section .carousel-slide.is-active .slide-cta {
+
+  .hero-section .slide-content.content-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-section .slide-content.content-visible .slide-eyebrow,
+  .hero-section .slide-content.content-visible .slide-title,
+  .hero-section .slide-content.content-visible .slide-subtitle,
+  .hero-section .slide-content.content-visible .slide-cta {
     animation: none !important;
     opacity: 1;
     transform: none;
   }
 }
 
-/* Touch device optimizations */
+/* Touch optimisations */
 @media (hover: none) and (pointer: coarse) {
-  .hero-section .carousel-arrow:hover {
-    transform: translateY(-50%);
-  }
-  
-  .hero-section .slide-cta:hover {
-    transform: none;
-  }
+  .hero-section .carousel-arrow:hover { transform: translateY(-50%); }
+  .hero-section .slide-cta:hover      { transform: none; }
 }

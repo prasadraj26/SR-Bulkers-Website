@@ -36,165 +36,150 @@ const slideData = [
 const AUTOPLAY_DURATION = 4000
 
 const Hero = () => {
-  const trackRef = useRef(null)
-  const autoPlayRef = useRef(null)
-  const progressRaf = useRef(null)
-  const startTimeRef = useRef(null)
-  const navigate = useNavigate()
+  const autoPlayRef   = useRef(null)
+  const progressRaf   = useRef(null)
+  const startTimeRef  = useRef(null)
+  const navigate      = useNavigate()
 
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [progress, setProgress] = useState(0)
+  const [activeIndex,    setActiveIndex]    = useState(0)
+  const [isAutoPlaying,  setIsAutoPlaying]  = useState(true)
+  const [progress,       setProgress]       = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [direction,      setDirection]      = useState(1) // 1 = forward, -1 = back
 
   const totalSlides = slideData.length
 
-  const goToSlide = useCallback((index) => {
-    if (isTransitioning) return
-    
-    setIsTransitioning(true)
-    setActiveIndex(index)
-    
-    // Reset progress
-    setProgress(0)
-    
-    // Update scroll position
-    const track = trackRef.current
-    if (track) {
-      const slideWidth = track.offsetWidth
-      track.scrollTo({
-        left: slideWidth * index,
-        behavior: 'smooth'
-      })
+  // ─── 3D position helper ──────────────────────────────────────────────
+  const getSlideStyle = useCallback((index) => {
+    let offset = index - activeIndex
+    // shortest path around the loop
+    if (offset > totalSlides / 2)  offset -= totalSlides
+    if (offset < -totalSlides / 2) offset += totalSlides
+
+    const absOff = Math.abs(offset)
+
+    if (offset === 0) {
+      // Centre / active
+      return {
+        transform:  'translateX(0) translateZ(0) rotateY(0deg) scale(1)',
+        opacity:    1,
+        filter:     'brightness(1)',
+        zIndex:     10,
+        pointerEvents: 'none',
+      }
+    } else if (offset === 1 || offset === -(totalSlides - 1)) {
+      // Right neighbour
+      return {
+        transform:  'translateX(62%) translateZ(-160px) rotateY(-22deg) scale(0.82)',
+        opacity:    0.6,
+        filter:     'brightness(0.55)',
+        zIndex:     5,
+        cursor:     'pointer',
+      }
+    } else if (offset === -1 || offset === (totalSlides - 1)) {
+      // Left neighbour
+      return {
+        transform:  'translateX(-62%) translateZ(-160px) rotateY(22deg) scale(0.82)',
+        opacity:    0.6,
+        filter:     'brightness(0.55)',
+        zIndex:     5,
+        cursor:     'pointer',
+      }
+    } else {
+      // Hidden / far
+      return {
+        transform:  `translateX(${offset > 0 ? '90%' : '-90%'}) translateZ(-280px) scale(0.65)`,
+        opacity:    0,
+        zIndex:     1,
+        pointerEvents: 'none',
+      }
     }
-    
-    // Reset transition lock after animation
-    setTimeout(() => {
-      setIsTransitioning(false)
-    }, 600)
+  }, [activeIndex, totalSlides])
+
+  // ─── Navigation ──────────────────────────────────────────────────────
+  const goToSlide = useCallback((index, dir = 1) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setDirection(dir)
+    setActiveIndex(index)
+    setProgress(0)
+    setTimeout(() => setIsTransitioning(false), 700)
   }, [isTransitioning])
 
   const handleNext = useCallback(() => {
     if (isTransitioning) return
-    const nextIndex = (activeIndex + 1) % totalSlides
-    goToSlide(nextIndex)
+    goToSlide((activeIndex + 1) % totalSlides, 1)
   }, [activeIndex, totalSlides, isTransitioning, goToSlide])
 
   const handlePrev = useCallback(() => {
     if (isTransitioning) return
-    const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides
-    goToSlide(prevIndex)
+    goToSlide((activeIndex - 1 + totalSlides) % totalSlides, -1)
   }, [activeIndex, totalSlides, isTransitioning, goToSlide])
 
+  // ─── Auto-play controls ───────────────────────────────────────────────
   const pauseAutoPlay = useCallback(() => {
     setIsAutoPlaying(false)
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current)
-      autoPlayRef.current = null
-    }
-    if (progressRaf.current) {
-      cancelAnimationFrame(progressRaf.current)
-      progressRaf.current = null
-    }
+    if (autoPlayRef.current)  { clearInterval(autoPlayRef.current); autoPlayRef.current = null }
+    if (progressRaf.current)  { cancelAnimationFrame(progressRaf.current); progressRaf.current = null }
   }, [])
 
-  const resumeAutoPlay = useCallback(() => {
-    setIsAutoPlaying(true)
-  }, [])
+  const resumeAutoPlay = useCallback(() => setIsAutoPlaying(true), [])
 
-  // Progress bar animation
+  // ─── Progress bar ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (!isAutoPlaying) {
-      setProgress(0)
-      return
-    }
-
+    if (!isAutoPlaying) { setProgress(0); return }
     startTimeRef.current = performance.now()
-
     const tick = (now) => {
-      const elapsed = now - startTimeRef.current
-      const pct = Math.min((elapsed / AUTOPLAY_DURATION) * 100, 100)
+      const pct = Math.min(((now - startTimeRef.current) / AUTOPLAY_DURATION) * 100, 100)
       setProgress(pct)
-      if (pct < 100) {
-        progressRaf.current = requestAnimationFrame(tick)
-      }
+      if (pct < 100) progressRaf.current = requestAnimationFrame(tick)
     }
-
     progressRaf.current = requestAnimationFrame(tick)
-    return () => {
-      if (progressRaf.current) {
-        cancelAnimationFrame(progressRaf.current)
-      }
-    }
+    return () => { if (progressRaf.current) cancelAnimationFrame(progressRaf.current) }
   }, [isAutoPlaying, activeIndex])
 
-  // Auto advance
+  // ─── Auto-advance ─────────────────────────────────────────────────────
   useEffect(() => {
     if (!isAutoPlaying) return
-    
     autoPlayRef.current = setInterval(() => {
       if (!isTransitioning) {
-        const nextIndex = (activeIndex + 1) % totalSlides
-        goToSlide(nextIndex)
+        goToSlide((activeIndex + 1) % totalSlides, 1)
       }
     }, AUTOPLAY_DURATION)
-    
-    return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current)
-      }
-    }
+    return () => { if (autoPlayRef.current) clearInterval(autoPlayRef.current) }
   }, [isAutoPlaying, activeIndex, totalSlides, isTransitioning, goToSlide])
 
-  // Scroll observer
+  // ─── Keyboard navigation ──────────────────────────────────────────────
   useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
-
-    const handleScroll = () => {
-      if (isTransitioning) return
-      
-      const scrollLeft = track.scrollLeft
-      const slideWidth = track.offsetWidth
-      const newIndex = Math.round(scrollLeft / slideWidth)
-      
-      if (newIndex >= 0 && newIndex < totalSlides && newIndex !== activeIndex) {
-        setActiveIndex(newIndex)
-      }
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight') { pauseAutoPlay(); handleNext(); setTimeout(resumeAutoPlay, 5000) }
+      if (e.key === 'ArrowLeft')  { pauseAutoPlay(); handlePrev(); setTimeout(resumeAutoPlay, 5000) }
     }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [handleNext, handlePrev, pauseAutoPlay, resumeAutoPlay])
 
-    track.addEventListener('scroll', handleScroll)
-    return () => track.removeEventListener('scroll', handleScroll)
-  }, [activeIndex, totalSlides, isTransitioning])
-
+  // ─── Section routing ──────────────────────────────────────────────────
   const handleScrollToSection = (sectionId) => {
-    if (sectionId === 'services') {
-      navigate('/services')
-    } else if (sectionId === 'about') {
-      navigate('/about')
-    } else {
-      const el = document.getElementById(sectionId)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
-    }
+    if (sectionId === 'services') navigate('/services')
+    else if (sectionId === 'about') navigate('/about')
+    else document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const handleDotClick = (index) => {
     if (index === activeIndex || isTransitioning) return
     pauseAutoPlay()
-    goToSlide(index)
+    goToSlide(index, index > activeIndex ? 1 : -1)
     setTimeout(resumeAutoPlay, 5000)
   }
 
-  const handleArrowClick = (direction) => {
+  const handleArrowClick = (dir) => {
     pauseAutoPlay()
-    if (direction === 'next') {
-      handleNext()
-    } else {
-      handlePrev()
-    }
+    dir === 'next' ? handleNext() : handlePrev()
     setTimeout(resumeAutoPlay, 5000)
   }
 
+  // ─── Render ───────────────────────────────────────────────────────────
   return (
     <section
       id="home"
@@ -202,49 +187,78 @@ const Hero = () => {
       onMouseEnter={pauseAutoPlay}
       onMouseLeave={resumeAutoPlay}
     >
-      {/* Left accent line */}
+      {/* Left accent spine */}
       <div className="slide-index-line" />
 
-      {/* Carousel track */}
-      <div ref={trackRef} className="carousel-track">
-        {slideData.map((slide, index) => (
-          <div
-            key={index}
-            className={`carousel-slide${index === activeIndex ? ' is-active' : ''}`}
-          >
-            <img
-              src={slide.image}
-              alt={`Slide ${index + 1}`}
-              className="slide-bg"
-              loading={index === activeIndex ? "eager" : "lazy"}
-              onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
-            />
+      {/* 3-D scene */}
+      <div className="carousel-3d-scene">
+        {slideData.map((slide, index) => {
+          const style = getSlideStyle(index)
+          const isActive = index === activeIndex
 
-            <div className="slide-content">
-              <span className="slide-eyebrow">{slide.eyebrow}</span>
-
-              <h1 className="slide-title">
-                {slide.title.split(' ').map((word, i) => 
-                  i === 0 ? <span key={i} className="accent">{word} </span> : word + ' '
-                )}
-              </h1>
-
-              <p className="slide-subtitle">{slide.subtitle}</p>
-
-              <button
-                className="slide-cta"
-                onClick={() => {
-                  handleScrollToSection(slide.ctaAction)
+          return (
+            <div
+              key={index}
+              className={`carousel-3d-slide${isActive ? ' is-active' : ''}`}
+              style={style}
+              onClick={() => {
+                if (!isActive) {
+                  const offset = ((index - activeIndex) + totalSlides) % totalSlides
+                  const dir = offset <= totalSlides / 2 ? 1 : -1
                   pauseAutoPlay()
+                  goToSlide(index, dir)
                   setTimeout(resumeAutoPlay, 5000)
-                }}
-              >
-                {slide.ctaLabel}
-                <span className="cta-arrow">→</span>
-              </button>
+                }
+              }}
+            >
+              <img
+                src={slide.image}
+                alt={`Slide ${index + 1}`}
+                className="slide-bg"
+                loading={isActive ? 'eager' : 'lazy'}
+                onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
+              />
+
+              {/* Gradient overlay */}
+              <div className="slide-gradient" />
+
+              {/* Content (only shown for active) */}
+              <div className={`slide-content${isActive ? ' content-visible' : ''}`}>
+                <span className="slide-eyebrow">{slide.eyebrow}</span>
+
+                <h1 className="slide-title">
+                  {slide.title.split(' ').map((word, i) =>
+                    i === 0
+                      ? <span key={i} className="accent">{word} </span>
+                      : word + ' '
+                  )}
+                </h1>
+
+                <p className="slide-subtitle">{slide.subtitle}</p>
+
+                <button
+                  className="slide-cta"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleScrollToSection(slide.ctaAction)
+                    pauseAutoPlay()
+                    setTimeout(resumeAutoPlay, 5000)
+                  }}
+                >
+                  {slide.ctaLabel}
+                  <span className="cta-arrow">→</span>
+                </button>
+              </div>
+
+              {/* Side-slide click hint icon */}
+              {!isActive && (
+                <div className="slide-click-hint">
+                  {((index - activeIndex + totalSlides) % totalSlides) <= totalSlides / 2 ? '›' : '‹'}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Arrows */}
@@ -253,17 +267,13 @@ const Hero = () => {
         className="carousel-arrow prev"
         onClick={() => handleArrowClick('prev')}
         disabled={isTransitioning}
-      >
-        ‹
-      </button>
+      >‹</button>
       <button
         aria-label="Next slide"
         className="carousel-arrow next"
         onClick={() => handleArrowClick('next')}
         disabled={isTransitioning}
-      >
-        ›
-      </button>
+      >›</button>
 
       {/* Dot indicators */}
       <div className="carousel-indicators">
@@ -280,21 +290,14 @@ const Hero = () => {
 
       {/* Slide counter */}
       <div className="slide-counter">
-        <span className="counter-current">
-          {String(activeIndex + 1).padStart(2, '0')}
-        </span>
+        <span className="counter-current">{String(activeIndex + 1).padStart(2, '0')}</span>
         <div className="counter-sep" />
-        <span className="counter-total">
-          {String(slideData.length).padStart(2, '0')}
-        </span>
+        <span className="counter-total">{String(slideData.length).padStart(2, '0')}</span>
       </div>
 
       {/* Progress bar */}
       <div className="hero-progress">
-        <div
-          className="hero-progress-fill"
-          style={{ width: `${progress}%` }}
-        />
+        <div className="hero-progress-fill" style={{ width: `${progress}%` }} />
       </div>
     </section>
   )

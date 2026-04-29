@@ -21,6 +21,7 @@ import ScrollToTop from "./components/ScrollToTop";
 
 /* ===== PRODUCT DETAIL PAGE ===== */
 import Bulkers from "./components/bulkers";
+import Silos from "./components/silos";
 
 /* ===== ADMIN ===== */
 import AdminLogin from "./admin/AdminLogin";
@@ -71,6 +72,7 @@ function App() {
 
         {/* ===== PRODUCT DETAIL ===== */}
         <Route path="/bulkers" element={<Bulkers />} />
+        <Route path="/silos" element={<Silos />} />
 
         {/* ===== ADMIN ===== */}
         <Route path="/admin" element={<AdminLogin />} />

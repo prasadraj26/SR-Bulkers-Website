@@ -34,7 +34,7 @@ const Footer = () => {
           <motion.div className="footer-column">
             <h3 className="logo-text">SR BULKERS</h3>
             <p className="company-description">
-  Leading truck bulkers with over 13 years of expertise in custom truck solutions,
+  Leading truck bulkers manufacturer with over 13 years of expertise in custom truck solutions,
   quality fabrication, and reliable service.
 </p>
           </motion.div>
@@ -63,9 +63,10 @@ const Footer = () => {
           <motion.div className="footer-column">
             <h3>Our Services</h3>
             <ul className="footer-links">
-              <li>Custom Truck Bodies</li>
+              <li>Custom Truck Bulkers</li>
+              <li>FC Painting</li>
               <li>Trailer Manufacturing</li>
-              <li>Truck Repair</li>
+              <li>Silo Manufacturing</li>
             </ul>
           </motion.div>
 
