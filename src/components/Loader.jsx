@@ -1,5 +1,5 @@
 import "./Loader.css";
-import logo from "../assets/images/logos.png";
+import logo from "../assets/images/logos.webp";
 
 const Loader = () => {
   return (

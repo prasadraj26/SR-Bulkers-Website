@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FaWhatsapp, FaPhone } from "react-icons/fa";
 import "./Navbar.css";
-import logo from "../assets/images/logo.jpg";
+import logo from "../assets/images/logo.webp";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

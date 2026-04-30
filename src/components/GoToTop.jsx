@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import wheelImage from '../assets/images/wheel.png' // Uncomment when wheel.png is added
+import wheelImage from '../assets/images/wheel.webp' // Uncomment when wheel.webp is added
 import './GoToTop.css'
 
 const GoToTop = () => {

@@ -360,3 +360,9 @@ section {
     padding: 40px 0;
   }
 }
+
+/* Add content-visibility to Off-Screen Sections for performance */
+#about, #products, #gallery, #quote {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
+}

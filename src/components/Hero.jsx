@@ -1,10 +1,10 @@
-﻿import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Hero.css'
 
-import traillerTank from '../assets/images/trailler tank.png'
-import sideImage    from '../assets/images/side.png'
-import bul2         from '../assets/images/bul2.png'
+import traillerTank from '../assets/images/trailler tank.webp'
+import sideImage    from '../assets/images/side.webp'
+import bul2         from '../assets/images/bul2.webp'
 
 const slideData = [
   {
@@ -39,6 +39,7 @@ const Hero = () => {
   const autoPlayRef   = useRef(null)
   const progressRaf   = useRef(null)
   const startTimeRef  = useRef(null)
+  const pauseTimerRef = useRef(null)
   const navigate      = useNavigate()
 
   const [activeIndex,    setActiveIndex]    = useState(0)
@@ -118,9 +119,11 @@ const Hero = () => {
 
   // ─── Auto-play controls ───────────────────────────────────────────────
   const pauseAutoPlay = useCallback(() => {
+    clearTimeout(pauseTimerRef.current)
     setIsAutoPlaying(false)
     if (autoPlayRef.current)  { clearInterval(autoPlayRef.current); autoPlayRef.current = null }
     if (progressRaf.current)  { cancelAnimationFrame(progressRaf.current); progressRaf.current = null }
+    setProgress(0)
   }, [])
 
   const resumeAutoPlay = useCallback(() => setIsAutoPlaying(true), [])
@@ -128,14 +131,15 @@ const Hero = () => {
   // ─── Progress bar ─────────────────────────────────────────────────────
   useEffect(() => {
     if (!isAutoPlaying) { setProgress(0); return }
-    startTimeRef.current = performance.now()
+    let rafId
+    const start = performance.now()
     const tick = (now) => {
-      const pct = Math.min(((now - startTimeRef.current) / AUTOPLAY_DURATION) * 100, 100)
+      const pct = Math.min(((now - start) / AUTOPLAY_DURATION) * 100, 100)
       setProgress(pct)
-      if (pct < 100) progressRaf.current = requestAnimationFrame(tick)
+      if (pct < 100) rafId = requestAnimationFrame(tick)
     }
-    progressRaf.current = requestAnimationFrame(tick)
-    return () => { if (progressRaf.current) cancelAnimationFrame(progressRaf.current) }
+    rafId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafId)
   }, [isAutoPlaying, activeIndex])
 
   // ─── Auto-advance ─────────────────────────────────────────────────────
@@ -158,6 +162,23 @@ const Hero = () => {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [handleNext, handlePrev, pauseAutoPlay, resumeAutoPlay])
+
+  // ─── Intersection Observer for Autoplay ───────────────────────────────
+  useEffect(() => {
+    const section = document.getElementById('home')
+    if (!section) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) resumeAutoPlay()
+        else pauseAutoPlay()
+      },
+      { threshold: 0.3 }
+    )
+
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [pauseAutoPlay, resumeAutoPlay])
 
   // ─── Section routing ──────────────────────────────────────────────────
   const handleScrollToSection = (sectionId) => {
@@ -186,6 +207,10 @@ const Hero = () => {
       className="hero-section"
       onMouseEnter={pauseAutoPlay}
       onMouseLeave={resumeAutoPlay}
+      onTouchStart={pauseAutoPlay}
+      onTouchEnd={() => {
+        pauseTimerRef.current = setTimeout(resumeAutoPlay, 1200)
+      }}
     >
       {/* Left accent spine */}
       <div className="slide-index-line" />
@@ -195,6 +220,9 @@ const Hero = () => {
         {slideData.map((slide, index) => {
           const style = getSlideStyle(index)
           const isActive = index === activeIndex
+          const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides
+          const nextIndex = (activeIndex + 1) % totalSlides
+          const isVisible = [activeIndex, prevIndex, nextIndex].includes(index)
 
           return (
             <div
@@ -211,50 +239,56 @@ const Hero = () => {
                 }
               }}
             >
-              <img
-                src={slide.image}
-                alt={`Slide ${index + 1}`}
-                className="slide-bg"
-                loading={isActive ? 'eager' : 'lazy'}
-                onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
-              />
+              {isVisible && (
+                <>
+                  <img
+                    src={slide.image}
+                    alt={`Slide ${index + 1}`}
+                    className="slide-bg"
+                    loading={isActive ? 'eager' : 'lazy'}
+                    decoding="async"
+                    fetchPriority={isActive ? 'high' : 'low'}
+                    onError={(e) => { e.target.style.backgroundColor = '#0a0f1e' }}
+                  />
 
-              {/* Gradient overlay */}
-              <div className="slide-gradient" />
+                  {/* Gradient overlay */}
+                  <div className="slide-gradient" />
 
-              {/* Content (only shown for active) */}
-              <div className={`slide-content${isActive ? ' content-visible' : ''}`}>
-                <span className="slide-eyebrow">{slide.eyebrow}</span>
+                  {/* Content (only shown for active) */}
+                  <div className={`slide-content${isActive ? ' content-visible' : ''}`}>
+                    <span className="slide-eyebrow">{slide.eyebrow}</span>
 
-                <h1 className="slide-title">
-                  {slide.title.split(' ').map((word, i) =>
-                    i === 0
-                      ? <span key={i} className="accent">{word} </span>
-                      : word + ' '
+                    <h1 className="slide-title">
+                      {slide.title.split(' ').map((word, i) =>
+                        i === 0
+                          ? <span key={i} className="accent">{word} </span>
+                          : word + ' '
+                      )}
+                    </h1>
+
+                    <p className="slide-subtitle">{slide.subtitle}</p>
+
+                    <button
+                      className="slide-cta"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleScrollToSection(slide.ctaAction)
+                        pauseAutoPlay()
+                        setTimeout(resumeAutoPlay, 5000)
+                      }}
+                    >
+                      {slide.ctaLabel}
+                      <span className="cta-arrow">→</span>
+                    </button>
+                  </div>
+
+                  {/* Side-slide click hint icon */}
+                  {!isActive && (
+                    <div className="slide-click-hint">
+                      {((index - activeIndex + totalSlides) % totalSlides) <= totalSlides / 2 ? '›' : '‹'}
+                    </div>
                   )}
-                </h1>
-
-                <p className="slide-subtitle">{slide.subtitle}</p>
-
-                <button
-                  className="slide-cta"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleScrollToSection(slide.ctaAction)
-                    pauseAutoPlay()
-                    setTimeout(resumeAutoPlay, 5000)
-                  }}
-                >
-                  {slide.ctaLabel}
-                  <span className="cta-arrow">→</span>
-                </button>
-              </div>
-
-              {/* Side-slide click hint icon */}
-              {!isActive && (
-                <div className="slide-click-hint">
-                  {((index - activeIndex + totalSlides) % totalSlides) <= totalSlides / 2 ? '›' : '‹'}
-                </div>
+                </>
               )}
             </div>
           )

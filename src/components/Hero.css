@@ -47,11 +47,12 @@
     filter     0.75s ease,
     box-shadow 0.75s ease;
   transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
+  contain: layout style;
 }
 
 /* Shadow only on active */
 .hero-section .carousel-3d-slide.is-active {
+  will-change: transform, opacity, filter;
   box-shadow:
     0 40px 100px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(255, 255, 255, 0.06);

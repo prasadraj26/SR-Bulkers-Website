@@ -5,11 +5,11 @@ import Footer from "../components/Footer";
 import "./silos.css";
 
 // Import images (adjust paths as needed)
-import siloMain from "../assets/images/silo.png";
-import img1 from "../assets/images/silo.png";
-import img2 from "../assets/images/silo.png";
-import img3 from "../assets/images/silo.png";
-import img4 from "../assets/images/silo.png";
+import siloMain from "../assets/images/silo.webp";
+import img1 from "../assets/images/silo.webp";
+import img2 from "../assets/images/silo.webp";
+import img3 from "../assets/images/silo.webp";
+import img4 from "../assets/images/silo.webp";
 
 const thumbnails = [
   { src: img1, alt: "Side view" },

@@ -1,22 +1,26 @@
+import React, { lazy, Suspense } from 'react'
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
-import About from '../components/About'
-import Products from '../components/Products'
-import Gallery from '../components/Gallery'
-import QuoteForm from '../components/QuoteForm'
-import Footer from '../components/Footer'
 import GoToTop from '../components/GoToTop'
+
+const About = lazy(() => import('../components/About'))
+const Products = lazy(() => import('../components/Products'))
+const Gallery = lazy(() => import('../components/Gallery'))
+const QuoteForm = lazy(() => import('../components/QuoteForm'))
+const Footer = lazy(() => import('../components/Footer'))
 
 const Home = () => {
   return (
     <div className="home">
       <Navbar />
       <Hero />
-      <About />
-      <Products />
-      <Gallery />
-      <QuoteForm />
-      <Footer />
+      <Suspense fallback={<div className="page-loader" />}>
+        <About />
+        <Products />
+        <Gallery />
+        <QuoteForm />
+        <Footer />
+      </Suspense>
       <GoToTop />
     </div>
   )
