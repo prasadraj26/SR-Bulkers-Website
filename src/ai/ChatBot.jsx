@@ -1,44 +1,70 @@
 import { useState, useEffect, useRef } from "react";
 import "./ChatBot.css";
-import { sendMessageToAI } from "./chatService";
+import { sendMessageToAI, clearConversation } from "./chatService";
+
+const SUGGESTED_QUESTIONS = [
+  "What types of bulkers do you manufacture?",
+  "Tell me about silo storage solutions",
+  "What after-sales services do you offer?",
+  "How do I get a quotation?",
+  "What are your contact details?",
+];
+
+// Renders text with **bold** and newlines
+const renderText = (text) => {
+  if (!text) return null;
+  return text.split("\n").map((line, i) => {
+    const parts = line.split(/\*\*(.*?)\*\*/g);
+    const rendered = parts.map((part, j) =>
+      j % 2 === 1 ? <strong key={j}>{part}</strong> : part
+    );
+    return <span key={i}>{rendered}<br /></span>;
+  });
+};
 
 const ChatBot = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Hello! I'm your SR Bulkers assistant. How may I help you today? 👋"
-    }
+      text: "Hello! I'm your SR Bulkers assistant. How may I help you today? 👋",
+    },
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  const sendMessage = async () => {
-    const userText = input.trim();
-    if (!userText) return;
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 120);
+  }, [open]);
 
-    setMessages(prev => [...prev, { sender: "user", text: userText }]);
+  const sendMessage = async (overrideText) => {
+    const userText = (overrideText ?? input).trim();
+    if (!userText || isTyping) return;
+
+    setMessages((prev) => [...prev, { sender: "user", text: userText }]);
     setInput("");
     setIsTyping(true);
 
     try {
       const reply = await sendMessageToAI(userText);
       setTimeout(() => {
-        setMessages(prev => [...prev, { sender: "bot", text: reply }]);
+        setMessages((prev) => [...prev, { sender: "bot", text: reply }]);
         setIsTyping(false);
-      }, 500);
-    } catch (error) {
-      setMessages(prev => [...prev, {
-        sender: "bot",
-        text: "I'm having trouble connecting right now. Please try again later."
-      }]);
+      }, 400);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "I'm having trouble connecting right now. Please try again later.\n\nFor immediate help:\n📞 +91-98423 98756\n📧 info@srbulkers.com",
+        },
+      ]);
       setIsTyping(false);
     }
   };
@@ -50,37 +76,38 @@ const ChatBot = () => {
     }
   };
 
-  const handleSuggestion = (question) => {
-    setInput(question);
-    setTimeout(() => {
-      sendMessage();
-    }, 100);
+  const handleReset = () => {
+    clearConversation();
+    setMessages([
+      {
+        sender: "bot",
+        text: "Hello! I'm your SR Bulkers assistant. How may I help you today? 👋",
+      },
+    ]);
+    setInput("");
   };
 
-  const suggestedQuestions = [
-    "What types of bulkers do you manufacture?",
-    "Tell me about silo storage solutions",
-    "What after-sales services do you offer?",
-    "How do I get a quotation?",
-    "What are your contact details?",
-  ];
+  // Current time string
+  const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+  const showSuggestions = messages.length === 1;
 
   return (
     <>
-      {/* Floating Toggle Button */}
+      {/* Floating Toggle */}
       <div
         className="chatbot-toggle"
         onClick={() => setOpen(!open)}
         aria-label="Toggle chat"
         title="Chat with us"
       >
-        {open ? "✖" : "🤖"}
+        <span className="toggle-icon">{open ? "✖" : "🤖"}</span>
       </div>
 
       {open && (
         <div className="chatbot-container">
 
-          {/* ── HEADER ── */}
+          {/* HEADER */}
           <div className="chatbot-header">
             <div className="header-left">
               <div className="header-avatar">🤖</div>
@@ -95,32 +122,41 @@ const ChatBot = () => {
             <div className="header-actions">
               <button
                 className="icon-btn"
+                onClick={handleReset}
+                title="New chat"
+                aria-label="Reset chat"
+              >
+                ↺
+              </button>
+              <button
+                className="icon-btn"
                 onClick={() => setOpen(false)}
-                aria-label="Close chat"
                 title="Close"
+                aria-label="Close chat"
               >
                 ✕
               </button>
             </div>
           </div>
 
-          {/* ── MESSAGES ── */}
+          {/* MESSAGES */}
           <div className="chatbot-messages">
             {messages.map((msg, index) => (
               <div key={index} className={`message ${msg.sender}`}>
-                <div className="message-icon">
+                <div className="message-avatar">
                   {msg.sender === "bot" ? "🤖" : "👤"}
                 </div>
-                <div className="message-content">
-                  <div className="message-text">{msg.text}</div>
+                <div className="message-bubble">
+                  <div className="message-text">{renderText(msg.text)}</div>
+                  <div className="message-time">{now}</div>
                 </div>
               </div>
             ))}
 
             {isTyping && (
-              <div className="message bot typing">
-                <div className="message-icon">🤖</div>
-                <div className="message-content">
+              <div className="message bot">
+                <div className="message-avatar">🤖</div>
+                <div className="message-bubble typing-bubble">
                   <div className="typing-indicator">
                     <span /><span /><span />
                   </div>
@@ -130,44 +166,51 @@ const ChatBot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* ── SUGGESTED QUESTIONS (shown only on first message) ── */}
-          {messages.length === 1 && (
+          {/* SUGGESTED QUESTIONS — only on first message */}
+          {showSuggestions && (
             <div className="suggested-questions">
               <p className="suggestions-label">Quick questions</p>
-              <div className="suggestions-grid">
-                {suggestedQuestions.map((question, index) => (
+              <div className="suggestions-list">
+                {SUGGESTED_QUESTIONS.map((q, i) => (
                   <button
-                    key={index}
+                    key={i}
                     className="suggestion-chip"
-                    onClick={() => handleSuggestion(question)}
+                    onClick={() => sendMessage(q)}
+                    disabled={isTyping}
                   >
-                    {question}
+                    {q}
                   </button>
                 ))}
               </div>
             </div>
           )}
 
-          {/* ── INPUT ── */}
+          {/* INPUT */}
           <div className="chatbot-input-area">
             <div className="input-wrapper">
               <input
+                ref={inputRef}
                 type="text"
                 placeholder="Ask about our products or services..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 disabled={isTyping}
+                maxLength={500}
               />
               <button
-                onClick={sendMessage}
-                disabled={!input.trim() || isTyping}
                 className="send-button"
+                onClick={() => sendMessage()}
+                disabled={!input.trim() || isTyping}
+                aria-label="Send"
               >
-                Send
+                ➤
               </button>
             </div>
-            <div className="input-hint">Press Enter to send</div>
+            <div className="input-footer">
+              <span>Press Enter to send</span>
+              <a href="tel:6384153370" className="quick-call">📞 Quick Call</a>
+            </div>
           </div>
 
         </div>

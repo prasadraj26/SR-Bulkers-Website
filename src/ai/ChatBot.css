@@ -565,3 +565,4 @@
 body.chatbot-open {
   overflow: hidden;
 }
+.quick-call:hover { text-decoration: underline; }
