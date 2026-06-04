@@ -2,9 +2,9 @@
 import { useNavigate } from 'react-router-dom'
 import './Hero.css'
 
-import traillerTank from '../assets/images/trailler tank.webp'
-import sideImage    from '../assets/images/side.webp'
-import bul2         from '../assets/images/bul2.webp'
+import h3 from '../assets/images/h3.jpg'
+import h2 from '../assets/images/h2.jpg'
+import h1 from '../assets/images/h1.png'
 
 const slideData = [
   {
@@ -12,7 +12,7 @@ const slideData = [
     title: 'Manufacturing & Servicing of Fly Ash Bulkers',
     subtitle: 'Custom truck bodies engineered for durability and performance in demanding industrial environments.',
     ctaLabel: 'Learn More',
-    image: bul2,
+    image: h1,
     ctaAction: 'about',
   },
   {
@@ -20,7 +20,7 @@ const slideData = [
     title: 'Premium Quality Trailers',
     subtitle: 'Engineered for heavy-duty performance and long-lasting durability on every road.',
     ctaLabel: 'Contact Us',
-    image: sideImage,
+    image: h2,
     ctaAction: 'quote',
   },
   {
@@ -28,7 +28,7 @@ const slideData = [
     title: 'Custom Built Solutions',
     subtitle: 'Tailored to meet your specific requirements with precision engineering and quality materials.',
     ctaLabel: 'View Services',
-    image: traillerTank,
+    image: h3,
     ctaAction: 'services',
   },
 ]

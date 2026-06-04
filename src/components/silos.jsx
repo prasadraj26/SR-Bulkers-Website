@@ -5,8 +5,8 @@ import Footer from "../components/Footer";
 import "./silos.css";
 
 // Import images (adjust paths as needed)
-import siloMain from "../assets/images/silo.webp";
-import img1 from "../assets/images/siloq.png";
+import siloMain from "../assets/images/image.png";
+import img1 from "../assets/images/silo.webp";
 import img2 from "../assets/images/silow.png";
 import img3 from "../assets/images/siloe.png";
 import img4 from "../assets/images/silor.png";
