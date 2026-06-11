@@ -41,6 +41,11 @@ const Hero = () => {
   const timerRef  = useRef(null)
   const [active, setActive] = useState(0)
   const total = slideData.length
+  
+  // Swipe refs
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+  const minSwipeDistance = 50
 
   const goTo = useCallback((index) => {
     setActive((index + total) % total)
@@ -69,12 +74,44 @@ const Hero = () => {
     else document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // Swipe Handlers
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    
+    const distance = touchStartX.current - touchEndX.current
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    
+    if (isLeftSwipe) {
+      // Swipe left - next slide
+      handleNav(1)
+    } else if (isRightSwipe) {
+      // Swipe right - previous slide
+      handleNav(-1)
+    }
+    
+    // Reset values
+    touchStartX.current = 0
+    touchEndX.current = 0
+  }
+
   return (
     <section
       id="home"
       className="hero"
       role="region"
       aria-label="Hero slideshow"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {slideData.map((slide, i) => {
         const isActive = i === active
@@ -82,8 +119,6 @@ const Hero = () => {
           <div
             key={i}
             className={`hero-slide${isActive ? ' hero-slide--active' : ''}`}
-            // 'inert' blocks focus AND hides from screen readers — the correct fix.
-            // aria-hidden="true" on a parent with focusable children causes the console warning.
             {...(!isActive ? { inert: true } : {})}
             role="group"
             aria-roledescription="slide"

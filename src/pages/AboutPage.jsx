@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import { getCompanyExperience } from "../utils/companyExperience";
 import "./AboutPage.css";
 import logo from '../assets/images/logo.webp';
-import team from '../assets/images/team.webp';
+import team from '../assets/images/team.png';
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
