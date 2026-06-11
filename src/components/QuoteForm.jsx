@@ -6,13 +6,15 @@ import {
   FaMapMarkerAlt, 
   FaPhone, 
   FaEnvelope, 
-  FaClock 
+  FaClock,
+  FaWhatsapp,
+  FaPaperPlane
 } from 'react-icons/fa'
 import './QuoteForm.css'
 
 const QuoteForm = ({ 
   title = "GET A QUOTE", 
-  subtitle = "Tell us your requirements and we’ll get back to you." 
+  subtitle = "Tell us your requirements and we'll get back to you." 
 }) => {
 
   const WHATSAPP_NUMBER = "916384153370"
@@ -111,7 +113,6 @@ const QuoteForm = ({
 
       const quotesRef = ref(db, 'quotes')
 
-      // store in Firebase
       await push(quotesRef, {
         ...formData,
         submittedVia: "WhatsApp",
@@ -164,15 +165,27 @@ ${formData.message}
     <section id="quote" className="quote-section">
       <div className="container">
 
-        <div className="quote-header">
+        <motion.div 
+          className="quote-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2>{title}</h2>
           <p>{subtitle}</p>
-        </div>
+        </motion.div>
 
         <div className="quote-container">
 
           {/* CONTACT INFO */}
-          <div className="quote-info">
+          <motion.div 
+            className="quote-info"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {contactInfo.map((info, index) => (
               <div key={index} className="info-item">
                 <div className="info-icon">{info.icon}</div>
@@ -182,10 +195,16 @@ ${formData.message}
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
 
           {/* FORM */}
-          <div className="quote-form-container">
+          <motion.div 
+            className="quote-form-container"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
 
             {formStatus.message && (
               <div className={`form-status ${formStatus.type}`}>
@@ -198,7 +217,7 @@ ${formData.message}
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Your Name *"
                 value={formData.name}
                 onChange={handleChange}
               />
@@ -206,7 +225,7 @@ ${formData.message}
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone Number"
+                placeholder="Phone Number *"
                 value={formData.phone}
                 onChange={handleChange}
               />
@@ -214,7 +233,7 @@ ${formData.message}
               <input
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder="Email Address *"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -224,30 +243,33 @@ ${formData.message}
                 value={formData.service}
                 onChange={handleChange}
               >
-                <option value="">Select Service</option>
+                <option value="">Select Service *</option>
                 <option value="Custom Truck Body">Custom Truck Body</option>
                 <option value="Silo Manufacturing">Silo Manufacturing</option>
                 <option value="Repair & Maintenance">Repair & Maintenance</option>
+                <option value="FC Painting">FC Painting</option>
               </select>
 
               <textarea
                 name="message"
-                placeholder="Requirement"
+                placeholder="Tell us your requirements *"
                 value={formData.message}
                 onChange={handleChange}
               />
 
-              <button type="submit" disabled={isSubmitting}>
-                Send via Email
-              </button>
+              <div className="button-group">
+                <button type="submit" disabled={isSubmitting} className="btn-email">
+                  <FaPaperPlane /> Send via Email
+                </button>
 
-              <button type="button" onClick={handleWhatsAppSubmit}>
-                Send via WhatsApp
-              </button>
+                <button type="button" onClick={handleWhatsAppSubmit} className="btn-whatsapp">
+                  <FaWhatsapp /> Send via WhatsApp
+                </button>
+              </div>
 
             </form>
 
-          </div>
+          </motion.div>
 
         </div>
       </div>

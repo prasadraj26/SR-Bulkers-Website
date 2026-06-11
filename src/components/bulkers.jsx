@@ -7,8 +7,8 @@ import "./bulkers.css";
 import bulkerMain from "../assets/images/BUL-T.webp";
 import img1 from "../assets/images/trailler tank.webp";
 import img2 from "../assets/images/bul2.webp";
-import img3 from "../assets/images/side.webp";
-import img4 from "../assets/images/back.webp";
+import img3 from "../assets/images/ogg.png";
+import img4 from "../assets/images/og.png";
 
 const thumbnails = [
   { src: img1, alt: "Side view" },

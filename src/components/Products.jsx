@@ -3,7 +3,7 @@ import { FaEye } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import './Products.css'
 
-import sideImg from '../assets/images/trailler tank.webp'
+import sideImg from '../assets/images/og.png'
 import siloImg from '../assets/images/silo.webp'
 
 const Products = () => {

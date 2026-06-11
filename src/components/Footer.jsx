@@ -6,6 +6,7 @@ import {
   FaInstagram
 } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
+import { getCompanyExperience } from "../utils/companyExperience";
 import './Footer.css'
 
 const Footer = () => {
@@ -34,9 +35,9 @@ const Footer = () => {
           <motion.div className="footer-column">
             <h3 className="logo-text">SR BULKERS</h3>
             <p className="company-description">
-  Leading truck bulkers manufacturer with over 13 years of expertise in custom truck solutions,
-  quality fabrication, and reliable service.
-</p>
+              Leading truck bulkers manufacturer with over {getCompanyExperience()} years of expertise in custom truck solutions,
+              quality fabrication, and reliable service.
+            </p>
           </motion.div>
 
           {/* QUICK LINKS */}

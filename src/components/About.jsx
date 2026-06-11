@@ -6,6 +6,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { getCompanyExperience } from "../utils/companyExperience";
 import "./About.css";
 
 const About = () => {
@@ -85,21 +86,21 @@ const About = () => {
 
           <motion.p className="home-section-subtitle" variants={subtitleVariants}>
             SR Bulkers is a trusted manufacturer of cement bulkers and trailers,
-            established in 2012 at Mettur, Tamil Nadu. With over 13 years of
+            established in 2012 at Mettur, Tamil Nadu. With over {getCompanyExperience()} years of
             experience, we focus on strong build quality, safety, and long
             service life.
           </motion.p>
 
+          {/* ── READ MORE BUTTON ── */}
           <motion.div className="home-read-more" variants={buttonVariants}>
-            <motion.button
-              className="home-tech-button"
-              onClick={() => navigate("/about")}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Read More <FaArrowRight className="home-button-icon" />
-            </motion.button>
+            <motion.button className="home-tech-button" onClick={() => navigate("/about")}
+            whileHover={{ scale: 1.05 }} 
+            whileTap={{ scale: 0.95 }}>
+              <span>Read More</span>
+              <FaArrowRight className="home-button-icon" />
+                </motion.button>
           </motion.div>
+
         </motion.div>
 
         {/* ── DIVIDER ── */}
@@ -127,7 +128,7 @@ const About = () => {
               whileHover={{ y: -5 }}
             >
               <div className="home-count-box">
-                <span className="home-count-text">13</span><span>+</span>
+                <span className="home-count-text">{getCompanyExperience()}</span><span>+</span>
               </div>
               <h6>Years of Experience</h6>
             </motion.div>

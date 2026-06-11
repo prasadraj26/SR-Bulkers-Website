@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { getCompanyExperience } from "../utils/companyExperience";
 import "./AboutPage.css";
 import logo from '../assets/images/logo.webp';
 import team from '../assets/images/team.webp';
@@ -171,7 +172,7 @@ const AboutPage = () => {
                 <div className="stat-divider" />
 
                 <div className="stat-item" data-aos="fade-up" data-aos-delay="200">
-                  <span className="stat-number">13+</span>
+                  <span className="stat-number">{getCompanyExperience()}+</span>
                   <span className="stat-label">Years of Experience</span>
                 </div>
 

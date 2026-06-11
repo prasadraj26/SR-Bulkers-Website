@@ -1,5 +1,6 @@
 ﻿import { useEffect, useRef, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getCompanyExperience } from '../utils/companyExperience'
 import './Hero.css'
 
 import h3 from '../assets/images/h3.jpg'
@@ -8,7 +9,7 @@ import h1 from '../assets/images/h1.png'
 
 const slideData = [
   {
-    eyebrow: 'Over 13 Years of Excellence',
+    eyebrow: `Over ${getCompanyExperience()} Years of Excellence`,
     title: 'Manufacturing & Servicing of Fly Ash Bulkers',
     subtitle: 'Custom truck bodies engineered for durability and performance in demanding industrial environments.',
     ctaLabel: 'Learn More',
