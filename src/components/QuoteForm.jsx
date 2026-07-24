@@ -17,7 +17,7 @@ const QuoteForm = ({
   subtitle = "Tell us your requirements and we'll get back to you." 
 }) => {
 
-  const WHATSAPP_NUMBER = "916384153370"
+  const WHATSAPP_NUMBER = "918098389303"
 
   const [formData, setFormData] = useState({
     name: '',
@@ -156,9 +156,9 @@ ${formData.message}
 
   const contactInfo = [
     { icon: <FaMapMarkerAlt />, title: 'Address', info: '8/7-1, Navapatti, Bhavani Main Road, Mettur Dam, Salem, Tamil Nadu 636452' },
-    { icon: <FaPhone />, title: 'Phone', info: '6384153370' },
+    { icon: <FaPhone />, title: 'Phone', info: '9487885503' },
     { icon: <FaEnvelope />, title: 'Email', info: 'srbulkers@gmail.com' },
-    { icon: <FaClock />, title: 'Working Hours', info: 'Mon-Fri: 8:00 AM - 6:00 PM' }
+    { icon: <FaClock />, title: 'Working Hours', info: 'Mon-Sat: 6:00 AM - 6:00 PM' }
   ]
 
   return (

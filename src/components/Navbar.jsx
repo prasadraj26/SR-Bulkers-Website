@@ -119,7 +119,7 @@ const Navbar = () => {
         {/* ACTION BUTTONS */}
         <div className="nav-actions">
           <a
-            href="https://wa.me/916384153370"
+            href="https://wa.me/918098389303"
             target="_blank"
             rel="noreferrer"
             className="icon-btn whatsapp"
@@ -129,7 +129,7 @@ const Navbar = () => {
           </a>
 
           <a
-            href="tel:+916384153370"
+            href="tel:+919487885503"
             className="icon-btn call"
             aria-label="Call"
           >
@@ -193,7 +193,7 @@ const Navbar = () => {
             {/* MOBILE ICONS */}
             <div className="mobile-actions">
               <a
-                href="https://wa.me/916384153370"
+                href="https://wa.me/918098389303"
                 target="_blank"
                 rel="noreferrer"
                 className="icon-btn whatsapp"
@@ -202,7 +202,7 @@ const Navbar = () => {
               </a>
 
               <a
-                href="tel:+916384153370"
+                href="tel:+919487885503"
                 className="icon-btn call"
               >
                 <FaPhone />
