@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Seo from "../components/Seo";
 import "./silos.css";
 
 // Import images (adjust paths as needed)
@@ -23,8 +24,24 @@ const Silos = () => {
   const [activeImg, setActiveImg] = useState(siloMain);
   const [activeIdx, setActiveIdx] = useState(0);
 
+  const siloSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'Storage Silos',
+    description: 'Industrial storage silos manufactured by SR Bulkers for bulk material storage and industrial handling applications.',
+    brand: { '@type': 'Brand', name: 'SR Bulkers' },
+    manufacturer: { '@type': 'Organization', name: 'SR Bulkers' },
+    category: 'Industrial storage equipment',
+    material: 'Galvanized steel',
+    additionalProperty: [
+      { '@type': 'PropertyValue', name: 'Capacity Range', value: '50 Ton to 200 Ton+' },
+      { '@type': 'PropertyValue', name: 'Application', value: 'Bulk storage and industrial material handling' },
+    ],
+  };
+
   return (
     <div className="silos-page">
+      <Seo title="Industrial Storage Silos" description="SR Bulkers manufactures industrial storage silos for safe and efficient bulk material storage in industrial and agricultural applications." canonical="https://srbulkers.in/silos" schema={siloSchema} />
       <Navbar />
 
       {/* ── HERO BANNER ── */}

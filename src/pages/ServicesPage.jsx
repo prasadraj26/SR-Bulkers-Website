@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Seo from "../components/Seo";
 import bulkerImg from "../assets/images/side.webp";
 import siloImg from "../assets/images/silo.webp";
 import AOS from "aos";
@@ -15,8 +16,22 @@ const ServicesPage = () => {
     AOS.init({ duration: 900, easing: "ease-out-quart", once: true, offset: 60 });
   }, []);
 
+  const servicesSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Industrial Fabrication and Bulk Transport Services',
+    provider: {
+      '@type': 'Organization',
+      name: 'SR Bulkers',
+      url: 'https://srbulkers.in',
+    },
+    areaServed: ['Mettur', 'Salem', 'Tamil Nadu', 'Karnataka', 'South India'],
+    description: 'SR Bulkers offers bulk cement transportation, fly ash transportation, heavy vehicle fabrication, trailer fabrication, industrial fabrication, and storage silo solutions.',
+  };
+
   return (
     <>
+      <Seo title="Industrial Fabrication and Bulk Transport Services" description="SR Bulkers offers bulk cement transportation, fly ash transportation, trailer fabrication, industrial fabrication, and storage silo solutions in Mettur and South India." canonical="https://srbulkers.in/services" schema={servicesSchema} />
       <Navbar />
       <main className="services-page">
 

@@ -1,0 +1,17 @@
+{
+  "name": "SR Bulkers",
+  "short_name": "SR Bulkers",
+  "description": "Industrial fabrication and bulk transport company manufacturing cement bulkers, fly ash bulkers, trailers, and storage silos in Mettur.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
