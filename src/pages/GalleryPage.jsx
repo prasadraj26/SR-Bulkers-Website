@@ -4,7 +4,6 @@ import { ref, onValue } from "firebase/database";
 import { db } from "../firebase";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Seo from "../components/Seo";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./GalleryPage.css";
@@ -88,17 +87,8 @@ const GalleryPage = () => {
     window.scrollTo({ top: 300, behavior: "smooth" });
   };
 
-  const gallerySchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ImageGallery',
-    name: 'SR Bulkers Gallery',
-    url: 'https://srbulkers.in/gallery',
-    description: 'View manufacturing and transport equipment images from SR Bulkers in Mettur, Tamil Nadu.',
-  };
-
   return (
     <>
-      <Seo title="SR Bulkers Gallery" description="Browse SR Bulkers manufacturing, fabrication, and bulk transport equipment images from Mettur, Tamil Nadu." canonical="https://srbulkers.in/gallery" schema={gallerySchema} />
       <Navbar />
 
       <main className="gallery-page">

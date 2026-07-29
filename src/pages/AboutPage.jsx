@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Seo from "../components/Seo";
 import { getCompanyExperience } from "../utils/companyExperience";
 import "./AboutPage.css";
 import logo from '../assets/images/logo.webp';
@@ -23,17 +22,8 @@ const AboutPage = () => {
     });
   }, []);
 
-  const aboutSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'AboutPage',
-    name: 'About SR Bulkers',
-    url: 'https://srbulkers.in/about',
-    description: 'SR Bulkers is a trusted fabrication and bulk transport company based in Mettur, Tamil Nadu, serving industrial and logistics sectors since 2012.',
-  };
-
   return (
     <>
-      <Seo title="About SR Bulkers" description="Learn about SR Bulkers, a trusted fabrication and bulk transport company in Mettur, Tamil Nadu, serving industrial and logistics sectors since 2012." canonical="https://srbulkers.in/about" schema={aboutSchema} />
       <Navbar />
 
       <main className="about-page">

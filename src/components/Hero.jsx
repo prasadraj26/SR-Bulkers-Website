@@ -126,7 +126,7 @@ const Hero = () => {
           >
             <img
               src={slide.image}
-              alt={`SR Bulkers ${slide.title}`}
+              alt=""
               className="hero-slide__bg"
               loading={i === 0 ? 'eager' : 'lazy'}
               decoding="async"

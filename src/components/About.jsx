@@ -188,7 +188,7 @@ const About = () => {
             >
               <FaTools className="home-why-icon" />
               <h4>Strong Build Quality</h4>
-              <p>Heavy-duty fabrication designed for demanding industrial transport and road conditions.</p>
+              <p>Designed for Indian roads</p>
             </motion.div>
 
             <motion.div
@@ -198,7 +198,7 @@ const About = () => {
             >
               <FaTruck className="home-why-icon" />
               <h4>On-Time Delivery</h4>
-              <p>Reliable project timelines for bulkers, trailers, and industrial fabrication orders.</p>
+              <p>Committed timelines</p>
             </motion.div>
 
             <motion.div
@@ -208,7 +208,7 @@ const About = () => {
             >
               <FaHandshake className="home-why-icon" />
               <h4>After-Sales Support</h4>
-              <p>Responsive support for maintenance, repairs, and long-term operational reliability.</p>
+              <p>Support after delivery</p>
             </motion.div>
 
           </motion.div>
