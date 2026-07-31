@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.srbulkers.in/sitemap.xml
+Sitemap: https://srbulkers.in/sitemap.xml
+Sitemap: https://srbulkers.in/sitemap-core.xml
+Sitemap: https://srbulkers.in/sitemap-gallery.xml
+Sitemap: https://srbulkers.in/sitemap-products.xml
