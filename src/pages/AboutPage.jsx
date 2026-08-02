@@ -34,7 +34,7 @@ const AboutPage = () => {
           <div className="hero-content" data-aos="fade-up">
             <span className="hero-eyebrow">Since 2012</span>
             <h1 className="hero-title">
-              Engineered for Strength.<br />Delivered with Precision.
+              Quality <br />is our<br/> priority
             </h1>
             <p className="hero-subtitle">
               "Engineering excellence isn't just our standard — it's our promise."
