@@ -101,13 +101,6 @@ const About = () => {
             </span>
           </motion.div>
 
-          <motion.span className="home-eyebrow" variants={subtitleVariants}>
-            WHO WE ARE
-          </motion.span>
-
-          <motion.h2 className="home-about-title" variants={titleVariants}>
-            WELCOME
-          </motion.h2>
 
           <motion.p className="home-section-subtitle" variants={subtitleVariants}>
             SR Bulkers is a trusted manufacturer of cement bulkers and trailers,

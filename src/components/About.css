@@ -136,40 +136,6 @@
   margin-left: 20px;
 }
 
-/* ── EYEBROW "WHO WE ARE" ── */
-.home-about-section .home-eyebrow {
-  display: block !important;
-  width: 100% !important;
-  text-align: center !important;
-  margin: 0 auto 10px !important;
-  letter-spacing: 3px;
-  font-weight: 700;
-  color: var(--gold, #c8960c) !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 0.78rem;
-  text-transform: uppercase;
-}
-
-/* ── TITLE ── */
-.home-about-section .home-about-title {
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem) !important;
-  font-weight: 800 !important;
-  color: #2c5ea4 !important;
-  font-family: 'Montserrat', sans-serif !important;
-  line-height: 1.2 !important;
-  margin: 0 0 16px !important;
-  letter-spacing: -0.3px !important;
-  display: block !important;
-  text-align: center !important;
-  text-transform: none !important;
-  text-decoration: none !important;
-  border-bottom: none !important;
-}
-
-.home-about-section .home-about-title::after {
-  display: none !important;
-  content: none !important;
-}
 
 /* ── SUBTITLE ── */
 .home-about-section .home-section-subtitle {
