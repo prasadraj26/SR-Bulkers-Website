@@ -116,24 +116,26 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* ACTION BUTTONS */}
+        {/* ACTION BUTTONS - UPDATED WITH ATTRACTIVE ICONS */}
         <div className="nav-actions">
           <a
             href="https://wa.me/918098389303"
             target="_blank"
             rel="noreferrer"
-            className="icon-btn whatsapp"
+            className="icon-btn whatsapp pulse-animation"
             aria-label="WhatsApp"
           >
             <FaWhatsapp />
+            <span className="tooltip">Chat on WhatsApp</span>
           </a>
 
           <a
             href="tel:+919487885503"
-            className="icon-btn call"
+            className="icon-btn call pulse-animation"
             aria-label="Call"
           >
             <FaPhone />
+            <span className="tooltip">Call Now</span>
           </a>
 
           <button
@@ -190,22 +192,24 @@ const Navbar = () => {
               Contact
             </span>
 
-            {/* MOBILE ICONS */}
+            {/* MOBILE ICONS - UPDATED */}
             <div className="mobile-actions">
               <a
                 href="https://wa.me/918098389303"
                 target="_blank"
                 rel="noreferrer"
-                className="icon-btn whatsapp"
+                className="icon-btn whatsapp mobile-pulse"
               >
                 <FaWhatsapp />
+                <span className="tooltip">WhatsApp</span>
               </a>
 
               <a
                 href="tel:+919487885503"
-                className="icon-btn call"
+                className="icon-btn call mobile-pulse"
               >
                 <FaPhone />
+                <span className="tooltip">Call</span>
               </a>
             </div>
 

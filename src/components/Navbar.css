@@ -86,43 +86,183 @@
 }
 
 /* =========================
-   ACTION ICONS
+   ACTION ICONS - ENHANCED
 ========================= */
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .icon-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 20px;
   text-decoration: none;
   transition: all 0.3s ease;
   flex-shrink: 0;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
+/* ── WHATSAPP ICON ── */
 .icon-btn.whatsapp {
-  background: #25d366;
+  background: linear-gradient(135deg, #25d366 0%, #128C7E 100%);
   color: #ffffff;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
 }
 
+.icon-btn.whatsapp:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.55);
+}
+
+/* ── CALL ICON ── */
 .icon-btn.call {
-  background: #0d6efd;
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
   color: #ffffff;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
 }
 
-.icon-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.icon-btn.call:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 8px 30px rgba(13, 110, 253, 0.55);
+}
+
+/* ── PULSE ANIMATION ── */
+.pulse-animation {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.pulse-animation:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0.1);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    transform: scale(1);
+  }
+}
+
+/* Different pulse color for call icon */
+.pulse-animation.call {
+  animation: pulse-call 2s ease-in-out infinite;
+}
+
+@keyframes pulse-call {
+  0% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(13, 110, 253, 0.1);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+    transform: scale(1);
+  }
+}
+
+/* ── RIPPLE EFFECT ON CLICK ── */
+.icon-btn:active {
+  transform: scale(0.92) !important;
+}
+
+/* ── TOOLTIP ── */
+.icon-btn .tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.icon-btn .tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.85);
+}
+
+.icon-btn:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px);
+}
+
+/* ── GLOW EFFECT ── */
+.icon-btn.whatsapp::after,
+.icon-btn.call::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.icon-btn.whatsapp:hover::after,
+.icon-btn.call:hover::after {
+  opacity: 0.6;
+}
+
+/* ── BADGE / NOTIFICATION DOT ── */
+.icon-btn .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  background: #ff4757;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  animation: badge-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
 }
 
 /* =========================
@@ -197,6 +337,24 @@
   border-top: 1px solid #eee;
 }
 
+/* Mobile Pulse - Simpler version */
+.mobile-pulse {
+  animation: mobile-pulse 2s ease-in-out infinite;
+}
+
+@keyframes mobile-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.mobile-pulse:hover {
+  animation-play-state: paused;
+}
+
 /* =========================
    CLOSE BUTTON
 ========================= */
@@ -245,11 +403,10 @@
     display: none;
   }
 
-  /* Keep icons visible but adjust size */
   .icon-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 17px;
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
   }
 
   .menu-toggle {
@@ -257,7 +414,7 @@
   }
   
   .nav-actions {
-    gap: 10px;
+    gap: 12px;
   }
 }
 
@@ -267,17 +424,21 @@
   }
   
   .icon-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
   }
   
   .nav-actions {
-    gap: 8px;
+    gap: 10px;
   }
   
   .logo-image {
     height: 42px;
+  }
+  
+  .icon-btn .tooltip {
+    display: none;
   }
 }
 
@@ -288,13 +449,14 @@
   }
   
   .icon-btn {
-    width: 34px;
-    height: 34px;
-    font-size: 15px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
   }
   
   .nav-actions {
-    gap: 6px;
+    gap: 8px;
   }
   
   .logo-image {
@@ -312,9 +474,9 @@
   }
   
   .icon-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
+    width: 34px;
+    height: 34px;
+    font-size: 15px;
   }
   
   .logo-image {

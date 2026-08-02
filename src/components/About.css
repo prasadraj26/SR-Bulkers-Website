@@ -9,7 +9,7 @@
 
 /* ── SECTION ── */
 .home-about-section {
-  padding: 50px 0 !important;   /* beats index.css: section { padding: 80px 0 } */
+  padding: 50px 0 !important;
   background: #ffffff !important;
 }
 
@@ -29,6 +29,113 @@
   margin: 0 auto 30px;
 }
 
+/* ── LOGO WITH FRAME ── */
+.home-about-section .home-logo-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+}
+
+.home-about-section .home-logo-frame {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(200, 150, 12, 0.15);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+/* Decorative border effect */
+.home-about-section .home-logo-frame::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  padding: 2px;
+  background: linear-gradient(135deg, #fff, #ffff, #1d7b0a);
+  background-size: 200% 200%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: home-logo-shimmer 4s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes home-logo-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.home-about-section .home-logo-frame:hover {
+  box-shadow: 0 15px 50px rgba(44, 94, 164, 0.15);
+  transform: translateY(-2px);
+}
+
+.home-about-section .home-company-logo {
+  max-width: 160px;
+  height: auto;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+  transition: transform 0.4s ease;
+}
+
+.home-about-section .home-logo-frame:hover .home-company-logo {
+  transform: scale(1.03);
+}
+
+/* ── ENGINEERING WORKS AND FABRICATORS TEXT ── */
+.home-about-section .home-engineering-text-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 18px !important;
+  width: 100% !important;
+}
+
+.home-about-section .home-engineering-text {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem) !important; /* Same size as WELCOME */
+  font-weight: 700 !important;
+  letter-spacing: 4px !important;
+  color: #2e7d32 !important; /* Green color */
+  text-transform: uppercase !important;
+  position: relative;
+  padding: 0 20px;
+  display: inline-block;
+}
+
+/* Decorative lines on both sides - Green to match text */
+.home-about-section .home-engineering-text::before,
+.home-about-section .home-engineering-text::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 3px;
+  background: #FFF !important; /* Green color */
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
+.home-about-section .home-engineering-text::before {
+  right: 100%;
+  margin-right: 20px;
+}
+
+.home-about-section .home-engineering-text::after {
+  left: 100%;
+  margin-left: 20px;
+}
+
 /* ── EYEBROW "WHO WE ARE" ── */
 .home-about-section .home-eyebrow {
   display: block !important;
@@ -43,29 +150,28 @@
   text-transform: uppercase;
 }
 
-/* ── TITLE — beats index.css h2 global rule ── */
+/* ── TITLE ── */
 .home-about-section .home-about-title {
   font-size: clamp(1.8rem, 3.5vw, 2.6rem) !important;
   font-weight: 800 !important;
   color: #2c5ea4 !important;
-  font-family: 'Montserrat', sans-serif !important;  /* override Copperplate from index.css */
+  font-family: 'Montserrat', sans-serif !important;
   line-height: 1.2 !important;
   margin: 0 0 16px !important;
   letter-spacing: -0.3px !important;
   display: block !important;
   text-align: center !important;
-  text-transform: none !important;                   /* override text-transform: uppercase from index.css */
+  text-transform: none !important;
   text-decoration: none !important;
   border-bottom: none !important;
 }
 
-/* Remove red underline bar — index.css triggers ::after on .about-title */
 .home-about-section .home-about-title::after {
   display: none !important;
   content: none !important;
 }
 
-/* ── SUBTITLE — beats index.css .section-subtitle ── */
+/* ── SUBTITLE ── */
 .home-about-section .home-section-subtitle {
   font-size: 1.05rem !important;
   line-height: 1.6 !important;
@@ -76,12 +182,12 @@
   text-align: center !important;
   display: block !important;
   width: 100% !important;
-  max-width: 100% !important;   /* override index.css: max-width: 700px on .section-subtitle */
+  max-width: 100% !important;
 }
 
 /* ── BUTTON ── */
 .home-about-section .home-read-more {
-  margin-top: 16px;
+  margin-top: 24px;
   display: flex;
   justify-content: center;
 }
@@ -89,31 +195,56 @@
 .home-about-section .home-tech-button {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 26px;
-  border-radius: 8px;
-  border: 1px solid rgb(44, 101, 186);
-  background: transparent;
-  color: rgb(44, 101, 186);
+  gap: 12px;
+  padding: 14px 32px;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, #1e3f7a 0%, #2c5ea4 100%);
+  color: #ffffff;
   font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
-  text-transform: none !important;   /* override index.css .btn text-transform: uppercase */
-  letter-spacing: normal !important;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(30, 63, 122, 0.25);
+}
+
+.home-about-section .home-tech-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.home-about-section .home-tech-button:hover::before {
+  left: 100%;
 }
 
 .home-about-section .home-tech-button:hover {
-  background: rgb(44, 101, 186);
-  color: #ffffff;
+  background: linear-gradient(135deg, #152d5c 0%, #1e3f7a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(30, 63, 122, 0.35);
+}
+
+.home-about-section .home-tech-button:active {
+  transform: translateY(0);
 }
 
 .home-about-section .home-button-icon {
+  font-size: 0.9rem;
   transition: transform 0.3s ease;
 }
 
 .home-about-section .home-tech-button:hover .home-button-icon {
-  transform: translateX(4px);
+  transform: translateX(6px);
 }
 
 /* ── DIVIDER ── */
@@ -135,8 +266,8 @@
   font-weight: 700 !important;
   margin-bottom: 25px !important;
   color: #222 !important;
-  font-family: 'Montserrat', sans-serif !important;  /* override Copperplate */
-  text-transform: none !important;                   /* override index.css h3 uppercase */
+  font-family: 'Montserrat', sans-serif !important;
+  text-transform: none !important;
   letter-spacing: normal !important;
   display: block !important;
   width: 100% !important;
@@ -227,8 +358,8 @@
   font-weight: 700 !important;
   margin-bottom: 8px !important;
   color: #222 !important;
-  font-family: 'Montserrat', sans-serif !important;  /* override Copperplate */
-  text-transform: none !important;                   /* override index.css h4 uppercase */
+  font-family: 'Montserrat', sans-serif !important;
+  text-transform: none !important;
   letter-spacing: normal !important;
 }
 
@@ -252,6 +383,19 @@
   .home-about-section .home-count-text {
     font-size: 2.3rem;
   }
+  
+  .home-about-section .home-company-logo {
+    max-width: 130px;
+  }
+  
+  .home-about-section .home-logo-frame {
+    padding: 16px;
+  }
+  
+  .home-about-section .home-engineering-text::before,
+  .home-about-section .home-engineering-text::after {
+    width: 35px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -274,66 +418,52 @@
   .home-about-section .home-section-subtitle {
     font-size: 0.95rem !important;
   }
-}
-/* ── READ MORE BUTTON - MODERN ── */
-.home-about-section .home-read-more {
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
-}
-
-.home-about-section .home-tech-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 32px;
-  border-radius: 50px;
-  border: none;
-  background: linear-gradient(135deg, #1e3f7a 0%, #2c5ea4 100%);
-  color: #ffffff;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Montserrat', sans-serif;
-  text-transform: none;
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(30, 63, 122, 0.25);
-}
-
-/* Shine effect on hover */
-.home-about-section .home-tech-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.5s ease;
+  
+  .home-about-section .home-company-logo {
+    max-width: 110px;
+  }
+  
+  .home-about-section .home-logo-frame {
+    padding: 14px;
+  }
+  
+  .home-about-section .home-engineering-text {
+    font-size: 1.8rem !important;
+    letter-spacing: 2px !important;
+  }
+  
+  .home-about-section .home-engineering-text::before,
+  .home-about-section .home-engineering-text::after {
+    width: 25px;
+    height: 2px;
+  }
+  
+  .home-about-section .home-engineering-text::before {
+    margin-right: 12px;
+  }
+  
+  .home-about-section .home-engineering-text::after {
+    margin-left: 12px;
+  }
 }
 
-.home-about-section .home-tech-button:hover::before {
-  left: 100%;
-}
-
-.home-about-section .home-tech-button:hover {
-  background: linear-gradient(135deg, #152d5c 0%, #1e3f7a 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(30, 63, 122, 0.35);
-}
-
-.home-about-section .home-tech-button:active {
-  transform: translateY(0);
-}
-
-.home-about-section .home-button-icon {
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-}
-
-.home-about-section .home-tech-button:hover .home-button-icon {
-  transform: translateX(6px);
+@media (max-width: 480px) {
+  .home-about-section .home-company-logo {
+    max-width: 90px;
+  }
+  
+  .home-about-section .home-logo-frame {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  
+  .home-about-section .home-engineering-text {
+    font-size: 1.4rem !important;
+    letter-spacing: 1.5px !important;
+  }
+  
+  .home-about-section .home-engineering-text::before,
+  .home-about-section .home-engineering-text::after {
+    display: none;
+  }
 }

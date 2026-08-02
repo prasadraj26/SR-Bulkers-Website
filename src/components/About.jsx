@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getCompanyExperience } from "../utils/companyExperience";
+import logo from '../assets/images/logo.webp';
 import "./About.css";
 
 const About = () => {
@@ -76,6 +77,30 @@ const About = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
+          {/* ── LOGO WITH FRAME ── */}
+          <motion.div 
+            className="home-logo-wrapper"
+            variants={subtitleVariants}
+          >
+            <div className="home-logo-frame">
+              <img 
+                src={logo} 
+                alt="SR Bulkers Logo" 
+                className="home-company-logo"
+              />
+            </div>
+          </motion.div>
+
+          {/* ── ENGINEERING WORKS AND FABRICATORS TEXT ── */}
+          <motion.div 
+            className="home-engineering-text-wrapper"
+            variants={subtitleVariants}
+          >
+            <span className="home-engineering-text">
+              ENGINEERING WORKS AND FABRICATORS
+            </span>
+          </motion.div>
+
           <motion.span className="home-eyebrow" variants={subtitleVariants}>
             WHO WE ARE
           </motion.span>
@@ -98,7 +123,7 @@ const About = () => {
             whileTap={{ scale: 0.95 }}>
               <span>Read More</span>
               <FaArrowRight className="home-button-icon" />
-                </motion.button>
+            </motion.button>
           </motion.div>
 
         </motion.div>
@@ -117,7 +142,6 @@ const About = () => {
             Why Choose Us
           </motion.h3>
 
-          {/* ✅ Grid is now the direct stagger container — no orphan wrapper class */}
           <motion.div
             className="home-feature-grid"
             variants={cardContainerVariants}
